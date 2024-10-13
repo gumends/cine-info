@@ -26,9 +26,8 @@ export function DemoComponent(props: PopularResponse) {
 
     return <Flicking circular={true} align="center" plugins={_plugins}>
         {props.results.map((item: Popular) => (
-            <Tooltip sx={{ ...inter.style }} title={item.overview} placement="bottom-start">
+            <Tooltip key={item.id} sx={{ ...inter.style }} title={item.overview} placement="bottom-start">
                 <Card
-                    key={item.id}
                     sx={{
                         maxWidth: 500,
                         maxHeight: 500,

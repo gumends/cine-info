@@ -140,7 +140,7 @@ export default function Home() {
                 >
                     {
                         filmesPopulares.map((item) => (
-                            <Card sx={{
+                            <Card key={item.id} sx={{
                                 display: 'flex',
                                 width: 345,
                                 justifyContent: 'space-between',
@@ -184,7 +184,7 @@ export default function Home() {
                         ))
                     }
                 </Box>
-                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', gap: 2, mt: 7 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 7 }}>
                     <IconButton
                         onClick={() => { paginado(false) }}
                         sx={{
