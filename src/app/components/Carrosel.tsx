@@ -6,13 +6,17 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
 import { Popular } from "@/types/popular.type";
+import { AutoPlay } from "@egjs/flicking-plugins";
 
 interface PopularResponse {
     results: Popular[];
 }
 
 export function DemoComponent(props: PopularResponse) {
-    const _plugins = [new Perspective({ rotate: -1, scale: 2, perspective: 1000 })];
+    const _plugins = [
+        new Perspective({ rotate: -1, scale: 2, perspective: 1000 }), 
+        new AutoPlay({ duration: 4000, direction: "NEXT", stopOnHover: true, delayAfterHover: 1000 }),
+    ];
 
     return <Flicking circular={true} align="center" plugins={_plugins}>
         {props.results.map((item: Popular) => (
