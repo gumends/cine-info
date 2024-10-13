@@ -6,7 +6,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
-import { Input, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -24,12 +24,6 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function AppAppBar() {
-  const [open, setOpen] = React.useState(false);
-
-  const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
-  };
-
   return (
     <AppBar
       position="fixed"
@@ -37,15 +31,12 @@ export default function AppAppBar() {
     >
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
-          
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-between' }}>
-            
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <Button variant="text" color="info" size="small">
                 Filmes
               </Button>
             </Box>
-            
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <TextField variant="outlined" />
               <IconButton>

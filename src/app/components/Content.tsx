@@ -6,7 +6,7 @@ import AppAppBar from './AppAppBar';
 import Footer from './Footer';
 import getMPTheme from '../theme/getMPTheme';
 import TemplateFrame from '../TemplateFrame';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { Box, Container } from '@mui/material';
 
 export default function MarketingPage({
   children,

@@ -1,15 +1,13 @@
 'use client';
-import { Component, useEffect, useState } from "react";
 import Flicking from "@egjs/react-flicking";
 import { Perspective } from "@egjs/flicking-plugins";
 import "@egjs/react-flicking/dist/flicking.css";
 // Or, if you have to support IE9
 import "@egjs/react-flicking/dist/flicking-inline.css";
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Tooltip, Typography } from '@mui/material'
+import {Card, CardContent, CardMedia, Chip, Tooltip, Typography } from '@mui/material'
 import { Popular } from "@/types/popular.type";
 import { AutoPlay } from "@egjs/flicking-plugins";
 import { Inter } from "next/font/google";
-import * as films from '@/services/films.service';
 
 interface PopularResponse {
     results: Popular[];

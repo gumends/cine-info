@@ -1,14 +1,12 @@
 'use client';
 
-import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
 import Content from './components/Content';
 import { DemoComponent } from './components/Carrosel';
 import * as films from '@/services/films.service';
-import { PopularResponse } from '@/types/popular.type';
 import { Popular } from '@/types/popular.type';
 import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
-import { useTheme } from '@emotion/react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
@@ -199,7 +197,7 @@ export default function Home() {
                         <Input
                             sx={{ textAlign: 'center' }}
                             value={pagina}
-                            onChange={(e) => { parseInt(e.target.value) >= 1 && setPagina(parseInt(e.target.value)) }}
+                            onChange={(e) => { setPagina(parseInt(e.target.value)) }}
                         />
                         / {totalPaginas}
                     </Box>

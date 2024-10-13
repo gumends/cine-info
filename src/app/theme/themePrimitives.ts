@@ -19,7 +19,17 @@ declare module '@mui/material/styles/createPalette' {
     900: string;
   }
 
-  interface PaletteColor extends ColorRange {}
+  interface ColorRange {
+    // Define existing properties of ColorRange
+    primary: string;
+    secondary: string;
+  }
+  
+  interface PaletteColor extends ColorRange {
+    // Add specific properties for PaletteColor
+    accent: string;
+    background: string;
+  }
 }
 
 const defaultTheme = createTheme();
