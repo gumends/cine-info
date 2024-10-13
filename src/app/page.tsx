@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Card, CardContent, CardMedia, Container, Divider, IconButton, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
 import Content from './components/Content';
 import { DemoComponent } from './components/Carrosel';
 import * as films from '@/services/films.service';
@@ -9,6 +9,8 @@ import { Popular } from '@/types/popular.type';
 import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import { useTheme } from '@emotion/react';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,6 +18,8 @@ export default function Home() {
 
     const [filmes, setFilmes] = useState<Popular[]>([]);
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
+    const [pagina, setPagina] = useState(1);
+    const [totalPaginas, setTotalPaginas] = useState(1);
 
     const getRecents = async () => {
         await films.getRecents()
@@ -25,16 +29,22 @@ export default function Home() {
     };
 
     const getPopulares = async () => {
-        await films.buscaPopulares(1)
+        await films.buscaPopulares(pagina)
             .then((data) => {
                 setFilmesPopulares(data.results);
+                setTotalPaginas(data.total_pages);
             })
+    };
+
+    const paginado = async (mais: boolean) => {
+        setPagina(mais ? pagina + 1 : pagina - 1);
+        await getPopulares();
     };
 
     useEffect(() => {
         getRecents();
         getPopulares();
-    }, []);
+    }, [pagina]);
 
 
     return (
@@ -130,7 +140,15 @@ export default function Home() {
                 >
                     {
                         filmesPopulares.map((item) => (
-                            <Card sx={{ display: 'flex', width: 345, justifyContent: 'space-between' }}>
+                            <Card sx={{
+                                display: 'flex',
+                                width: 345,
+                                justifyContent: 'space-between',
+                                cursor: 'pointer',
+                                '&:hover': {
+                                    filter: 'brightness(0.9)',
+                                },
+                            }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
                                         <Typography
@@ -146,28 +164,57 @@ export default function Home() {
                                         <Typography
                                             variant="subtitle1"
                                             component="div"
-                                            sx={{ 
+                                            sx={{
                                                 color: 'text.secondary',
                                                 fontSize: '12px',
                                                 ...inter.style,
-                                             }}
+                                            }}
                                         >
-                                            {new Date(item.release_date).toISOString().split('T')[0].split('-').reverse().join('/')}
+                                            {item.release_date && new Date(item.release_date).toISOString().split('T')[0].split('-').reverse().join('/')}
                                         </Typography>
                                     </CardContent>
                                 </Box>
                                 <CardMedia
                                     component="img"
-                                    sx={{ width: 151 }}
-                                    image={`https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg`}
+                                    sx={{ width: 151, height: 100 }}
+                                    image={item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg` : 'https://via.placeholder.com/150'}
                                     alt="Live from space album cover"
                                 />
                             </Card>
                         ))
                     }
-
+                </Box>
+                <Box sx={{ mt: 2, display: 'flex', justifyContent: 'center', gap: 2, mt: 7 }}>
+                    <IconButton
+                        onClick={() => { paginado(false) }}
+                        sx={{
+                            ...inter.style,
+                            textAlign: 'center',
+                        }}
+                        disabled={pagina === 1}
+                    >
+                        <ArrowBackIosNewIcon />
+                    </IconButton>
+                    <Box sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
+                        <Input
+                            sx={{ textAlign: 'center' }}
+                            value={pagina}
+                            onChange={(e) => { parseInt(e.target.value) >= 1 && setPagina(parseInt(e.target.value)) }}
+                        />
+                        / {totalPaginas}
+                    </Box>
+                    <IconButton
+                        onClick={() => { paginado(true) }}
+                        sx={{
+                            ...inter.style,
+                            textAlign: 'center',
+                        }}
+                        disabled={pagina === totalPaginas}
+                    >
+                        <ArrowForwardIosIcon />
+                    </IconButton>
                 </Box>
             </Container>
-        </Content>
+        </Content >
     );
 }
