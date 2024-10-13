@@ -21,6 +21,7 @@ export default function ToggleColorMode({
       color="primary"
       aria-label="Theme toggle button"
       size="small"
+      sx={{ position: 'fixed', top: 16, right: 16 }}
       {...props}
     >
       {mode === 'dark' ? (
