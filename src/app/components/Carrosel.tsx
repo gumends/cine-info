@@ -1,41 +1,79 @@
-import { Component } from "react";
+'use client';
+import { Component, useEffect, useState } from "react";
 import Flicking from "@egjs/react-flicking";
 import { Perspective } from "@egjs/flicking-plugins";
 import "@egjs/react-flicking/dist/flicking.css";
 // Or, if you have to support IE9
 import "@egjs/react-flicking/dist/flicking-inline.css";
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Chip, Tooltip, Typography } from '@mui/material'
 import { Popular } from "@/types/popular.type";
 import { AutoPlay } from "@egjs/flicking-plugins";
+import { Inter } from "next/font/google";
+import * as films from '@/services/films.service';
 
 interface PopularResponse {
     results: Popular[];
 }
 
+const inter = Inter({ subsets: ['latin'] })
+
 export function DemoComponent(props: PopularResponse) {
+
     const _plugins = [
-        new Perspective({ rotate: -1, scale: 2, perspective: 1000 }), 
+        new Perspective({ rotate: -1, scale: 2, perspective: 1000 }),
         new AutoPlay({ duration: 4000, direction: "NEXT", stopOnHover: true, delayAfterHover: 1000 }),
     ];
 
     return <Flicking circular={true} align="center" plugins={_plugins}>
         {props.results.map((item: Popular) => (
-            <Card key={item.id} sx={{ maxWidth: 500 }}>
-                <CardMedia
-                    component="img"
-                    height="240"
-                    image={`https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg`}
-                    alt="green iguana"
-                />
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                        {item.title}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                        {item.overview}
-                    </Typography>
-                </CardContent>
-            </Card>
+            <Tooltip sx={{ ...inter.style }} title={item.overview} placement="bottom-start">
+                <Card
+                    key={item.id}
+                    sx={{
+                        maxWidth: 500,
+                        maxHeight: 500,
+                        cursor: 'pointer',
+                    }}
+                >
+                    <CardMedia
+                        component="img"
+                        image={`https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg`}
+                        alt="green iguana"
+                    />
+                    <CardContent sx={{ position: 'relative' }}>
+                        <Chip
+                            color="success"
+                            variant="outlined"
+                            label={item.original_language}
+                            sx={{
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                ...inter.style,
+                                position: 'absolute',
+                                top: -10,
+                                right: 0
+                            }}
+                        />
+                        <Typography gutterBottom variant="h5" component="div" sx={{
+                            fontWeight: 'bold',
+                            ...inter.style,
+                            mt: 2
+                        }}>
+                            {item.title}
+                        </Typography>
+                        <Chip
+                            color="default"
+                            variant="outlined"
+                            label={new Date(item.release_date).toLocaleDateString()}
+                            sx={{
+                                fontSize: '16px',
+                                fontWeight: 'bold',
+                                ...inter.style,
+                            }}
+                        />
+                    </CardContent>
+                </Card>
+            </Tooltip>
         ))}
     </Flicking>;
 
