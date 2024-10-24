@@ -8,6 +8,7 @@ import {Card, CardContent, CardMedia, Chip, Tooltip, Typography } from '@mui/mat
 import { Popular } from "@/types/popular.type";
 import { AutoPlay } from "@egjs/flicking-plugins";
 import { Inter } from "next/font/google";
+import { useRouter } from 'next/navigation';
 
 interface PopularResponse {
     results: Popular[];
@@ -16,6 +17,8 @@ interface PopularResponse {
 const inter = Inter({ subsets: ['latin'] })
 
 export function DemoComponent(props: PopularResponse) {
+
+    const router = useRouter();
 
     const _plugins = [
         new Perspective({ rotate: -1, scale: 2, perspective: 1000 }),
@@ -31,6 +34,7 @@ export function DemoComponent(props: PopularResponse) {
                         maxHeight: 500,
                         cursor: 'pointer',
                     }}
+                    onClick={() => {router.push(`/filme?id=${item.id}`)}}
                 >
                     <CardMedia
                         component="img"
