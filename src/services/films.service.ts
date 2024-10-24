@@ -1,5 +1,5 @@
 import { IFilme } from '@/types/filmes.type';
-import { IElenco } from '@/types/elenco.type';
+import { IElenco, IElencoResponse } from '@/types/elenco.type';
 import process from 'process';
 
 const key = process.env.NEXT_PUBLIC_API_KEY;
@@ -53,7 +53,7 @@ async function getFilme(id: number): Promise<IFilme> {
     return response.json();
 }
 
-async function getCredts(id: number): Promise<IElenco> {
+async function getCredts(id: number): Promise<IElencoResponse> {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${key}&language=pt-BR`, {
         method: 'GET',
         headers: {

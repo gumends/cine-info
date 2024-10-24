@@ -12,3 +12,9 @@ export interface IElenco {
   popularity: number;
   profile_path: string;
 }
+
+export interface IElencoResponse {
+  id: number;
+  cast: IElenco[];
+  crew: IElenco[];
+}
