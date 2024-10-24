@@ -34,7 +34,7 @@ export function DemoComponent(props: PopularResponse) {
                         maxHeight: 500,
                         cursor: 'pointer',
                     }}
-                    onClick={() => {router.push(`/filme?id=${item.id}`)}}
+                    onClick={() => {router.push(`/filmes/detalhes?id=${item.id}`)}}
                 >
                     <CardMedia
                         component="img"

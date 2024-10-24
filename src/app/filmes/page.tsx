@@ -143,7 +143,7 @@ export default function Home() {
                         filmesPopulares.map((item) => (
                             <Card
                                 key={item.id}
-                                onClick={() => {router.push(`/filme?id=${item.id}`)}}
+                                onClick={() => {router.push(`/filmes/detalhes?id=${item.id}`)}}
                                 sx={{
                                     display: 'flex',
                                     width: 345,
