@@ -36,6 +36,12 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small">
                 Filmes
               </Button>
+              <Button variant="text" color="info" size="small">
+                Series
+              </Button>
+              <Button variant="text" color="info" size="small">
+                TV serieris
+              </Button>
             </Box>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
               <TextField variant="outlined" />

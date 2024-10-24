@@ -45,14 +45,14 @@ export default function Footer() {
         }}
       >
         <div>
-          <Link color="text.secondary" variant="body2" href="#">
-            Privacy Policy
+          <Link color="text.secondary" variant="body2" href="https://developer.themoviedb.org/docs/getting-started">
+            API
           </Link>
           <Typography sx={{ display: 'inline', mx: 0.5, opacity: 0.5 }}>
             &nbsp;•&nbsp;
           </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            Terms of Service
+          <Link color="text.secondary" variant="body2"  href="https://mui.com/material-ui/getting-started/">
+            Material UI
           </Link>
           <Copyright />
         </div>
@@ -65,7 +65,7 @@ export default function Footer() {
           <IconButton
             color="inherit"
             size="small"
-            href="https://github.com/mui"
+            href="https://github.com/gumends/cine-info"
             aria-label="GitHub"
             sx={{ alignSelf: 'center' }}
           >
@@ -74,16 +74,7 @@ export default function Footer() {
           <IconButton
             color="inherit"
             size="small"
-            href="https://x.com/MaterialUI"
-            aria-label="X"
-            sx={{ alignSelf: 'center' }}
-          >
-            <TwitterIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            size="small"
-            href="https://www.linkedin.com/company/mui/"
+            href="https://www.linkedin.com/in/gustavo-mendes-de-lima-75108b210/"
             aria-label="LinkedIn"
             sx={{ alignSelf: 'center' }}
           >
