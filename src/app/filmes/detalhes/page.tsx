@@ -1,6 +1,6 @@
 'use client';
 import { Box, Card, CardContent, CardMedia, Divider, Typography } from '@mui/material';
-import Content from '../components/Content';
+import Content from '../../components/Content';
 import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import * as films from '@/services/films.service';
@@ -8,15 +8,23 @@ import { IFilme } from '@/types/filmes.type';
 const inter = Inter({ subsets: ['latin'] })
 import CircleIcon from '@mui/icons-material/Circle';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
+import Flicking from "@egjs/react-flicking";
+import "@egjs/react-flicking/dist/flicking.css";
+// Or, if you have to support IE9
+import "@egjs/react-flicking/dist/flicking-inline.css";
+import { useRouter } from 'next/navigation';
 
 export default function Home() {
 
     const [filme, setFilme] = useState<IFilme>();
     const [credts, setCredts] = useState<IElenco[]>([]);
+    const router = useRouter();
 
     useEffect(() => {
         const { searchParams } = new URL(window.location.href);
         const movieId = searchParams.get('id');
+
+        if (!movieId) router.push('/filmes');
 
         if (movieId) {
             films.getFilme(Number(movieId))
@@ -30,7 +38,7 @@ export default function Home() {
                     console.log(data);
                     setCredts(data.cast);
                 })
-        }
+        } 
     }, []);
 
     return (
@@ -60,23 +68,28 @@ export default function Home() {
             </Typography>
             <Divider />
             <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px", mt: 5 }}>
-                {credts.map((elenco, key) => (
-                    <Card key={key} sx={{ minWidth: 240 }}>
-                        <CardMedia
-                            sx={{ height: 240 }}
-                            image={`https://image.tmdb.org/t/p/w500${elenco.profile_path}`}
-                            title={elenco.name}
-                        />
-                        <CardContent>
-                            <Typography sx={{ fontSize: 20, mt: 1 }} fontFamily={inter.style.fontFamily} gutterBottom variant="h5" component="div">
-                                {elenco.name}
-                            </Typography>
-                            <Typography sx={{ fontSize: 12 }} fontFamily={inter.style.fontFamily} gutterBottom variant="body2" component="div">
-                                {elenco.character}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                ))}
+                <Flicking
+                    align="prev"
+                    circular={false}
+                    >
+                    {credts.map((elenco, key) => (
+                        <Card key={key} sx={{ minWidth: 240, mx: 1 }}>
+                            <CardMedia
+                                sx={{ height: 240 }}
+                                image={`https://image.tmdb.org/t/p/w500${elenco.profile_path}`}
+                                title={elenco.name}
+                            />
+                            <CardContent>
+                                <Typography sx={{ fontSize: 20, mt: 1 }} fontFamily={inter.style.fontFamily} gutterBottom variant="h5" component="div">
+                                    {elenco.name}
+                                </Typography>
+                                <Typography sx={{ fontSize: 12 }} fontFamily={inter.style.fontFamily} gutterBottom variant="body2" component="div">
+                                    {elenco.character}
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </Flicking>
             </Box>
         </Content>
     );
