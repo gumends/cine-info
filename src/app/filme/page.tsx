@@ -1,9 +1,8 @@
 'use client';
-import { Box, Button, Card, CardActions, CardContent, CardMedia, Divider, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Divider, Typography } from '@mui/material';
 import Content from '../components/Content';
 import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import * as films from '@/services/films.service';
 import { IFilme } from '@/types/filmes.type';
 const inter = Inter({ subsets: ['latin'] })

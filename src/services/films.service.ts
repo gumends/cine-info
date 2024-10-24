@@ -1,5 +1,5 @@
 import { IFilme } from '@/types/filmes.type';
-import { IElenco, IElencoResponse } from '@/types/elenco.type';
+import { IElencoResponse } from '@/types/elenco.type';
 import process from 'process';
 
 const key = process.env.NEXT_PUBLIC_API_KEY;
