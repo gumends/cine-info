@@ -50,8 +50,8 @@ export default function Home() {
                 <Box>
                     <CardMedia
                         component="img"
-                        sx={{ width: 751, height: 400 }}
-                        image={`https://image.tmdb.org/t/p/original${filme?.backdrop_path}.jpg`}
+                        sx={{ minWidth: 351, height: 500 }}
+                        image={`https://image.tmdb.org/t/p/original${filme?.poster_path}.jpg`}
                         alt={filme?.title}
                     />
                 </Box>
