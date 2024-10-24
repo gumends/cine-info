@@ -9,10 +9,13 @@ import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import { useRouter } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
+
+    const router = useRouter();
 
     const [filmes, setFilmes] = useState<Popular[]>([]);
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
@@ -106,7 +109,7 @@ export default function Home() {
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4 }}>
-                    <DemoComponent results={filmes} />
+                    {filmes.length > 0 ? <DemoComponent results={filmes} /> : null}
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
@@ -138,15 +141,18 @@ export default function Home() {
                 >
                     {
                         filmesPopulares.map((item) => (
-                            <Card key={item.id} sx={{
-                                display: 'flex',
-                                width: 345,
-                                justifyContent: 'space-between',
-                                cursor: 'pointer',
-                                '&:hover': {
-                                    filter: 'brightness(0.9)',
-                                },
-                            }}>
+                            <Card
+                                key={item.id}
+                                onClick={() => {router.push(`/filme?id=${item.id}`)}}
+                                sx={{
+                                    display: 'flex',
+                                    width: 345,
+                                    justifyContent: 'space-between',
+                                    cursor: 'pointer',
+                                    '&:hover': {
+                                        filter: 'brightness(0.9)',
+                                    },
+                                }}>
                                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                                     <CardContent sx={{ flex: '1 0 auto' }}>
                                         <Typography

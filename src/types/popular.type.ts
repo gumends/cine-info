@@ -35,3 +35,5 @@ export interface PopularResponse {
   total_pages: number;
   total_results: number;
 }
+
+

@@ -1,3 +1,5 @@
+import { IFilme } from '@/types/filmes.type';
+import { IElenco } from '@/types/elenco.type';
 import process from 'process';
 
 const key = process.env.NEXT_PUBLIC_API_KEY;
@@ -38,9 +40,36 @@ async function buscaPopulares(page: number = 1) {
     }
     return response.json();
 }
+async function getFilme(id: number): Promise<IFilme> {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
+
+async function getCredts(id: number): Promise<IElenco> {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${key}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
 
 export {
     getRecents,
     buscaGenero,
-    buscaPopulares
+    buscaPopulares,
+    getFilme,
+    getCredts
 }
