@@ -8,6 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import { TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useRouter } from 'next/navigation';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -24,6 +25,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 }));
 
 export default function AppAppBar() {
+  const router = useRouter();
   return (
     <AppBar
       position="fixed"
@@ -33,7 +35,7 @@ export default function AppAppBar() {
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-between' }}>
             <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Button variant="text" color="info" size="small">
+              <Button variant="text" color="info" size="small" onClick={() => {router.push('/filmes')}}>
                 Filmes
               </Button>
               <Button variant="text" color="info" size="small">

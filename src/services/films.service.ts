@@ -1,5 +1,6 @@
 import { IFilme } from '@/types/filmes.type';
 import { IElencoResponse } from '@/types/elenco.type';
+import { IVideosResponse } from '@/types/videos.type';
 import process from 'process';
 
 const key = process.env.NEXT_PUBLIC_API_KEY;
@@ -53,6 +54,19 @@ async function getFilme(id: number): Promise<IFilme> {
     return response.json();
 }
 
+async function getVideos(id: number): Promise<IVideosResponse> {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${key}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
+
 async function getCredts(id: number): Promise<IElencoResponse> {
     const response = await fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${key}&language=pt-BR`, {
         method: 'GET',
@@ -71,5 +85,6 @@ export {
     buscaGenero,
     buscaPopulares,
     getFilme,
-    getCredts
+    getCredts,
+    getVideos
 }

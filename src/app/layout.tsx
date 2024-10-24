@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import "./globals.css"
 const inter = Inter({ subsets: ['latin'] })
+import '@fontsource/inter';
 
 export const metadata = {
   title: 'CineInfo',
