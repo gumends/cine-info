@@ -80,11 +80,28 @@ async function getCredts(id: number): Promise<IElencoResponse> {
     return response.json();
 }
 
+async function getFilmePorNome(nomeDoFilme: string): Promise<IFilme[]> {
+    const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${encodeURIComponent(nomeDoFilme)}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    return data.results;
+}
+
+
 export {
     getRecents,
     buscaGenero,
     buscaPopulares,
     getFilme,
     getCredts,
-    getVideos
+    getVideos,
+    getFilmePorNome
 }

@@ -14,8 +14,6 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
-import CardVideo from '@/app/components/CardVideo';
-import { CardCover } from '@mui/joy';
 
 export default function Home() {
 
@@ -99,7 +97,7 @@ export default function Home() {
                 </Flicking>
             </Box>
             <Typography sx={{ fontSize: 20, mt: 4 }} gutterBottom variant="h5" component="div">
-                Vídeos
+                Trailers
             </Typography>
             <Divider />
             <Box
