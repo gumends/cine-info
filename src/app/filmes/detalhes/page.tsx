@@ -1,11 +1,9 @@
 'use client';
 import { Box, Card, CardContent, CardMedia, Divider, Typography } from '@mui/material';
 import Content from '../../components/Content';
-import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import * as films from '@/services/films.service';
 import { IFilme } from '@/types/filmes.type';
-const inter = Inter({ subsets: ['latin'] })
 import CircleIcon from '@mui/icons-material/Circle';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
 import Flicking from "@egjs/react-flicking";
