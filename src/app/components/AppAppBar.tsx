@@ -5,13 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import * as films from '@/services/films.service';
-import { IFilme } from '@/types/filmes.type';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
-import { Typography } from '@mui/material';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -30,13 +24,13 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 export default function AppAppBar() {
   const router = useRouter();
 
-  const [search, setSearch] = useState('');
-  const [filmes, setFilmes] = useState<IFilme[]>([]);
+  // const [search, setSearch] = useState('');
+  // const [filmes, setFilmes] = useState<IFilme[]>([]);
 
-  useEffect(() => {
-    films.getFilmePorNome(search)
-      .then((data: IFilme[]) => setFilmes(data));
-  }, [search])
+  // useEffect(() => {
+  //   films.getFilmePorNome(search)
+  //     .then((data: IFilme[]) => setFilmes(data));
+  // }, [search])
   return (
     <AppBar
       position="fixed"

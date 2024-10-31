@@ -12,7 +12,7 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
-import { Sheet, Stack } from '@mui/joy';
+import { Stack } from '@mui/joy';
 
 export default function Home() {
 
