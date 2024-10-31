@@ -59,6 +59,7 @@ export default function Home() {
                     spacing={2}
                     useFlexGap
                     sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}
+                    marginTop={{ xs: 15, sm: 0, md: 0 }}
                 >
                     <Typography
                         variant="h1"
