@@ -21,7 +21,7 @@ export function DemoComponent(props: PopularResponse) {
     const router = useRouter();
 
     const _plugins = [
-        new Perspective({ rotate: -1, scale: 2, perspective: 1000 }),
+        new Perspective({ rotate: -1, scale: 1, perspective: 1000 }),
         new AutoPlay({ duration: 4000, direction: "NEXT", stopOnHover: true, delayAfterHover: 1000 }),
     ];
 
@@ -30,8 +30,8 @@ export function DemoComponent(props: PopularResponse) {
             <Tooltip key={item.id} sx={{ ...inter.style }} title={item.overview} placement="bottom-start">
                 <Card
                     sx={{
-                        maxWidth: 500,
-                        maxHeight: 500,
+                        maxWidth: { xs: 300, sm: 300, md: 400, lg: 500 },
+                        maxHeight: { xs: 300, sm: 300, md: 400, lg: 500 },
                         cursor: 'pointer',
                     }}
                     onClick={() => {router.push(`/filmes/detalhes?id=${item.id}`)}}

@@ -5,14 +5,10 @@ import Content from '@/app/components/Content';
 import { DemoComponent } from '@/app/components/Carrosel';
 import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
-import { Inter } from 'next/font/google';
 import { useEffect, useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useRouter } from 'next/navigation';
-
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
 
@@ -72,7 +68,6 @@ export default function Home() {
                             alignItems: 'center',
                             fontSize: 'clamp(3rem, 10vw, 3.5rem)',
                             fontWeight: 'bold',
-                            ...inter.style,
                         }}
                     >
                         Cine
@@ -86,7 +81,6 @@ export default function Home() {
                                     color: 'success.light',
                                 }),
                                 fontWeight: 'bold',
-                                ...inter.style,
                             })}
                         >
                             Info
@@ -103,13 +97,12 @@ export default function Home() {
                             color: 'success.light',
                         }),
                         fontWeight: 'bold',
-                        ...inter.style,
                         mt: 4,
                     })}
                 >
                     Filmes Em Cartaz
                 </Typography>
-                <Box sx={{ mt: 4 }}>
+                <Box sx={{ mt: 4, width: '100%',  }}>
                     {filmes.length > 0 ? <DemoComponent results={filmes} /> : null}
                 </Box>
             </Container>
@@ -124,7 +117,6 @@ export default function Home() {
                             color: 'success.light',
                         }),
                         fontWeight: 'bold',
-                        ...inter.style,
                         mt: 4,
                     })}
                 >
@@ -163,7 +155,6 @@ export default function Home() {
                                             variant="body2"
                                             sx={{
                                                 fontSize: '12px',
-                                                ...inter.style,
                                             }}
                                         >
                                             {item.title}
@@ -174,7 +165,6 @@ export default function Home() {
                                             sx={{
                                                 color: 'text.secondary',
                                                 fontSize: '12px',
-                                                ...inter.style,
                                             }}
                                         >
                                             {item.release_date && new Date(item.release_date).toISOString().split('T')[0].split('-').reverse().join('/')}
@@ -226,7 +216,6 @@ export default function Home() {
                     <IconButton
                         onClick={() => { paginado(false) }}
                         sx={{
-                            ...inter.style,
                             textAlign: 'center',
                         }}
                         disabled={pagina === 1}
@@ -244,7 +233,6 @@ export default function Home() {
                     <IconButton
                         onClick={() => { paginado(true) }}
                         sx={{
-                            ...inter.style,
                             textAlign: 'center',
                         }}
                         disabled={pagina === totalPaginas}
