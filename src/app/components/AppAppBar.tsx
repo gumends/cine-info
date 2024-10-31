@@ -45,7 +45,7 @@ export default function AppAppBar() {
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-between' }}>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
               <Button variant="text" color="info" size="small" onClick={() => { router.push('/filmes') }}>
                 Filmes
               </Button>
@@ -55,45 +55,6 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small">
                 TV serieris
               </Button>
-            </Box>
-            <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-              <Autocomplete
-                id="country-select-demo"
-                sx={{ width: 500 }}
-                options={filmes}
-                autoHighlight
-                getOptionLabel={(option) => option.title}
-                renderOption={(props, option) => {
-                  const { key, ...optionProps } = props;
-                  return (
-                    <Box
-                      key={key}
-                      component="li"
-                      sx={{ '& > img': { mr: 2, flexShrink: 0 } }}
-                      {...optionProps}
-                    >
-                      <img
-                        loading="lazy"
-                        width="70"
-                        srcSet={`https://image.tmdb.org/t/p/original${option.poster_path}.jpg`}
-                        src={`https://image.tmdb.org/t/p/original${option.poster_path}.jpg`}
-                        alt=""
-                      />
-                      <Box>
-                        <Typography>{option.title}</Typography>
-                        <Typography>{option.release_date}</Typography>
-                      </Box>
-                    </Box>
-                  );
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                )}
-              />
             </Box>
           </Box>
         </StyledToolbar>

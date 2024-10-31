@@ -12,6 +12,7 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
+import { Sheet, Stack } from '@mui/joy';
 
 export default function Home() {
 
@@ -46,26 +47,36 @@ export default function Home() {
 
     return (
         <Content>
-            <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between", my: 8, gap: 2 }}>
+            <Stack
+                sx={{
+                    width: "100%",
+                    justifyContent: "space-between",
+                    my: 8,
+                    gap: 2,
+                }}
+                direction={{ xs: "column", sm: "row", md: "row" }}
+                alignItems={{ xs: "center", sm: "flex-start", md: "flex-start" }}
+                marginTop={{ xs: 15, sm: 0, md: 0 }}
+            >
                 <Box>
                     <Typography variant="h4" >{filme?.title}</Typography>
-                    <Typography variant="body1" sx={{ mt: 4, width: "70%" }}>{filme?.overview}</Typography>
-                    <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
-                        {filme?.genres.map((genre, key) => (
-                            <Box key={key} sx={{ display: "flex", alignItems: "center", gap: 1 }}><CircleIcon sx={{ width: 8, height: 8 }} /> <Typography variant="body2" >{genre.name}</Typography></Box>
-                        ))}
-                    </Box>
+                    <Typography variant="body1" sx={{ mt: 4, width: { xs: "100%", sm: "70%", md: "70%" } }}>{filme?.overview}</Typography>
 
                 </Box>
                 <Box>
                     <CardMedia
                         component="img"
-                        sx={{ minWidth: 351, height: 500 }}
+                        sx={{ minWidth: 300, maxWidth: "100%", height: 500 }}
                         image={`https://image.tmdb.org/t/p/original${filme?.poster_path}.jpg`}
                         alt={filme?.title}
                     />
+                    <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
+                        {filme?.genres.map((genre, key) => (
+                            <Box key={key} sx={{ display: "flex", alignItems: "center", gap: 1 }}><CircleIcon sx={{ width: 8, height: 8 }} /> <Typography variant="body2" >{genre.name}</Typography></Box>
+                        ))}
+                    </Box>
                 </Box>
-            </Box>
+            </Stack>
             <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
                 Elenco
             </Typography>
@@ -101,7 +112,7 @@ export default function Home() {
             <Box
                 sx={{
                     minWidth: "100%",
-                    height: "600px", 
+                    height: { xs: 300, sm: 400, md: 500 },
                     display: "flex",
                     overflowX: "auto",
                     gap: 2,
