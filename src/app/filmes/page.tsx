@@ -2,13 +2,13 @@
 
 import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
-import { DemoComponent } from '@/app/components/Carrosel';
 import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
 import { useEffect, useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useRouter } from 'next/navigation';
+import Carrosel from '@/app/components/Carrosel'
 
 export default function Home() {
 
@@ -104,7 +104,7 @@ export default function Home() {
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%',  }}>
-                    {filmes.length > 0 ? <DemoComponent results={filmes} /> : null}
+                <Carrosel/>
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
