@@ -1,10 +1,11 @@
 import { Box } from "@mui/material";
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Popular } from '@/types/popular.type';
 
-function CenterMode() {
+function CenterMode({ filmes }: { filmes: Popular[] }) {
   const settings = {
     dots: true,
     className: "right",
@@ -14,25 +15,17 @@ function CenterMode() {
     slidesToShow: 3,
     speed: 500,
   };
-
-  const teste = [
-    {teste:  1},
-    {teste:  2},
-    {teste:  3},
-    {teste:  4},
-    {teste:  5},
-    {teste:  6},
-    {teste:  7},
-    {teste:  8}
-  ]
+  
   return (
     <div className="slider-container">
       <Slider {...settings}>
-        {
-          teste.map((ts, key) => {
-            return <Box sx={{ bgcolor: 'red', height: 100 }} key={key} className="">{ts.teste}</Box>;
-          })
-        }
+        {filmes.map((filme) => (
+          <div key={filme.id}>
+          <Box key={filme.id} sx={{ mx: 2 }}>
+            <img src={`https://image.tmdb.org/t/p/w500/${filme.poster_path}`} alt={filme.title} />
+          </Box>
+          </div>
+        ))}
       </Slider>
     </div>
   );  
