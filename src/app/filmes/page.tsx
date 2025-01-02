@@ -104,7 +104,7 @@ export default function Home() {
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%',  }}>
-                <Carrosel/>
+                <Carrosel filmes={filmes} />
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
