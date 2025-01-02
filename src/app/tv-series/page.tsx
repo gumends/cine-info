@@ -2,7 +2,7 @@
 
 import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
-import { DemoComponent } from '@/app/components/Carrosel';
+import Carrosel from '@/app/components/Carrosel'
 import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
 import { useEffect, useState } from 'react';
@@ -104,7 +104,7 @@ export default function Home() {
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%',  }}>
-                    {filmes.length > 0 ? <DemoComponent results={filmes} /> : null}
+                    {filmes.length > 0 ? <Carrosel filmes={filmes} /> : null}
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
