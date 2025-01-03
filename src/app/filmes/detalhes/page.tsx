@@ -12,6 +12,7 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
+import { IService } from '@/types/services.type';
 import { Stack } from '@mui/joy';
 
 export default function Home() {
@@ -19,6 +20,7 @@ export default function Home() {
     const [filme, setFilme] = useState<IFilme>();
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
+    const [servers, setServers] = useState<IService[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -41,6 +43,11 @@ export default function Home() {
             films.getVideos(Number(movieId))
                 .then((data: IVideosResponse) => {
                     setVideos(data.results);
+                })
+            
+                films.getServices(Number(movieId))
+                .then((data: IService) => {
+                    setServers([data]);
                 })
         }
     }, []);
