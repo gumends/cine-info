@@ -95,6 +95,18 @@ async function getFilmePorNome(nomeDoFilme: string): Promise<IFilme[]> {
     return data.results;
 }
 
+async function getServices(id: number) {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/550/watch/providers?api_key=${key}&region=BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
 
 export {
     getRecents,
@@ -103,5 +115,6 @@ export {
     getFilme,
     getCredts,
     getVideos,
-    getFilmePorNome
+    getFilmePorNome,
+    getServices
 }
