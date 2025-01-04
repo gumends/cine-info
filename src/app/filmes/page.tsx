@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
@@ -16,8 +16,9 @@ export default function Home() {
 
     const [filmes, setFilmes] = useState<Popular[]>([]);
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
-    const [pagina, setPagina] = useState(1);
-    const [totalPaginas, setTotalPaginas] = useState(1);
+    const [pagina, setPagina] = useState(0);
+
+
 
     const getRecents = async () => {
         await films.getRecents()
@@ -27,22 +28,15 @@ export default function Home() {
     };
 
     const getPopulares = async () => {
-        await films.buscaPopulares(pagina)
-            .then((data) => {
-                setFilmesPopulares(data.results);
-                setTotalPaginas(data.total_pages);
-            })
-    };
-
-    const paginado = async (mais: boolean) => {
-        setPagina(mais ? pagina + 1 : pagina - 1);
-        await getPopulares();
+        const data = await films.buscaPopulares(pagina + 1);
+        setPagina((prevPagina) => prevPagina + 1);
+        setFilmesPopulares((prevFilmes) => [...prevFilmes, ...data.results]); 
     };
 
     useEffect(() => {
         getRecents();
         getPopulares();
-    }, [pagina]);
+    }, []);
 
 
     return (
@@ -214,32 +208,9 @@ export default function Home() {
                     }
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 7 }}>
-                    <IconButton
-                        onClick={() => { paginado(false) }}
-                        sx={{
-                            textAlign: 'center',
-                        }}
-                        disabled={pagina === 1}
-                    >
-                        <ArrowBackIosNewIcon />
-                    </IconButton>
-                    <Box sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
-                        <Input
-                            sx={{ textAlign: 'center' }}
-                            value={pagina}
-                            onChange={(e) => { setPagina(parseInt(e.target.value)) }}
-                        />
-                        / {totalPaginas}
-                    </Box>
-                    <IconButton
-                        onClick={() => { paginado(true) }}
-                        sx={{
-                            textAlign: 'center',
-                        }}
-                        disabled={pagina === totalPaginas}
-                    >
-                        <ArrowForwardIosIcon />
-                    </IconButton>
+                    <Button variant="contained" onClick={() => { getPopulares() }}>
+                        Ver mais
+                    </Button>
                 </Box>
             </Container>
         </Content >

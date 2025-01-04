@@ -3,7 +3,7 @@
 import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import Carrosel from '@/app/components/Carrosel'
-import * as films from '@/services/films.service';
+import * as series from '@/services/series.service';
 import { Popular } from '@/types/popular.type';
 import { useEffect, useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
@@ -20,14 +20,14 @@ export default function Home() {
     const [totalPaginas, setTotalPaginas] = useState(1);
 
     const getRecents = async () => {
-        await films.getRecents()
+        await series.getRecents()
             .then((data) => {
                 setFilmes(data.results);
             })
     };
 
     const getPopulares = async () => {
-        await films.buscaPopulares(pagina)
+        await series.buscaPopulares(pagina)
             .then((data) => {
                 setFilmesPopulares(data.results);
                 setTotalPaginas(data.total_pages);
@@ -104,7 +104,7 @@ export default function Home() {
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%',  }}>
-                    {filmes.length > 0 ? <Carrosel filmes={filmes} /> : null}
+                {filmes.length > 0 ? <Carrosel filmes={filmes} /> : null}
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>

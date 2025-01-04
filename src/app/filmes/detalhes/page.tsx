@@ -14,13 +14,25 @@ import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { IService } from '@/types/services.type';
 import { Stack } from '@mui/joy';
+import Leao from '@/assets/1pTQrPsNl1TCkgjQUz97M6UMY1u.jpg'
 
-export default function Home() {
+import { useExtractColors } from "react-extract-colors";
+
+interface ColorResult {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+    hex: string;
+    rgb: string;
+}
+const Home: React.FC = () => {
 
     const [filme, setFilme] = useState<IFilme>();
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [servers, setServers] = useState<IService[]>([]);
+    const [poster_path, setPoster_path] = useState<string>('');
     const router = useRouter();
 
     useEffect(() => {
@@ -33,6 +45,7 @@ export default function Home() {
             films.getFilme(Number(movieId))
                 .then((data: IFilme) => {
                     setFilme(data);
+                    setPoster_path(data.poster_path);
                 })
 
             films.getCredts(Number(movieId))
@@ -44,16 +57,28 @@ export default function Home() {
                 .then((data: IVideosResponse) => {
                     setVideos(data.results);
                 })
-            
-                films.getServices(Number(movieId))
+
+            films.getServices(Number(movieId))
                 .then((data: IService) => {
-                    setServers([data]);
+                    console.log(data);
                 })
         }
     }, []);
 
+    const image = `https://image.tmdb.org/t/p/w500/${poster_path}`
+
+    const { colors, dominantColor, darkerColor, lighterColor, loading, error } =
+        useExtractColors(image);
+
+    useEffect(() => {
+        console.log(colors, dominantColor, darkerColor, lighterColor, loading, error);
+    }, [image]);
+
+
     return (
-        <Content>
+        <Content
+        rgba={dominantColor ? dominantColor : "#000000"}
+        >
             <Stack
                 sx={{
                     width: "100%",
@@ -74,7 +99,7 @@ export default function Home() {
                     <CardMedia
                         component="img"
                         sx={{ minWidth: 300, maxWidth: "100%", height: 500 }}
-                        image={`https://image.tmdb.org/t/p/original${filme?.poster_path}.jpg`}
+                        image={`https://image.tmdb.org/t/p/original${filme?.poster_path}`}
                         alt={filme?.title}
                     />
                     <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
@@ -146,3 +171,5 @@ export default function Home() {
         </Content>
     );
 }
+
+export default Home
