@@ -14,24 +14,14 @@ import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { IService } from '@/types/services.type';
 import { Stack } from '@mui/joy';
-import Leao from '@/assets/1pTQrPsNl1TCkgjQUz97M6UMY1u.jpg'
 
 import { useExtractColors } from "react-extract-colors";
 
-interface ColorResult {
-    r: number;
-    g: number;
-    b: number;
-    a: number;
-    hex: string;
-    rgb: string;
-}
 const Home: React.FC = () => {
 
     const [filme, setFilme] = useState<IFilme>();
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
-    const [servers, setServers] = useState<IService[]>([]);
     const [poster_path, setPoster_path] = useState<string>('');
     const router = useRouter();
 

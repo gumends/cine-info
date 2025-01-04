@@ -95,7 +95,7 @@ async function getFilmePorNome(nomeDoFilme: string): Promise<IFilme[]> {
     return data.results;
 }
 
-async function getServices(id: number) {
+async function getServices() {
     const response = await fetch(`https://api.themoviedb.org/3/tv/550/watch/providers?api_key=${key}&region=BR`, {
         method: 'GET',
         headers: {

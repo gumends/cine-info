@@ -1,12 +1,10 @@
 'use client';
 
-import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
 import { useEffect, useState } from 'react';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useRouter } from 'next/navigation';
 import Carrosel from '@/app/components/Carrosel'
 
