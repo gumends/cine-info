@@ -3,5 +3,36 @@
 @tailwind utilities;
 
 body {
-    font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
+}
+
+/* Sobrescrevendo os estilos dos dots */
+.slick-dots li button:before {
+  font-size: 20px;
+  color: #707070 !important; /* Cor padrão dos dots */
+}
+
+.slick-dots li.slick-active button:before {
+  color: #22ff2d !important; /* Cor do dot ativo */
+}
+
+/* Sobrescrevendo os estilos das setas */
+.slick-prev:before,
+.slick-next:before {
+  font-size: 20px !important; /* Tamanho das setas */
+  color: #22ff2d !important; /* Cor das setas */
+}
+
+/* Ajustando a posição das setas */
+.slick-prev {
+  left: -65px !important; /* Ajuste horizontal da seta anterior */
+}
+
+.slick-next {
+  right: -65px !important; /* Ajuste horizontal da seta próxima */
+}
+
+/* Ajuste opcional para a posição dos dots */
+.slick-dots {
+  bottom: -25px !important;
 }
