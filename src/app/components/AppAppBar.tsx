@@ -43,11 +43,8 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small" onClick={() => { router.push('/filmes') }}>
                 Filmes
               </Button>
-              <Button variant="text" color="info" size="small">
+              <Button variant="text" color="info" size="small" onClick={() => { router.push('/tv-series') }}>
                 Series
-              </Button>
-              <Button variant="text" color="info" size="small">
-                TV serieris
               </Button>
             </Box>
           </Box>
