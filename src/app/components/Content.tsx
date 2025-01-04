@@ -8,11 +8,15 @@ import getMPTheme from '../theme/getMPTheme';
 import TemplateFrame from '../TemplateFrame';
 import { Box, Container } from '@mui/material';
 
+interface IMarketingPageProps {
+  children: React.ReactNode;
+  rgba?: string; // Define a propriedade "rgba" aqui
+}
+
 export default function MarketingPage({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+  rgba, // Desestruturar a propriedade "rgba"
+}: IMarketingPageProps) {
   const [mode, setMode] = React.useState<PaletteMode>('light');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const MPTheme = createTheme(getMPTheme(mode));
@@ -56,21 +60,20 @@ export default function MarketingPage({
             width: '100%',
             backgroundRepeat: 'no-repeat',
             backgroundImage:
-              'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(116 100% 90%), transparent)',
+              `radial-gradient(ellipse 80% 50% at 50% -20%, ${rgba}, transparent)`, // Cor em RGBA
             ...theme.applyStyles('dark', {
               backgroundImage:
-                'radial-gradient(ellipse 80% 50% at 50% -20%, hsl(117 100% 16%), transparent)',
+                `radial-gradient(ellipse 80% 50% at 50% -20%, ${rgba}, transparent)`, // Cor em RGBA para o modo escuro
             }),
-
           })}
         >
           <CssBaseline enableColorScheme />
           <AppAppBar />
           <Container
-          sx={{
-            pt: { xs: 4, sm: 20 },
-            pb: { xs: 8, sm: 12 },
-          }}
+            sx={{
+              pt: { xs: 4, sm: 20 },
+              pb: { xs: 8, sm: 12 },
+            }}
           >
             {children}
           </Container>
