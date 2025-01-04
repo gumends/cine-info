@@ -4,7 +4,7 @@ import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider
 import Content from '@/app/components/Content';
 import Carrosel from '@/app/components/Carrosel'
 import * as series from '@/services/series.service';
-import { Popular } from '@/types/popular.type';
+import { IPopular } from '@/types/popular-tv.type';
 import { useEffect, useState } from 'react';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
@@ -14,8 +14,8 @@ export default function Home() {
 
     const router = useRouter();
 
-    const [filmes, setFilmes] = useState<Popular[]>([]);
-    const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
+    const [filmes, setFilmes] = useState<IPopular[]>([]);
+    const [filmesPopulares, setFilmesPopulares] = useState<IPopular[]>([]);
     const [pagina, setPagina] = useState(1);
     const [totalPaginas, setTotalPaginas] = useState(1);
 
@@ -30,6 +30,8 @@ export default function Home() {
         await series.buscaPopulares(pagina)
             .then((data) => {
                 setFilmesPopulares(data.results);
+                console.log(data.results);
+                
                 setTotalPaginas(data.total_pages);
             })
     };
@@ -158,7 +160,7 @@ export default function Home() {
                                                 fontSize: '12px',
                                             }}
                                         >
-                                            {item.title}
+                                            {item.name}
                                         </Typography>
                                         <Typography
                                             variant="subtitle1"
@@ -168,7 +170,7 @@ export default function Home() {
                                                 fontSize: '12px',
                                             }}
                                         >
-                                            {item.release_date && new Date(item.release_date).toISOString().split('T')[0].split('-').reverse().join('/')}
+                                            {item.first_air_date && new Date(item.first_air_date).toISOString().split('T')[0].split('-').reverse().join('/')}
                                         </Typography>
                                     </CardContent>
 
