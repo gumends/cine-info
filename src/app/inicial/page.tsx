@@ -1,16 +1,15 @@
 'use client';
 
-import { Box, CardMedia, Container, Stack, Tab, Tabs, Typography, Button, CircularProgress } from '@mui/material';
+import { Box, CardMedia, Container, Stack, Tab, Tabs, Typography, CircularProgress } from '@mui/material';
 import Content from '@/app/components/Content';
 import * as films from '@/services/films.service';
 import * as series from '@/services/series.service';
 import { Popular } from '@/types/popular.type';
 import { IPopular } from '@/types/popular-tv.type';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Responsive from '@/app/components/CarroselSimples';
 
-function MediaCard({ item, type }: { item: Popular | IPopular; type: 'filme' | 'serie' | 'anime' }) {
+function MediaCard({ item }: { item: Popular | IPopular; type: 'filme' | 'serie' | 'anime' }) {
     return (
         <Box
             sx={{

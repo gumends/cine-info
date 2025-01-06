@@ -27,7 +27,7 @@ function CenterMode({ filmes }: { filmes: Popular[] | IPopular[] }) {
     <div className="slider-container">
       <Slider {...settings}>
         {filmes.map((filme) => (
-          <Box 
+          <Box
             key={filme.id}
             className="slider-item"
             sx={{
