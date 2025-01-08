@@ -35,29 +35,25 @@ export default function AppAppBar() {
   //     .then((data: IFilme[]) => setFilmes(data));
   // }, [search])
   return (
-    <AppBar
-      sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 10 }}
-    >
-      <Container maxWidth="lg">
-        <StyledToolbar variant="dense" disableGutters>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-around' }}>
-            <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
-              <Button variant="text" color="info" size="small" onClick={() => { router.push('/filmes') }}>
-                Filmes
-              </Button>
-              <Button variant="text" color="info" size="small" onClick={() => { router.push('/tv-series') }}>
-                Series
-              </Button>
-            </Box>
-            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
-              <TextField variant="outlined" placeholder='Busca' sx={{ mt: 0, width: 500 }} />
-              <IconButton color="success" sx={{ ml: 1 }}>
-                <SearchIcon />
-              </IconButton>
-            </Box>
+    <Container maxWidth="lg">
+      <StyledToolbar variant="dense" disableGutters>
+        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-around' }}>
+          <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
+            <Button variant="text" color="info" size="small" onClick={() => { router.push('/filmes') }}>
+              Filmes
+            </Button>
+            <Button variant="text" color="info" size="small" onClick={() => { router.push('/tv-series') }}>
+              Series
+            </Button>
           </Box>
-        </StyledToolbar>
-      </Container>
-    </AppBar>
+          <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+            <TextField variant="outlined" placeholder='Busca' sx={{ mt: 0, width: 500 }} />
+            <IconButton color="success" sx={{ ml: 1 }}>
+              <SearchIcon />
+            </IconButton>
+          </Box>
+        </Box>
+      </StyledToolbar>
+    </Container>
   );
 }

@@ -68,13 +68,14 @@ export default function MarketingPage({
           })}
         >
           <CssBaseline enableColorScheme />
-          <AppAppBar />
+          
           <Container
             sx={{
               pt: { xs: 4, sm: 20 },
               pb: { xs: 8, sm: 12 },
             }}
           >
+            <AppAppBar />
             {children}
           </Container>
         </Box>
