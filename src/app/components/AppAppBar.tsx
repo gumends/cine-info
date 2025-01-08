@@ -6,6 +6,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
+import { Textarea } from '@mui/joy';
+import { IconButton, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -33,12 +36,11 @@ export default function AppAppBar() {
   // }, [search])
   return (
     <AppBar
-      position="fixed"
       sx={{ boxShadow: 0, bgcolor: 'transparent', backgroundImage: 'none', mt: 10 }}
     >
       <Container maxWidth="lg">
         <StyledToolbar variant="dense" disableGutters>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-between' }}>
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-around' }}>
             <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
               <Button variant="text" color="info" size="small" onClick={() => { router.push('/filmes') }}>
                 Filmes
@@ -46,6 +48,12 @@ export default function AppAppBar() {
               <Button variant="text" color="info" size="small" onClick={() => { router.push('/tv-series') }}>
                 Series
               </Button>
+            </Box>
+            <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>
+              <TextField variant="outlined" placeholder='Busca' sx={{ mt: 0, width: 500 }} />
+              <IconButton color="success" sx={{ ml: 1 }}>
+                <SearchIcon />
+              </IconButton>
             </Box>
           </Box>
         </StyledToolbar>
