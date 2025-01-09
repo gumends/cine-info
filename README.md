@@ -1,14 +1,16 @@
 # CineInfo
 
-Bem-vindo ao **CineInfo**! Um site dedicado a fornecer informações sobre filmes de forma simples e intuitiva. Utilizamos a API TMDB (The Movie Database) para obter as informações mais recentes sobre filmes, como descrições, lançamentos, gêneros e muito mais.
+Bem-vindo ao **CineInfo**! Um site dedicado a fornecer informações sobre filmes e séries de forma simples e intuitiva. Utilizamos a API TMDB (The Movie Database) para obter as informações mais recentes sobre filmes e séries, como descrições, lançamentos, gêneros e muito mais.
 
 Este projeto foi desenvolvido com [Next.js](https://nextjs.org), proporcionando uma excelente experiência para o desenvolvimento de sites rápidos e escaláveis.
 
+Acesse o site ao vivo: [CineInfo](https://cineinfo-info.vercel.app/inicial)
+
 ## Funcionalidades
 
-- Pesquise por filmes, visualize detalhes, classificações e sinopses.
-- Obtenha informações atualizadas sobre os filmes mais populares e lançamentos em destaque.
-- Utilização da API TMDB para obter dados sobre filmes.
+- Pesquise por filmes e séries, visualize detalhes, classificações e sinopses.
+- Obtenha informações atualizadas sobre os filmes e séries mais populares, lançamentos e destaques.
+- Utilização da API TMDB para obter dados sobre filmes e séries.
 
 ## Tecnologias
 
@@ -58,7 +60,7 @@ Antes de começar, você precisa ter o Node.js instalado. Caso não tenha, você
 
 ## Estrutura do Projeto
 
-- `app/page.tsx`: Página principal onde os dados dos filmes são exibidos.
+- `app/page.tsx`: Página principal onde os dados dos filmes e séries são exibidos.
 - `lib/tmdb.ts`: Funções auxiliares para interagir com a API TMDB.
 - `components/`: Componentes reutilizáveis para o design do site.
 - `public/`: Arquivos públicos, como imagens e ícones.
