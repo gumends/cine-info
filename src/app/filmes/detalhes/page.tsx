@@ -67,7 +67,9 @@ const Home: React.FC = () => {
 
     return (
         <Content
-        rgba={dominantColor ? dominantColor : "#000000"}
+        //rgba={colors[0] ? colors[0] : "#000000"}
+        //rgbaDark={colors[1] ? colors[1] : "#000000"}
+        //rgbaLight={colors[2] ? colors[2] : "#000000"}
         >
             <Stack
                 sx={{

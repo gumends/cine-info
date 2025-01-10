@@ -13,14 +13,14 @@ body {
 }
 
 .slick-dots li.slick-active button:before {
-  color: #22ff2d !important; /* Cor do dot ativo */
+  color: rgb(0, 89, 255) !important; /* Cor do dot ativo */
 }
 
 /* Sobrescrevendo os estilos das setas */
 .slick-prev:before,
 .slick-next:before {
   font-size: 20px !important; /* Tamanho das setas */
-  color: #22ff2d !important; /* Cor das setas */
+  color: rgb(8, 255, 222) !important; /* Cor das setas */
 }
 
 /* Ajustando a posição das setas */
