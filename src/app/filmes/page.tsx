@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
@@ -47,39 +47,6 @@ export default function Home() {
                 }}
                 maxWidth="lg"
             >
-                <Stack
-                    spacing={2}
-                    useFlexGap
-                    sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}
-                    marginTop={{ xs: 15, sm: 0, md: 0 }}
-                >
-                    <Typography
-                        variant="h1"
-                        sx={{
-                            display: 'flex',
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: 'center',
-                            fontSize: 'clamp(3rem, 10vw, 3.5rem)',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Cine
-                        <Typography
-                            component="span"
-                            variant="h1"
-                            sx={(theme) => ({
-                                fontSize: 'inherit',
-                                color: 'success.main',
-                                ...theme.applyStyles('dark', {
-                                    color: 'success.light',
-                                }),
-                                fontWeight: 'bold',
-                            })}
-                        >
-                            Info
-                        </Typography>
-                    </Typography>
-                </Stack>
                 <Typography
                     component="span"
                     variant="h2"
