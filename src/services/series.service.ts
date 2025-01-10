@@ -122,6 +122,21 @@ async function getAnimes() {
     return response.json();
 }
 
+async function getSeriePorNome(nomeDoFilme: string) {
+    const response = await fetch(`https://api.themoviedb.org/3/search/tv?api_key=${key}&query=${encodeURIComponent(nomeDoFilme)}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    return data.results;
+}
+
 export {
     getRecents,
     buscaGenero,
@@ -131,5 +146,6 @@ export {
     getVideos,
     getFilmePorNome,
     getServices,
-    getAnimes
+    getAnimes,
+    getSeriePorNome
 }
