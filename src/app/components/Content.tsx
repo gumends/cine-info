@@ -10,14 +10,12 @@ import { Box, Container } from '@mui/material';
 
 interface IMarketingPageProps {
   children: React.ReactNode;
-  rgba?: string; // Define a propriedade "rgba" aqui
 }
 
 export default function MarketingPage({
   children,
-  rgba, // Desestruturar a propriedade "rgba"
 }: IMarketingPageProps) {
-  const [mode, setMode] = React.useState<PaletteMode>('light');
+  const [mode] = React.useState<PaletteMode>('dark');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const MPTheme = createTheme(getMPTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
@@ -25,18 +23,11 @@ export default function MarketingPage({
   React.useEffect(() => {
     const savedMode = localStorage.getItem('themeMode') as PaletteMode | null;
     if (savedMode) {
-      setMode(savedMode);
-    } else {
-      const systemPrefersDark = window.matchMedia(
-        '(prefers-color-scheme: dark)',
-      ).matches;
-      setMode(systemPrefersDark ? 'dark' : 'light');
     }
   }, []);
 
   const toggleColorMode = () => {
     const newMode = mode === 'dark' ? 'light' : 'dark';
-    setMode(newMode);
     localStorage.setItem('themeMode', newMode);
   };
 
@@ -58,20 +49,29 @@ export default function MarketingPage({
           id="hero"
           sx={(theme) => ({
             width: '100%',
+            minHeight: '100vh',
             backgroundRepeat: 'no-repeat',
-            backgroundImage:
-              `radial-gradient(ellipse 80% 50% at 50% -20%, ${rgba}, transparent)`, // Cor em RGBA
+            backgroundAttachment: 'fixed',
+            backgroundImage: `
+              radial-gradient(circle at 30% 20%, rgba(70, 130, 180, 0.6), transparent 50%),
+              radial-gradient(circle at 70% 50%, rgba(75, 0, 130, 0.5), transparent 60%),
+              radial-gradient(circle at 50% 80%, rgba(123, 104, 238, 0.4), transparent 70%)
+            `,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             ...theme.applyStyles('dark', {
-              backgroundImage:
-                `radial-gradient(ellipse 80% 50% at 50% -20%, ${rgba}, transparent)`, // Cor em RGBA para o modo escuro
+              backgroundImage: `
+                radial-gradient(circle at 30% 20%, rgba(70, 130, 180, 0.6), transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(75, 0, 130, 0.5), transparent 60%),
+                radial-gradient(circle at 50% 80%, rgba(123, 104, 238, 0.4), transparent 70%)
+              `,
             }),
           })}
         >
           <CssBaseline enableColorScheme />
-          
           <Container
             sx={{
-              pt: { xs: 4, sm: 20 },
+              pt: 5,
               pb: { xs: 8, sm: 12 },
             }}
           >
