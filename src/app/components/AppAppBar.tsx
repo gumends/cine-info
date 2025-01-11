@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
 import { IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { useSearchParams } from 'next/navigation';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -25,7 +26,13 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 export default function AppAppBar() {
   const router = useRouter();
 
+  const searchParams = useSearchParams(); 
+
   const [busca, setBusca] = React.useState('');
+
+  React.useEffect(() => {
+    setBusca(searchParams.get('q') as string);
+  }, []);
 
   // const [search, setSearch] = useState('');
   // const [filmes, setFilmes] = useState<IFilme[]>([]);
