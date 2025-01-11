@@ -80,8 +80,8 @@ async function getCredts(id: number): Promise<IElencoResponse> {
     return response.json();
 }
 
-async function getFilmePorNome(nomeDoFilme: string) {
-    const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${encodeURIComponent(nomeDoFilme)}&language=pt-BR`, {
+async function getFilmePorNome(nomeDoFilme: string, page?: number) {
+    const response = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${key}&query=${encodeURIComponent(nomeDoFilme)}&language=pt-BR&${page && 'page = ' + page}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -92,7 +92,7 @@ async function getFilmePorNome(nomeDoFilme: string) {
         throw new Error(response.statusText);
     }
     const data = await response.json();
-    return data.results;
+    return data;
 }
 
 async function getServices(id: number) {

@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Stack, Typography, CircularProgress, Chip, CardMedia } from '@mui/material';
+import { Box, Container, Stack, Typography, CircularProgress, Chip, CardMedia, Button } from '@mui/material';
 import Content from '@/app/components/Content';
 import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
@@ -10,17 +10,24 @@ import Divider from '@mui/material/Divider';
 import * as filmes from '@/services/films.service';
 import * as series from '@/services/series.service';
 import { IPopular } from '@/types/popular-tv.type';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Popular } from '@/types/popular.type';
-
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
 
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const router = useRouter();
+
+    const [selectedIndex, setSelectedIndex] = useState(0);
 
     const [filmesBusca, setFilmesBusca] = useState<Popular[]>([]);
     const [seriesBusca, setSeriesBusca] = useState<IPopular[]>([]);
+    const [qntFilmes, setQntFilmes] = useState(0);
+    const [qntSeries, setQntSeries] = useState(0);
+
+    const [pagina, setPagina] = useState(0);
+
+    const searchParams = useSearchParams();
 
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -29,19 +36,40 @@ export default function Home() {
         setSelectedIndex(index);
     };
 
-    const searchParams = useSearchParams();
+    const getPopulares = async () => {
+        const query = searchParams.get('q') as string;
+        if (!query) return;
+
+        setPagina((prevPagina) => prevPagina + 1);
+
+        const [maisFilmes, maisSeries] = await Promise.all([
+            filmes.getFilmePorNome(query, pagina + 1),
+            series.getSeriePorNome(query, pagina + 1),
+        ]);
+
+        setFilmesBusca((prev) => [...prev, ...maisFilmes.results]);
+        setSeriesBusca((prev) => [...prev, ...maisSeries.results]);
+    };
 
     const fetchData = async () => {
-        console.log(searchParams.get('q') as string);
+        const query = searchParams.get('q');
+        if (!query) {
+            console.error("Parâmetro 'q' está ausente");
+            setLoading(false);
+            return;
+        }
 
         await Promise.all([
-            filmes.getFilmePorNome(searchParams.get('q') as string).then((response) => {
-                setFilmesBusca(response);
+            filmes.getFilmePorNome(query).then((response) => {
+                setQntFilmes(response.total_results);
+                setFilmesBusca(response.results);
             }),
-            series.getSeriePorNome(searchParams.get('q') as string).then((response) => {
-                setSeriesBusca(response);
+            series.getSeriePorNome(query).then((response) => {
+                setQntSeries(response.total_results);
+                setSeriesBusca(response.results);
             }),
-        ])
+        ]);
+
         setLoading(false);
     };
 
@@ -107,14 +135,14 @@ export default function Home() {
                                 onClick={(event) => handleListItemClick(event, 0)}
                             >
                                 <ListItemText primary="Filmes" />
-                                <Chip label={filmesBusca.length} color="warning" variant="outlined" />
+                                <Chip label={qntFilmes} color="warning" variant="outlined" />
                             </ListItemButton>
                             <ListItemButton
                                 selected={selectedIndex === 1}
                                 onClick={(event) => handleListItemClick(event, 1)}
                             >
                                 <ListItemText primary="Séries" />
-                                <Chip label={seriesBusca.length} color="warning" variant="outlined" />
+                                <Chip label={qntSeries} color="warning" variant="outlined" />
                             </ListItemButton>
                             <ListItemButton
                                 selected={selectedIndex === 2}
@@ -137,14 +165,15 @@ export default function Home() {
                     >
                         {selectedIndex === 0 &&
                             filmesBusca.map((filme) => (
-                                <Box key={filme.id} sx={{ width: 150, cursor: 'pointer' }}>
+                                <Box key={filme.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/filmes/detalhes?id=${filme.id}`)}>
                                     <CardMedia
                                         component="img"
                                         image={
-                                            filme.backdrop_path
-                                                ? `https://image.tmdb.org/t/p/original${filme.poster_path}.jpg`
+                                            filme.poster_path
+                                                ? `https://image.tmdb.org/t/p/original${filme.poster_path}`
                                                 : 'https://via.placeholder.com/150'
                                         }
+                                        alt={filme.title || 'Poster do filme'}
                                         sx={{
                                             width: '100%',
                                             height: 225,
@@ -178,10 +207,11 @@ export default function Home() {
                                     <CardMedia
                                         component="img"
                                         image={
-                                            series.backdrop_path
-                                                ? `https://image.tmdb.org/t/p/original${series.poster_path}.jpg`
+                                            series.poster_path
+                                                ? `https://image.tmdb.org/t/p/original${series.poster_path}`
                                                 : 'https://via.placeholder.com/150'
                                         }
+                                        alt={series.name || 'Poster da série'}
                                         sx={{
                                             width: '100%',
                                             height: 225,
@@ -211,6 +241,9 @@ export default function Home() {
                             ))}
                     </Box>
                 </Stack>
+                <Box sx={{ display: 'flex', justifyContent: 'right', width: '100%', mr: 6, mt: 2 }}>
+                    <Button variant='outlined' color='info' onClick={() => { getPopulares();}}>Exibir mais</Button>
+                </Box>
             </Container>
         </Content>
     );
