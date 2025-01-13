@@ -9,9 +9,11 @@ import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import * as filmes from '@/services/films.service';
 import * as series from '@/services/series.service';
+import * as pessoas from '@/services/pessoa.service';
 import { IPopular } from '@/types/popular-tv.type';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Popular } from '@/types/popular.type';
+import { IPessoa } from '@/types/pessoa.type';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
@@ -22,6 +24,8 @@ export default function Home() {
 
     const [filmesBusca, setFilmesBusca] = useState<Popular[]>([]);
     const [seriesBusca, setSeriesBusca] = useState<IPopular[]>([]);
+    const [pessoasBusca, setPessoasBusca] = useState<IPessoa[]>([]);
+    const [qntPessoas, setQntPessoas] = useState(0);
     const [qntFilmes, setQntFilmes] = useState(0);
     const [qntSeries, setQntSeries] = useState(0);
 
@@ -68,6 +72,12 @@ export default function Home() {
                 setQntSeries(response.total_results);
                 setSeriesBusca(response.results);
             }),
+            pessoas.getPessoa(query).then((response) => {
+                console.log(response.results);
+                
+                setPessoasBusca(response.results);
+                setQntPessoas(response.total_results);
+            })
         ]);
 
         setLoading(false);
@@ -148,8 +158,8 @@ export default function Home() {
                                 selected={selectedIndex === 2}
                                 onClick={(event) => handleListItemClick(event, 2)}
                             >
-                                <ListItemText primary="Animes" />
-                                <Chip label="3" color="warning" variant="outlined" />
+                                <ListItemText primary="Pessoas" />
+                                <Chip label={qntPessoas} color="warning" variant="outlined" />
                             </ListItemButton>
                         </List>
                     </Box>
@@ -236,6 +246,44 @@ export default function Home() {
                                         }}
                                     >
                                         {series.name}
+                                    </Typography>
+                                </Box>
+                            ))}
+                            {selectedIndex === 2 &&
+                            pessoasBusca.map((pessoa)=> (
+                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }}>
+                                    <CardMedia
+                                        component="img"
+                                        image={
+                                            pessoa.profile_path
+                                                ? `https://image.tmdb.org/t/p/original${pessoa.profile_path}`
+                                                : 'https://via.placeholder.com/150'
+                                        }
+                                        alt={pessoa.name || 'Poster da série'}
+                                        sx={{
+                                            width: '100%',
+                                            height: 225,
+                                            objectFit: 'cover',
+                                            borderTopLeftRadius: 10,
+                                            borderTopRightRadius: 10,
+                                        }}
+                                    />
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: 'text.primary',
+                                            textAlign: 'center',
+                                            backgroundColor: 'background.paper',
+                                            borderBottomLeftRadius: 10,
+                                            borderBottomRightRadius: 10,
+                                            p: 1,
+                                            fontSize: 14,
+                                            whiteSpace: 'nowrap',
+                                            overflow: 'hidden',
+                                            textOverflow: 'ellipsis',
+                                        }}
+                                    >
+                                        {pessoa.name}
                                     </Typography>
                                 </Box>
                             ))}
