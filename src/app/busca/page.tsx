@@ -257,7 +257,7 @@ export default function Home() {
                                         image={
                                             pessoa.profile_path
                                                 ? `https://image.tmdb.org/t/p/original${pessoa.profile_path}`
-                                                : 'https://via.placeholder.com/150'
+                                                : 'https://placehold.co/150'
                                         }
                                         alt={pessoa.name || 'Poster da série'}
                                         sx={{
