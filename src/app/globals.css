@@ -8,7 +8,7 @@ body {
 
 /* Sobrescrevendo os estilos dos dots */
 .slick-dots li button:before {
-  font-size: 20px;
+  font-size: 60px;
   color: #707070 !important; /* Cor padrão dos dots */
 }
 
@@ -19,7 +19,7 @@ body {
 /* Sobrescrevendo os estilos das setas */
 .slick-prev:before,
 .slick-next:before {
-  font-size: 20px !important; /* Tamanho das setas */
+  font-size: 25px !important; /* Tamanho das setas */
   color: rgb(8, 255, 222) !important; /* Cor das setas */
 }
 
