@@ -11,15 +11,15 @@ function Responsive({ filmes }: { filmes: Popular[] | IPopular[] }) {
         dots: true,
         infinite: false,
         speed: 500,
-        slidesToShow: 5,
-        slidesToScroll: 5,
+        slidesToShow: 7,
+        slidesToScroll: 7,
         initialSlide: 0,
     };
     return (
         <div className="slider-container">
             <Slider {...settings} >
                 {filmes.map((data) => (
-                    <Box key={data.id} sx={{ p: 2, cursor: 'pointer' }} >
+                    <Box key={data.id} sx={{ p: 2, cursor: 'pointer' }} onClick={() => window.location.href = `/filmes/detalhes?id=${data.id}`} >
                         <img src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`} style={{ borderRadius: '10px' }} alt={(data as Popular).title || (data as IPopular).name} />
                     </Box>
                 ))}
