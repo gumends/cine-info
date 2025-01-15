@@ -1,21 +1,15 @@
 'use client';
 
-import { Box, Container, Stack, Typography, CircularProgress, Chip, CardMedia, Button } from '@mui/material';
+import { Box, Container, CircularProgress, CardMedia } from '@mui/material';
 import Content from '@/app/components/Content';
 import React, { useEffect, useState } from 'react';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import Divider from '@mui/material/Divider';
 import * as pessoas from '@/services/pessoa.service';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { IPessoa } from '@/types/pessoa.type';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
     const [pessoasBusca, setPessoasBusca] = useState<IPessoa>();
-
-    const [pagina, setPagina] = useState(0);
 
     const searchParams = useSearchParams();
 
