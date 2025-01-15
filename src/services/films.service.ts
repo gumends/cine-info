@@ -108,6 +108,19 @@ async function getServices(id: number) {
     return response.json();
 }
 
+async function getFilmesEmCartaz() {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/now_playing?api_key=${key}&language=pt-BR&region=BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
+
 export {
     getRecents,
     buscaGenero,
@@ -116,5 +129,6 @@ export {
     getCredts,
     getVideos,
     getFilmePorNome,
-    getServices
+    getServices,
+    getFilmesEmCartaz
 }
