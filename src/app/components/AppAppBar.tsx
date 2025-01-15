@@ -34,24 +34,18 @@ export default function AppAppBar() {
     setBusca(searchParams.get('q') as string);
   }, []);
 
-  // const [search, setSearch] = useState('');
-  // const [filmes, setFilmes] = useState<IFilme[]>([]);
-
-  // useEffect(() => {
-  //   films.getFilmePorNome(search)
-  //     .then((data: IFilme[]) => setFilmes(data));
-  // }, [search])
   return (
     <Container maxWidth="lg" sx={{ mb: 6 }}>
       <StyledToolbar variant="dense" disableGutters>
-        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-around' }}>
+        <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', px: 0, justifyContent: 'space-around', height: '50px' }}>
           <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: { xs: 'center', sm: 'flex-start' } }}>
-          <Button variant="text" color="info" size="small" onClick={() => { router.push('/inicial') }}>
-              Home
-            </Button><Button variant="text" color="info" size="small" onClick={() => { router.push('/filmes') }}>
+          <Button variant="text" color="info" size="medium" onClick={() => { router.push('/inicial') }}>
+              Inicial
+            </Button>
+            <Button variant="text" color="info" size="medium" onClick={() => { router.push('/filmes') }}>
               Filmes
             </Button>
-            <Button variant="text" color="info" size="small" onClick={() => { router.push('/tv-series') }}>
+            <Button variant="text" color="info" size="medium" onClick={() => { router.push('/tv-series') }}>
               Series
             </Button>
           </Box>
