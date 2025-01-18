@@ -1,10 +1,9 @@
 'use client';
-import { Box, Card, CardContent, CardMedia, Chip, Container, Divider, Modal, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Container, Divider, Modal, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as films from '@/services/films.service';
 import { IFilme } from '@/types/filmes.type';
-import CircleIcon from '@mui/icons-material/Circle';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
@@ -12,7 +11,6 @@ import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
-import { IService } from '@/types/services.type';
 import { Stack } from '@mui/joy';
 
 import { useExtractColors } from "react-extract-colors";
@@ -54,6 +52,7 @@ const Home: React.FC = () => {
         if (movieId) {
             films.getFilme(Number(movieId))
                 .then((data: IFilme) => {
+                    console.log(data);
                     classificacao(data?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].certification);
                     setFilme(data);
                     setPoster_path(data.poster_path);
@@ -69,10 +68,10 @@ const Home: React.FC = () => {
                     setVideos(data.results);
                 })
 
-            films.getServices(Number(movieId))
-                .then((data: IService) => {
-                    // console.log(data);
-                })
+            // films.getServices(Number(movieId))
+            //     .then((data: IService) => {
+            //         // console.log(data);
+            //     })
         }
     }, []);
 
@@ -134,7 +133,29 @@ const Home: React.FC = () => {
                             </Typography>
                             <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview}</Typography>
                         </Box>
+                        {filme?.homepage !== "" && <Typography
+                            sx={{
+                                bgcolor: "rgba(3, 154, 241, 0.4)",
+                                px: 1.5,
+                                py: 1,
+                                borderRadius: 1,
+                                display: "inline",
+                                width: "fit-content",
+                                cursor: "pointer",
+                                fontSize: 17,
+                                fontWeight: "bold",
+                                color: "rgba(255, 255, 255, 0.8)",
+                                '&:hover': {
+                                    bgcolor: "rgba(3, 154, 241, 0.6)",
+                                    color: "rgba(255, 255, 255, 0.9)"
+                                }
+                            }}
+                            onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
+                        >
+                            Ver no cinema
+                        </Typography>}
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
+
                             {filme?.genres.map((genre, key) => (
                                 <Box key={key} sx={{ display: "flex", border: "1px solid rgba(255, 255, 255, 0.1)", alignItems: "center", gap: 1, bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 1, p: 1 }}>
                                     <Typography variant="body2" >
