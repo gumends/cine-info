@@ -178,10 +178,17 @@ const Home: React.FC = () => {
                     </Box>
                 </Stack>
                 <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
+                    Mais informações
+                </Typography>
+                <Divider />
+                <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px", mt: 5, mb: 5 }}>
+                    <Typography>{filme?.title}</Typography>
+                </Box>
+                <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
                     Elenco
                 </Typography>
                 <Divider />
-                <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px", mt: 5 }}>
+                <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px", mt: 5, mb: 5 }}>
                     <Flicking
                         align="prev"
                         circular={false}
