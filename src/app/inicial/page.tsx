@@ -56,6 +56,7 @@ export default function Home() {
         autoplay: true,
         autoplaySpeed: 10000,
         cssEase: "linear",
+        
     };
 
     return (
@@ -66,7 +67,8 @@ export default function Home() {
                     width: '100vw',
                     height: '100vh',
                     overflow: 'hidden',
-                    top: -179
+                    top: -179,
+                    boxShadow: '1px 300px 200px rgb(0, 0, 0)',
                 }}
             >
                 <Stack
@@ -82,7 +84,7 @@ export default function Home() {
                         <Slider {...settings}>
                             {filmesPopulares.map((filme) => (
                                 <>
-                                    <Box key={filme.id} sx={{ position: 'relative', width: '100%', height: '100%' }}>
+                                    <Box key={filme.id} sx={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
                                         <img
                                             src={
                                                 filme.backdrop_path
@@ -94,6 +96,7 @@ export default function Home() {
                                                 width: '100%',
                                                 height: '100%',
                                                 objectFit: 'cover',
+                                                
                                             }}
                                         />
                                     </Box>
@@ -209,7 +212,7 @@ export default function Home() {
                             left: 0,
                             width: '100%',
                             height: '30%', // Tamanho do gradiente (ajustável)
-                            background: 'linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent)',
+                            background: 'linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))',
                         }}
                     />
                 </Stack>
