@@ -23,7 +23,24 @@ const Home: React.FC = () => {
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [poster_path, setPoster_path] = useState<string>('');
+    const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
     const router = useRouter();
+
+    function formatRuntime(minutes: number) {
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}min`;
+    }
+
+    const classificacao = (certification: string) => {
+        if (isNaN(parseInt(certification))) {
+            setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
+        } else if (parseInt(certification) < 18) {
+            setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
+        } else if (parseInt(certification) >= 18) {
+            setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
+        }
+    }
 
     useEffect(() => {
         const { searchParams } = new URL(window.location.href);
@@ -34,8 +51,7 @@ const Home: React.FC = () => {
         if (movieId) {
             films.getFilme(Number(movieId))
                 .then((data: IFilme) => {
-                    console.log(data);
-
+                    classificacao(data?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].certification);
                     setFilme(data);
                     setPoster_path(data.poster_path);
                 })
@@ -89,6 +105,30 @@ const Home: React.FC = () => {
                     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                         <Box>
                             <Typography variant="h4" sx={{ fontSize: 30, width: "100%", fontWeight: "bold" }} >{filme?.title}</Typography>
+                            <Typography variant="body1" 
+                            sx={{ 
+                                mt: 4, 
+                                fontSize: 20, 
+                                width: '70%', 
+                                color: TipoClassificacao[2],
+                                bgcolor: TipoClassificacao[1],
+                                display: "inline",
+                                borderRadius: 1,
+                                py: 0.5,
+                                px: 1
+                                }}>
+                                {TipoClassificacao[0]}
+                            </Typography>
+                            <Typography
+                            sx={{fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2}}
+                            >
+                                {filme?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].release_date.split("T")[0].split("-").reverse().join("/")}
+                            </Typography>
+                            <Typography
+                            sx={{fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2}}
+                            >
+                                {formatRuntime(filme?.runtime as number)}
+                            </Typography>
                             <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview}</Typography>
                         </Box>
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
