@@ -3,6 +3,20 @@ interface IGenrt {
   name: string;
 }
 
+interface IReleaseDates {
+  results: {
+    iso_3166_1: string;
+    release_dates: {
+      certification: string;
+      descriptors: {}[];
+      iso_639_1: string;
+      note: string;
+      release_date: string;
+      type: number;
+    }[];
+  }[];
+}
+
 export interface IFilme {
   adult: boolean;
   backdrop_path: string;
@@ -15,6 +29,7 @@ export interface IFilme {
   popularity: number;
   poster_path: string;
   release_date: string;
+  release_dates: IReleaseDates[];
   title: string;
   video: boolean;
   vote_average: number;
