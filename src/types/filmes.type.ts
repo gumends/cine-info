@@ -8,7 +8,7 @@ interface IReleaseDates {
     iso_3166_1: string;
     release_dates: {
       certification: string;
-      descriptors: {}[];
+      descriptors: [];
       iso_639_1: string;
       note: string;
       release_date: string;
@@ -32,6 +32,7 @@ export interface IFilme {
   release_dates: IReleaseDates;
   title: string;
   runtime: number;
+  homepage: string;
   video: boolean;
   vote_average: number;
   vote_count: number;

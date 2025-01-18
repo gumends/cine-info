@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, CardMedia, Container, Stack, Typography, CircularProgress } from '@mui/material';
+import { Box, Container, Stack, Typography, CircularProgress } from '@mui/material';
 import Content from '@/app/components/Content';
 import * as films from '@/services/films.service';
 import * as series from '@/services/series.service';
@@ -12,7 +12,6 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from 'next/navigation';
-import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 export default function Home() {
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
