@@ -29,8 +29,9 @@ export interface IFilme {
   popularity: number;
   poster_path: string;
   release_date: string;
-  release_dates: IReleaseDates[];
+  release_dates: IReleaseDates;
   title: string;
+  runtime: number;
   video: boolean;
   vote_average: number;
   vote_count: number;
