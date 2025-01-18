@@ -42,7 +42,7 @@ async function buscaPopulares(page: number = 1) {
     return response.json();
 }
 async function getFilme(id: number): Promise<IFilme> {
-    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=pt-BR`, {
+    const response = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${key}&language=pt-BR&append_to_response=release_dates`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
