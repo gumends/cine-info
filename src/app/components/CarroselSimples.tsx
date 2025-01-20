@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { IPopular } from "@/types/popular-tv.type";
 import { Box } from "@mui/material";
 
-function Responsive({ filmes }: { filmes: Popular[] | IPopular[] }) {
+function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: string }) {
     const settings = {
         dots: true,
         infinite: false,
@@ -19,7 +19,7 @@ function Responsive({ filmes }: { filmes: Popular[] | IPopular[] }) {
         <div className="slider-container">
             <Slider {...settings} >
                 {filmes.map((data) => (
-                    <Box key={data.id} sx={{ p: 2, cursor: 'pointer' }} onClick={() => window.location.href = `/filmes/detalhes?id=${data.id}`} >
+                    <Box key={data.id} sx={{ p: 2, cursor: 'pointer' }} onClick={() => window.location.href = `/${tipo}/detalhes?id=${data.id}`} >
                         <img src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`} style={{ borderRadius: '10px' }} alt={(data as Popular).title || (data as IPopular).name} />
                     </Box>
                 ))}
