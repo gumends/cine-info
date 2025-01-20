@@ -1,4 +1,4 @@
-import { IFilme } from '@/types/filmes.type';
+import { ISerie } from '@/types/series.type';
 import { IElencoResponse } from '@/types/elenco.type';
 import { IVideosResponse } from '@/types/videos.type';
 import process from 'process';
@@ -41,8 +41,8 @@ async function buscaPopulares(page: number = 1) {
     }
     return response.json();
 }
-async function getFilme(id: number): Promise<IFilme> {
-    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${key}&language=pt-BR`, {
+async function getSerie(id: number): Promise<ISerie> {
+    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${key}&language=pt-BR&append_to_response=release_dates`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ async function getCredts(id: number): Promise<IElencoResponse> {
     return response.json();
 }
 
-async function getFilmePorNome(nomeDoFilme: string): Promise<IFilme[]> {
+async function getFilmePorNome(nomeDoFilme: string): Promise<ISerie[]> {
     const response = await fetch(`https://api.themoviedb.org/3/search/tv?api_key=${key}&query=${encodeURIComponent(nomeDoFilme)}&language=pt-BR`, {
         method: 'GET',
         headers: {
@@ -141,7 +141,7 @@ export {
     getRecents,
     buscaGenero,
     buscaPopulares,
-    getFilme,
+    getSerie,
     getCredts,
     getVideos,
     getFilmePorNome,
