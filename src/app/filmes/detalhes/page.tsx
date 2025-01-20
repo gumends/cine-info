@@ -7,13 +7,11 @@ import { IFilme } from '@/types/filmes.type';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-// Or, if you have to support IE9
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { Stack } from '@mui/joy';
-
-import { useExtractColors } from "react-extract-colors";
+import LoadingScreen from '@/app/components/Loading';
 
 const Home: React.FC = () => {
 
@@ -21,7 +19,7 @@ const Home: React.FC = () => {
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [open, setOpen] = React.useState(false);
-    const [poster_path, setPoster_path] = useState<string>('');
+    const [loading, setLoading] = useState(true);
     const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -55,9 +53,7 @@ const Home: React.FC = () => {
                     console.log(data);
                     classificacao(data?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].certification);
                     setFilme(data);
-                    setPoster_path(data.poster_path);
                 })
-
             films.getCredts(Number(movieId))
                 .then((data: IElencoResponse) => {
                     setCredts(data.cast);
@@ -68,29 +64,15 @@ const Home: React.FC = () => {
                     setVideos(data.results);
                 })
 
-            // films.getServices(Number(movieId))
-            //     .then((data: IService) => {
-            //         // console.log(data);
-            //     })
+            setTimeout(() => {
+                setLoading(false);
+            }, 2000);
         }
     }, []);
 
-    const image = `https://image.tmdb.org/t/p/w500/${poster_path}`
-
-    const { colors, dominantColor, darkerColor, lighterColor, loading, error } =
-        useExtractColors(image);
-
-    useEffect(() => {
-        console.log(colors, dominantColor, darkerColor, lighterColor, loading, error);
-    }, [image]);
-
-
     return (
-        <Content
-        //rgba={colors[0] ? colors[0] : "#000000"}
-        //rgbaDark={colors[1] ? colors[1] : "#000000"}
-        //rgbaLight={colors[2] ? colors[2] : "#000000"}
-        >
+        <Content>
+            {loading && <LoadingScreen loading={loading} />}
             <Container>
                 <Stack
                     sx={{
