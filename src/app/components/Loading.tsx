@@ -4,16 +4,25 @@ import { motion } from 'framer-motion';
 const LoadingScreen = () => {
     const text = "CineInfo";
 
-    // Configuração para animar cada letra
+    // Configuração para animar cada letra com o efeito de "salto"
     const letterAnimation = {
-        initial: { opacity: 0, y: 50 },
+        initial: { opacity: 0, y: -50 },
         animate: { opacity: 1, y: 0 },
         transition: (index: number) => ({
-            delay: index * 0.2, // Atraso incremental por letra
-            duration: 0.7,
-            repeat: Infinity, // Repetição infinita
-            repeatType: "reverse" as const, // Animação de ida e volta
+            delay: index * 0.1, // Atraso incremental por letra
+            duration: 0.5,
+            type: "spring",
+            stiffness: 100,
+            damping: 15,
         }),
+    };
+
+    // Alterar a cor da letra após o "I"
+    const getLetterColor = (index: number) => {
+        if (text[index] === "I") {
+            return "rgb(36, 122, 2)"; // Cor verde para a letra "I"
+        }
+        return "white"; // Cor branca para as outras letras
     };
 
     return (
@@ -60,7 +69,6 @@ const LoadingScreen = () => {
                     display: 'flex',
                     fontSize: { xs: '3rem', sm: '6rem' },
                     fontWeight: 'bold',
-                    color: 'rgb(36, 122, 2)',
                 }}
             >
                 {text.split('').map((letter, index) => (
@@ -70,7 +78,10 @@ const LoadingScreen = () => {
                         animate="animate"
                         variants={letterAnimation}
                         transition={letterAnimation.transition(index)}
-                        style={{ display: 'inline-block' }}
+                        style={{
+                            display: 'inline-block',
+                            color: getLetterColor(index), // Definir a cor com base no índice
+                        }}
                     >
                         {letter}
                     </motion.span>
