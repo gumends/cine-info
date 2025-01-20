@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Stack, Typography, CircularProgress, Chip, CardMedia, Button } from '@mui/material';
+import { Box, Container, Stack, Typography, Chip, CardMedia, Button } from '@mui/material';
 import Content from '@/app/components/Content';
 import React, { useEffect, useState } from 'react';
 import List from '@mui/material/List';
@@ -11,9 +11,10 @@ import * as filmes from '@/services/films.service';
 import * as series from '@/services/series.service';
 import * as pessoas from '@/services/pessoa.service';
 import { IPopular } from '@/types/popular-tv.type';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Popular } from '@/types/popular.type';
 import { IPessoa } from '@/types/pessoa.type';
+import LoadingScreen from '../components/Loading';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
@@ -31,8 +32,6 @@ export default function Home() {
 
     const [pagina, setPagina] = useState(0);
 
-    const searchParams = useSearchParams();
-
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
         index: number,
@@ -40,9 +39,15 @@ export default function Home() {
         setSelectedIndex(index);
     };
 
+
+
     const getPopulares = async () => {
+        const { searchParams } = new URL(window.location.href);
+            
         const query = searchParams.get('q') as string;
-        if (!query) return;
+
+        if (!query) router.push('/filmes');
+
 
         setPagina((prevPagina) => prevPagina + 1);
 
@@ -56,25 +61,22 @@ export default function Home() {
     };
 
     const fetchData = async () => {
-        const query = searchParams.get('q');
-        if (!query) {
-            console.error("Parâmetro 'q' está ausente");
-            setLoading(false);
-            return;
-        }
+        const { searchParams } = new URL(window.location.href);
+            
+        const query = searchParams.get('q') as string;
+
+        if (!query) router.push('/filmes');
 
         await Promise.all([
-            filmes.getFilmePorNome(query).then((response) => {
+            filmes.getFilmePorNome(query as string).then((response) => {
                 setQntFilmes(response.total_results);
                 setFilmesBusca(response.results);
             }),
-            series.getSeriePorNome(query).then((response) => {
+            series.getSeriePorNome(query as string).then((response) => {
                 setQntSeries(response.total_results);
                 setSeriesBusca(response.results);
             }),
-            pessoas.getPessoas(query).then((response) => {
-                console.log(response.results);
-                
+            pessoas.getPessoas(query as string).then((response) => {
                 setPessoasBusca(response.results);
                 setQntPessoas(response.total_results);
             })
@@ -85,20 +87,11 @@ export default function Home() {
 
     useEffect(() => {
         fetchData();
-    }, [searchParams]);
-
-    if (loading) {
-        return (
-            <Content>
-                <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                    <CircularProgress color="primary" />
-                </Container>
-            </Content>
-        );
-    }
+    }, []);
 
     return (
         <Content>
+            {loading && <LoadingScreen/>}
             <Container
                 sx={{
                     display: 'flex',

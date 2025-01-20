@@ -49,7 +49,7 @@ export default function Home() {
         autoplay: true,
         autoplaySpeed: 10000,
         cssEase: "linear",
-        
+
     };
 
     return (
@@ -90,7 +90,7 @@ export default function Home() {
                                                 width: '100%',
                                                 height: '100%',
                                                 objectFit: 'cover',
-                                                
+
                                             }}
                                         />
                                     </Box>

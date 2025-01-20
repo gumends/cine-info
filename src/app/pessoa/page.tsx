@@ -1,31 +1,26 @@
 'use client';
 
-import { Box, Container, CircularProgress, CardMedia } from '@mui/material';
+import { Box, CardMedia } from '@mui/material';
 import Content from '@/app/components/Content';
 import React, { useEffect, useState } from 'react';
 import * as pessoas from '@/services/pessoa.service';
-import { useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { IPessoa } from '@/types/pessoa.type';
+import LoadingScreen from '../components/Loading';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
     const [pessoasBusca, setPessoasBusca] = useState<IPessoa>();
-
-    const searchParams = useSearchParams();
-
+    const router = useRouter();
 
     const fetchData = async () => {
+        const { searchParams } = new URL(window.location.href);
         const query = searchParams.get('p');
-        if (!query) {
-            console.error("Parâmetro 'p' está ausente");
-            setLoading(false);
-            return;
-        }
+
+        if (!query) router.push('/filmes');
 
         await Promise.all([
-            pessoas.getPessoa(query).then((response) => {
-                console.log(response.results);
-                
+            pessoas.getPessoa(query as string).then((response) => {
                 setPessoasBusca(response.results);
             })
         ]);
@@ -35,26 +30,18 @@ export default function Home() {
 
     useEffect(() => {
         fetchData();
-    }, [searchParams]);
-
-    if (loading) {
-        return (
-            <Content>
-                <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                    <CircularProgress color="primary" />
-                </Container>
-            </Content>
-        );
-    }
+    }, []);
 
     return (
         <Content>
+            {loading && <LoadingScreen />}
             <Box>
-                <CardMedia>
-                    <img src={`https://image.tmdb.org/t/p/w500/${pessoasBusca?.profile_path}`} alt={pessoasBusca?.name} />
-                </CardMedia>
+                {pessoasBusca && (
+                    <CardMedia>
+                        <img src={`https://image.tmdb.org/t/p/w500/${pessoasBusca?.profile_path}`} alt={pessoasBusca?.name} />
+                    </CardMedia>
+                )}
             </Box>
         </Content>
     );
-
 }
