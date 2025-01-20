@@ -72,7 +72,7 @@ const Home: React.FC = () => {
 
     return (
         <Content>
-            {loading && <LoadingScreen loading={loading} />}
+            {loading && <LoadingScreen />}
             <Container>
                 <Stack
                     sx={{

@@ -1,5 +1,5 @@
 'use client';
-import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Modal, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Container, Divider, Modal, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as series from '@/services/series.service';
@@ -13,7 +13,6 @@ import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { Stack } from '@mui/joy';
 
-import { useExtractColors } from "react-extract-colors";
 import LoadingScreen from '@/app/components/Loading';
 
 const Home: React.FC = () => {
@@ -23,29 +22,11 @@ const Home: React.FC = () => {
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = React.useState(false);
-    const [poster_path, setPoster_path] = useState<string>('');
-    const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const router = useRouter();
-
-    function formatRuntime(minutes: number) {
-        const hours = Math.floor(minutes / 60);
-        const mins = minutes % 60;
-        return `${hours}h ${mins}min`;
-    }
-
-    const classificacao = (certification: string) => {
-        if (isNaN(parseInt(certification))) {
-            setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
-        } else if (parseInt(certification) < 18) {
-            setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
-        } else if (parseInt(certification) >= 18) {
-            setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
-        }
-    }
 
     const fatchData = async (movieId: string) => {
         await Promise.all([
@@ -54,7 +35,6 @@ const Home: React.FC = () => {
                     console.log(data);
                     // classificacao(data?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].certification);
                     setFilme(data);
-                    setPoster_path(data.poster_path);
                 }),
             series.getCredts(Number(movieId))
                 .then((data: IElencoResponse) => {
@@ -83,7 +63,7 @@ const Home: React.FC = () => {
 
     return (
         <Content>
-            {loading && <LoadingScreen loading={loading} />}
+            {loading && <LoadingScreen />}
             <Container >
                 <Stack
                     sx={{
@@ -100,20 +80,6 @@ const Home: React.FC = () => {
                     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                         <Box>
                             <Typography variant="h4" sx={{ fontSize: 30, width: "100%", fontWeight: "bold" }} >{filme?.name}</Typography>
-                            <Typography variant="body1"
-                                sx={{
-                                    mt: 4,
-                                    fontSize: 20,
-                                    width: '70%',
-                                    color: TipoClassificacao[2],
-                                    bgcolor: TipoClassificacao[1],
-                                    display: "inline",
-                                    borderRadius: 1,
-                                    py: 0.5,
-                                    px: 1
-                                }}>
-                                {TipoClassificacao[0]}
-                            </Typography>
                             <Typography
                                 sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >

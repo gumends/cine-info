@@ -44,7 +44,7 @@ export default function Home() {
 
     return (
         <Content>
-            {loading && <LoadingScreen loading={loading} />}
+            {loading && <LoadingScreen />}
             <Container
                 sx={{
                     display: 'flex',

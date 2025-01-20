@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Container, Stack, Typography, CircularProgress } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import * as films from '@/services/films.service';
 import * as series from '@/services/series.service';
@@ -54,7 +54,7 @@ export default function Home() {
 
     return (
         <Content>
-            {loading && <LoadingScreen loading={loading} />}
+            {loading && <LoadingScreen />}
             <Stack
                 sx={{
                     position: 'relative',

@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { motion } from 'framer-motion';
 
-const LoadingScreen = ({ loading }: { loading: boolean }) => {
+const LoadingScreen = () => {
     const text = "CineInfo";
 
     // Configuração para animar cada letra
