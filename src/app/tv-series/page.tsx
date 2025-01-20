@@ -1,54 +1,49 @@
 'use client';
 
-import { Box, Card, CardContent, CardMedia, CircularProgress, Container, Divider, IconButton, Input, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Stack, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import Carrosel from '@/app/components/Carrosel'
 import * as series from '@/services/series.service';
 import { IPopular } from '@/types/popular-tv.type';
 import { useEffect, useState } from 'react';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import { useRouter } from 'next/navigation';
+import LoadingScreen from '../components/Loading';
 
 export default function Home() {
 
     const router = useRouter();
 
-    const [filmes, setFilmes] = useState<IPopular[]>([]);
-    const [filmesPopulares, setFilmesPopulares] = useState<IPopular[]>([]);
+    const [seriesRecentes, setSeriesRecentes] = useState<IPopular[]>([]);
+    const [seriesPopulares, setSeriesPopulares] = useState<IPopular[]>([]);
+    const [loading, setLoading] = useState(true);
     const [pagina, setPagina] = useState(1);
-    const [totalPaginas, setTotalPaginas] = useState(1);
-
-    const getRecents = async () => {
-        await series.getRecents()
-            .then((data) => {
-                setFilmes(data.results);
-            })
-    };
 
     const getPopulares = async () => {
-        await series.buscaPopulares(pagina)
-            .then((data) => {
-                setFilmesPopulares(data.results);
-                console.log(data.results);
-                
-                setTotalPaginas(data.total_pages);
-            })
+        const data = await series.buscaPopulares(pagina + 1);
+        setPagina((prevPagina) => prevPagina + 1);
+        setSeriesPopulares((prevFilmes) => [...prevFilmes, ...data.results]);
     };
 
-    const paginado = async (mais: boolean) => {
-        setPagina(mais ? pagina + 1 : pagina - 1);
-        await getPopulares();
-    };
+    const fatchData = async () => {
+        await Promise.all([
+            series.getRecents()
+                .then((data) => {
+                    setSeriesRecentes(data.results);
+                }),
+            getPopulares()
+        ]);
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
+    }
 
     useEffect(() => {
-        getRecents();
-        getPopulares();
-    }, [pagina]);
-
+        fatchData();
+    }, []);
 
     return (
         <Content>
+            {loading && <LoadingScreen loading={loading} />}
             <Container
                 sx={{
                     display: 'flex',
@@ -103,10 +98,10 @@ export default function Home() {
                         mt: 4,
                     })}
                 >
-                    Filmes Em Cartaz
+                    Séries Recentes
                 </Typography>
-                <Box sx={{ mt: 4, width: '100%',  }}>
-                {filmes.length > 0 ? <Carrosel filmes={filmes} /> : null}
+                <Box sx={{ mt: 4, width: '100%', }}>
+                    {seriesRecentes.length > 0 ? <Carrosel filmes={seriesRecentes} tipo='tv-series' /> : null}
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
@@ -136,10 +131,10 @@ export default function Home() {
                     }}
                 >
                     {
-                        filmesPopulares.map((item) => (
+                        seriesPopulares.map((item) => (
                             <Card
                                 key={item.id}
-                                onClick={() => { router.push(`/filmes/detalhes?id=${item.id}`) }}
+                                onClick={() => { router.push(`/tv-series/detalhes?id=${item.id}`) }}
                                 sx={{
                                     display: 'flex',
                                     width: 345,
@@ -170,7 +165,7 @@ export default function Home() {
                                                 fontSize: '12px',
                                             }}
                                         >
-                                            {item.first_air_date && new Date(item.first_air_date).toISOString().split('T')[0].split('-').reverse().join('/')}
+
                                         </Typography>
                                     </CardContent>
 
@@ -216,32 +211,9 @@ export default function Home() {
                     }
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 7 }}>
-                    <IconButton
-                        onClick={() => { paginado(false) }}
-                        sx={{
-                            textAlign: 'center',
-                        }}
-                        disabled={pagina === 1}
-                    >
-                        <ArrowBackIosNewIcon />
-                    </IconButton>
-                    <Box sx={{ alignItems: 'center', display: 'flex', gap: 1 }}>
-                        <Input
-                            sx={{ textAlign: 'center' }}
-                            value={pagina}
-                            onChange={(e) => { setPagina(parseInt(e.target.value)) }}
-                        />
-                        / {totalPaginas}
-                    </Box>
-                    <IconButton
-                        onClick={() => { paginado(true) }}
-                        sx={{
-                            textAlign: 'center',
-                        }}
-                        disabled={pagina === totalPaginas}
-                    >
-                        <ArrowForwardIosIcon />
-                    </IconButton>
+                    <Button variant="contained" onClick={() => { getPopulares() }}>
+                        Ver mais
+                    </Button>
                 </Box>
             </Container>
         </Content >
