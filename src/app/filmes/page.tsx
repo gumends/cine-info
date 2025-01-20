@@ -7,6 +7,7 @@ import { Popular } from '@/types/popular.type';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Carrosel from '@/app/components/Carrosel'
+import LoadingScreen from '../components/Loading';
 
 export default function Home() {
 
@@ -14,6 +15,7 @@ export default function Home() {
 
     const [filmes, setFilmes] = useState<Popular[]>([]);
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
+    const [loading, setLoading] = useState(true);
     const [pagina, setPagina] = useState(0);
 
 
@@ -34,11 +36,15 @@ export default function Home() {
     useEffect(() => {
         getRecents();
         getPopulares();
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     }, []);
 
 
     return (
         <Content>
+            {loading && <LoadingScreen loading={loading} />}
             <Container
                 sx={{
                     display: 'flex',
@@ -63,7 +69,7 @@ export default function Home() {
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%',  }}>
-                <Carrosel filmes={filmes} />
+                <Carrosel filmes={filmes} tipo="filmes" />
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
