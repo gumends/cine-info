@@ -12,6 +12,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from 'next/navigation';
+import LoadingScreen from '../components/Loading';
 
 export default function Home() {
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
@@ -29,22 +30,14 @@ export default function Home() {
             series.buscaPopulares().then((data) => setSeriesPopulares(data.results)),
             films.getFilmesEmCartaz().then((data) => setFilmesEmCartaz(data.results))
         ]);
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 2000);
     };
 
     useEffect(() => {
         fetchData();
     }, []);
-
-    if (loading) {
-        return (
-            <Content>
-                <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                    <CircularProgress color="primary" />
-                </Container>
-            </Content>
-        );
-    }
 
     const settings = {
         fade: true,
@@ -61,6 +54,7 @@ export default function Home() {
 
     return (
         <Content>
+            {loading && <LoadingScreen loading={loading} />}
             <Stack
                 sx={{
                     position: 'relative',
@@ -241,7 +235,7 @@ export default function Home() {
                     </Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', mt: 4 }}>
-                    <Responsive filmes={filmesPopulares} />
+                    <Responsive filmes={filmesPopulares} tipo="filmes" />
                 </Stack>
                 <Stack sx={{ alignItems: 'left', width: '100%', mt: 4 }}>
                     <Typography
@@ -258,7 +252,7 @@ export default function Home() {
                     </Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', mt: 4 }}>
-                    <Responsive filmes={seriesPopulares} />
+                    <Responsive filmes={seriesPopulares} tipo="tv-series" />
                 </Stack>
 
             </Box>
@@ -289,7 +283,7 @@ export default function Home() {
                     </Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', mt: 4 }}>
-                    <Responsive filmes={filmesEmCartaz} />
+                    <Responsive filmes={filmesEmCartaz} tipo="filmes" />
                 </Stack>
             </Box>
         </Content >
