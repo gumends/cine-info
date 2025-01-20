@@ -10,10 +10,12 @@ import { Box } from '@mui/material';
 
 interface IMarketingPageProps {
   children: React.ReactNode;
+  showMenu?: boolean;
 }
 
 export default function MarketingPage({
   children,
+  showMenu = true,
 }: IMarketingPageProps) {
   const [mode] = React.useState<PaletteMode>('dark');
   const [showCustomTheme, setShowCustomTheme] = React.useState(true);
@@ -72,7 +74,11 @@ export default function MarketingPage({
               zIndex: (theme) => theme.zIndex.drawer + 1, // Prioridade alta no zIndex
             }}
           >
-            <AppAppBar />
+            {
+              showMenu && (
+                <AppAppBar />
+              )
+            }
           </Box>
           {/* Conteúdo abaixo do AppAppBar */}
           <Box
