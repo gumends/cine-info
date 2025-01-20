@@ -7,7 +7,7 @@ import { Popular } from '@/types/popular.type';
 import { IPopular } from '@/types/popular-tv.type';
 import { useRouter } from "next/navigation";
 
-function CenterMode({ filmes }: { filmes: Popular[] | IPopular[] }) {
+function CenterMode({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: string }) {
   const settings = {
     dots: true,
     centerMode: true,
@@ -37,7 +37,7 @@ function CenterMode({ filmes }: { filmes: Popular[] | IPopular[] }) {
               transition: 'transform 0.3s ease-in-out',
               height: '100%',
             }}
-            onClick={() => { router.push(`/filmes/detalhes?id=${filme.id}`) }}
+            onClick={() => { router.push(`/${tipo}/detalhes?id=${filme.id}`) }}
           >
             <img
               src={`https://image.tmdb.org/t/p/w500/${filme.poster_path}`}
