@@ -18,8 +18,6 @@ export default function Home() {
     const [loading, setLoading] = useState(true);
     const [pagina, setPagina] = useState(0);
 
-
-
     const getRecents = async () => {
         await films.getRecents()
             .then((data) => {
@@ -40,7 +38,6 @@ export default function Home() {
             setLoading(false);
         }, 2000);
     }, []);
-
 
     return (
         <Content>
