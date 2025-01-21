@@ -86,7 +86,7 @@ const Home: React.FC = () => {
                     console.log(data);
                     const br = data.release_dates.results.filter((data) => data.iso_3166_1 === "BR");
                     if (br.length == 0) {
-                        classificacao(undefined as any);
+                        classificacao("");
                     }
                     for (let i = 0; i < br.length; i++) {
                         for (let r = 0; r < br[i].release_dates.length; r++) {

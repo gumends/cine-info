@@ -1,4 +1,5 @@
 'use client';
+
 import { Box, Card, CardContent, CardMedia, Container, Divider, Modal, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
@@ -7,43 +8,38 @@ import { ISerie } from '@/types/series.type';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
 import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
-// Or, if you have to support IE9
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { Stack } from '@mui/joy';
 
 import LoadingScreen from '@/app/components/Loading';
-import Link from 'next/link';
 
 const Home: React.FC = () => {
-
+    
     const [filme, setFilme] = useState<ISerie>();
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = React.useState(false);
-    const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
-    const [classificacaos, setClassificacoes] = useState<string[]>([]);
-
+    // const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const router = useRouter();
 
-    const classificacao = (certification: string) => {
-        console.log(certification);
-        if (isNaN(parseInt(certification))) {
-            setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
-        } else if (parseInt(certification) < 18) {
-            setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
-        } else if (parseInt(certification) >= 18) {
-            setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
-        }
-    }
+    // const classificacao = (certification: string) => {
+    //     console.log(certification);
+    //     if (isNaN(parseInt(certification))) {
+    //         setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
+    //     } else if (parseInt(certification) < 18) {
+    //         setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
+    //     } else if (parseInt(certification) >= 18) {
+    //         setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
+    //     }
+    // }
 
     const formatarData = (data: string) => {
-
         if (data == '') {
             return
         }
@@ -69,18 +65,16 @@ const Home: React.FC = () => {
                 .then((data: IVideosResponse) => {
                     setVideos(data.results);
                 }),
-            series.getClassificacoes(Number(movieId))
-                .then((data) => {
-                    try {
-                        const classBrasil = (data.results).filter((item: any) => item.iso_3166_1 == 'BR');
-                        classificacao(classBrasil[0].rating);
-                        classificacao(classBrasil[0].rating);
-                    } catch (error) {
-                        setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
-                    } finally {
-                        setClassificacoes(data.results);
-                    }
-                })
+            // series.getClassificacoes(Number(movieId))
+            //     .then((data) => {
+            //         try {
+            //             const classBrasil = (data.results).filter((item: any) => item.iso_3166_1 == 'BR');
+            //             classificacao(classBrasil[0].rating);
+            //             classificacao(classBrasil[0].rating);
+            //         } catch {
+            //             setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
+            //         }
+            //     })
         ]);
         setTimeout(() => {
             setLoading(false);
@@ -150,7 +144,7 @@ const Home: React.FC = () => {
                                     Pagina da série
                                 </Typography>}
                             </Box>
-                            <Typography variant="body1"
+                            {/* <Typography variant="body1"
                                 sx={{
                                     mt: 4,
                                     fontSize: 20,
@@ -163,7 +157,7 @@ const Home: React.FC = () => {
                                     px: 1
                                 }}>
                                 {TipoClassificacao[0]}
-                            </Typography>
+                            </Typography> */}
                             <Typography
                                 sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
