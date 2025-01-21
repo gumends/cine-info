@@ -46,7 +46,7 @@ export default function AppAppBar() {
               Filmes
             </Button>
             <Button variant="text" color="info" size="medium" onClick={() => { router.push('/tv-series') }}>
-              Series
+              Séries
             </Button>
           </Box>
           <Box sx={{ width: '100%', display: 'flex', justifyContent: 'end' }}>

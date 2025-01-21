@@ -248,7 +248,7 @@ export default function Home() {
                             mt: 4,
                         }}
                     >
-                        Series populares
+                        Séries populares
                     </Typography>
                 </Stack>
                 <Stack sx={{ width: '100%', mt: 4 }}>
