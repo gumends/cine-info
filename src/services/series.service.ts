@@ -42,7 +42,7 @@ async function buscaPopulares(page: number = 1) {
     return response.json();
 }
 async function getSerie(id: number): Promise<ISerie> {
-    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${key}&language=pt-BR&append_to_response=release_dates`, {
+    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${key}&language=pt-BR`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -137,6 +137,21 @@ async function getSeriePorNome(nomeDoFilme: string, page?: number) {
     return data;
 }
 
+async function getClassificacoes(id: number) {
+    const response = await fetch(`https://api.themoviedb.org/3/tv/${id}/content_ratings?api_key=${key}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    const data = await response.json();
+    return data;
+}
+
 export {
     getRecents,
     buscaGenero,
@@ -147,5 +162,6 @@ export {
     getFilmePorNome,
     getServices,
     getAnimes,
-    getSeriePorNome
+    getSeriePorNome,
+    getClassificacoes
 }
