@@ -4,12 +4,11 @@ import { motion } from 'framer-motion';
 const LoadingScreen = () => {
     const text = "CineInfo";
 
-    // Configuração para animar cada letra com o efeito de "salto"
     const letterAnimation = {
         initial: { opacity: 0, y: -50 },
         animate: { opacity: 1, y: 0 },
         transition: (index: number) => ({
-            delay: index * 0.1, // Atraso incremental por letra
+            delay: index * 0.1,
             duration: 0.5,
             type: "spring",
             stiffness: 100,
@@ -17,12 +16,11 @@ const LoadingScreen = () => {
         }),
     };
 
-    // Alterar a cor da letra após o "I"
     const getLetterColor = (index: number) => {
         if (text[index] === "I") {
-            return "rgb(36, 122, 2)"; // Cor verde para a letra "I"
+            return "rgb(36, 122, 2)";
         }
-        return "white"; // Cor branca para as outras letras
+        return "white";
     };
 
     return (
@@ -40,7 +38,6 @@ const LoadingScreen = () => {
                 zIndex: 9999,
             }}
         >
-            {/* Fundo com gradiente animado */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -61,8 +58,6 @@ const LoadingScreen = () => {
                     zIndex: 0,
                 }}
             />
-
-            {/* Animação do texto */}
             <Box
                 sx={{
                     zIndex: 1,
