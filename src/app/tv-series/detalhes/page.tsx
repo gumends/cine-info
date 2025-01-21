@@ -14,6 +14,7 @@ import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { Stack } from '@mui/joy';
 
 import LoadingScreen from '@/app/components/Loading';
+import Link from 'next/link';
 
 const Home: React.FC = () => {
 
@@ -22,18 +23,42 @@ const Home: React.FC = () => {
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [loading, setLoading] = useState(true);
     const [open, setOpen] = React.useState(false);
+    const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
+    const [classificacaos, setClassificacoes] = useState<string[]>([]);
 
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
     const router = useRouter();
 
+    const classificacao = (certification: string) => {
+        console.log(certification);
+        if (isNaN(parseInt(certification))) {
+            setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
+        } else if (parseInt(certification) < 18) {
+            setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
+        } else if (parseInt(certification) >= 18) {
+            setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
+        }
+    }
+
+    const formatarData = (data: string) => {
+
+        if (data == '') {
+            return
+        }
+        const partes = data.split('-');
+        const dia = partes[2];
+        const mes = partes[1];
+        const ano = partes[0];
+        return `${dia}/${mes}/${ano}`;
+    }
+
     const fatchData = async (movieId: string) => {
         await Promise.all([
             series.getSerie(Number(movieId))
                 .then((data: ISerie) => {
                     console.log(data);
-                    // classificacao(data?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].certification);
                     setFilme(data);
                 }),
             series.getCredts(Number(movieId))
@@ -44,6 +69,18 @@ const Home: React.FC = () => {
                 .then((data: IVideosResponse) => {
                     setVideos(data.results);
                 }),
+            series.getClassificacoes(Number(movieId))
+                .then((data) => {
+                    try {
+                        const classBrasil = (data.results).filter((item: any) => item.iso_3166_1 == 'BR');
+                        classificacao(classBrasil[0].rating);
+                        classificacao(classBrasil[0].rating);
+                    } catch (error) {
+                        setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
+                    } finally {
+                        setClassificacoes(data.results);
+                    }
+                })
         ]);
         setTimeout(() => {
             setLoading(false);
@@ -79,49 +116,76 @@ const Home: React.FC = () => {
                 >
                     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                         <Box>
-                            <Typography variant="h4" sx={{ fontSize: 30, width: "100%", fontWeight: "bold" }} >{filme?.name}</Typography>
-                            <Typography
-                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                            <Box
+                                sx={{
+                                    display: "flex",
+                                    flexDirection: "row",
+                                    justifyContent: "space-between",
+                                    alignItems: "center",
+                                    width: "100%",
+                                    mb: 2
+                                }}
                             >
-                                {/* {filme?.release_dates.results.filter((data) => data.iso_3166_1 === "BR")[0]?.release_dates[0].release_date.split("T")[0].split("-").reverse().join("/")} */}
+                                <Typography variant="h4" sx={{ fontSize: 30, width: "100%", fontWeight: "bold" }} >{filme?.name}</Typography>
+                                {filme?.homepage !== "" && <Typography
+                                    sx={{
+                                        bgcolor: "rgba(156, 219, 255, 0.4)",
+                                        px: 1,
+                                        py: 0.5,
+                                        borderRadius: 1,
+                                        display: "inline",
+                                        width: "fit-content",
+                                        cursor: "pointer",
+                                        fontSize: 14,
+                                        fontWeight: "bold",
+                                        whiteSpace: "nowrap",
+                                        color: "rgba(255, 255, 255, 0.8)",
+                                        '&:hover': {
+                                            bgcolor: "rgba(141, 206, 243, 0.6)",
+                                            color: "rgba(255, 255, 255, 0.9)"
+                                        }
+                                    }}
+                                    onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
+                                >
+                                    Pagina da série
+                                </Typography>}
+                            </Box>
+                            <Typography variant="body1"
+                                sx={{
+                                    mt: 4,
+                                    fontSize: 20,
+                                    width: '70%',
+                                    color: TipoClassificacao[2],
+                                    bgcolor: TipoClassificacao[1],
+                                    display: "inline",
+                                    borderRadius: 1,
+                                    py: 0.5,
+                                    px: 1
+                                }}>
+                                {TipoClassificacao[0]}
                             </Typography>
                             <Typography
                                 sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
-                                tempo
+                                {formatarData(filme?.first_air_date ? filme?.first_air_date : "")}
+                            </Typography>
+                            <Typography
+                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                            >
+                                {filme?.number_of_seasons} Temporadas - {filme?.number_of_episodes} Episódios
                             </Typography>
                             <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview}</Typography>
                         </Box>
-                        {filme?.homepage !== "" && <Typography
-                            sx={{
-                                bgcolor: "rgba(3, 154, 241, 0.4)",
-                                px: 1.5,
-                                py: 1,
-                                borderRadius: 1,
-                                display: "inline",
-                                width: "fit-content",
-                                cursor: "pointer",
-                                fontSize: 17,
-                                fontWeight: "bold",
-                                color: "rgba(255, 255, 255, 0.8)",
-                                '&:hover': {
-                                    bgcolor: "rgba(3, 154, 241, 0.6)",
-                                    color: "rgba(255, 255, 255, 0.9)"
-                                }
-                            }}
-                            onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
-                        >
-                            Ver no cinema
-                        </Typography>}
-                        <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
-
-                            {filme?.genres.map((genre, key) => (
-                                <Box key={key} sx={{ display: "flex", border: "1px solid rgba(255, 255, 255, 0.1)", alignItems: "center", gap: 1, bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 1, p: 1 }}>
-                                    <Typography variant="body2" >
-                                        {genre.name}
-                                    </Typography>
-                                </Box>
-                            ))}
+                        <Box>
+                            <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
+                                {filme?.genres.map((genre, key) => (
+                                    <Box key={key} sx={{ display: "flex", border: "1px solid rgba(255, 255, 255, 0.1)", alignItems: "center", gap: 1, bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 1, p: 1 }}>
+                                        <Typography variant="body2" >
+                                            {genre.name}
+                                        </Typography>
+                                    </Box>
+                                ))}
+                            </Box>
                         </Box>
                     </Box>
                     <Box>
