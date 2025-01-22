@@ -16,6 +16,7 @@ import LoadingScreen from '@/app/components/Loading';
 import { styled } from '@mui/material/styles';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import CarroselCuston from '@/app/components/CarroselCuston';
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -45,7 +46,6 @@ const Home: React.FC = () => {
         const mins = minutes % 60;
         return `${hours}h ${mins}min`;
     }
-
 
     const formatarData = (data: string) => {
         if (data == '') {
@@ -99,6 +99,8 @@ const Home: React.FC = () => {
                 })
             films.getCredts(Number(movieId))
                 .then((data: IElencoResponse) => {
+                    console.log(data.cast);
+
                     setCredts(data.cast);
                 })
 
@@ -140,29 +142,13 @@ const Home: React.FC = () => {
                                     width: "100%"
                                 }}
                             >
-                                <Typography variant="h4" sx={{ fontSize: 30, width: "100%", fontWeight: "bold" }} >{filme?.title}</Typography>
-                                {filme?.homepage !== "" && <Typography
+                                <Typography
+                                    variant="h4"
                                     sx={{
-                                        bgcolor: "rgba(156, 219, 255, 0.4)",
-                                        px: 1,
-                                        py: 0.5,
-                                        borderRadius: 1,
-                                        display: "inline",
-                                        width: "fit-content",
-                                        cursor: "pointer",
-                                        fontSize: 14,
-                                        fontWeight: "bold",
-                                        whiteSpace: "nowrap",
-                                        color: "rgba(255, 255, 255, 0.8)",
-                                        '&:hover': {
-                                            bgcolor: "rgba(141, 206, 243, 0.6)",
-                                            color: "rgba(255, 255, 255, 0.9)"
-                                        }
-                                    }}
-                                    onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
-                                >
-                                    Pagina do Filme
-                                </Typography>}
+                                        fontSize: 30,
+                                        width: "100%",
+                                        fontWeight: "bold"
+                                    }}>{filme?.title}</Typography>
                             </Box>
                             <Box sx={{ mb: 2 }}>
                                 <Typography variant="subtitle1" color="text.secondary">
@@ -316,29 +302,8 @@ const Home: React.FC = () => {
                             <Typography component="span">Elenco</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px" }}>
-                                <Flicking
-                                    align="prev"
-                                    circular={false}
-                                >
-                                    {credts.map((elenco, key) => (
-                                        <Card key={key} sx={{ minWidth: 275, mx: 1 }}>
-                                            <CardMedia
-                                                sx={{ height: 240 }}
-                                                image={`https://image.tmdb.org/t/p/w500${elenco.profile_path}`}
-                                                title={elenco.name}
-                                            />
-                                            <CardContent>
-                                                <Typography sx={{ fontSize: 20, mt: 1 }} gutterBottom variant="h5" component="div">
-                                                    {elenco.name}
-                                                </Typography>
-                                                <Typography sx={{ fontSize: 12 }} gutterBottom variant="body2" component="div">
-                                                    {elenco.character}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </Flicking>
+                            <Box sx={{ px: 2 }}>
+                                <CarroselCuston data={credts} />
                             </Box>
                         </AccordionDetails>
                     </Accordion>

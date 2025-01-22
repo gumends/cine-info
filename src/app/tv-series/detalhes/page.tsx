@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Card, CardContent, CardMedia, Container, Divider, Modal, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, CardMedia, Container, Divider, Modal, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as series from '@/services/series.service';
@@ -12,32 +12,34 @@ import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
 import { IVideos, IVideosResponse } from '@/types/videos.type';
 import { Stack } from '@mui/joy';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import LoadingScreen from '@/app/components/Loading';
 
 const Home: React.FC = () => {
-    
+
     const [filme, setFilme] = useState<ISerie>();
     const [credts, setCredts] = useState<IElenco[]>([]);
     const [videos, setVideos] = useState<IVideos[]>([]);
     const [loading, setLoading] = useState(true);
-    const [open, setOpen] = React.useState(false);
-    // const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [TipoClassificacao, setTipoClassificacao] = useState<string[]>([]);
 
     const router = useRouter();
 
-    // const classificacao = (certification: string) => {
-    //     console.log(certification);
-    //     if (isNaN(parseInt(certification))) {
-    //         setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
-    //     } else if (parseInt(certification) < 18) {
-    //         setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
-    //     } else if (parseInt(certification) >= 18) {
-    //         setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
-    //     }
-    // }
+    const classificacao = (certification: string) => {
+        console.log(certification);
+        if (certification === "" || certification == undefined) {
+            setTipoClassificacao(['Não classificado', 'rgba(206, 110, 0, 0.3)', 'rgb(206, 110, 0)'])
+            return
+        };
+        if (isNaN(parseInt(certification))) {
+            setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
+        } else if (parseInt(certification) < 18) {
+            setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
+        } else if (parseInt(certification) >= 18) {
+            setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
+        }
+    }
 
     const formatarData = (data: string) => {
         if (data == '') {
@@ -48,6 +50,13 @@ const Home: React.FC = () => {
         const mes = partes[1];
         const ano = partes[0];
         return `${dia}/${mes}/${ano}`;
+    }
+
+    function formatRuntime(minutes: number) {
+        if (minutes == 0) return 'Tem duração não informado';
+        const hours = Math.floor(minutes / 60);
+        const mins = minutes % 60;
+        return `${hours}h ${mins}min`;
     }
 
     const fatchData = async (movieId: string) => {
@@ -65,16 +74,15 @@ const Home: React.FC = () => {
                 .then((data: IVideosResponse) => {
                     setVideos(data.results);
                 }),
-            // series.getClassificacoes(Number(movieId))
-            //     .then((data) => {
-            //         try {
-            //             const classBrasil = (data.results).filter((item: any) => item.iso_3166_1 == 'BR');
-            //             classificacao(classBrasil[0].rating);
-            //             classificacao(classBrasil[0].rating);
-            //         } catch {
-            //             setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
-            //         }
-            //     })
+            series.getClassificacoes(Number(movieId))
+                .then((data) => {
+                    try {
+                        const classBrasil = (data.results).filter((item: any) => item.iso_3166_1 == 'BR');
+                        classificacao(classBrasil[0].rating);
+                    } catch {
+                        classificacao('');
+                    }
+                })
         ]);
         setTimeout(() => {
             setLoading(false);
@@ -95,7 +103,7 @@ const Home: React.FC = () => {
     return (
         <Content>
             {loading && <LoadingScreen />}
-            <Container >
+            <Container>
                 <Stack
                     sx={{
                         width: "100%",
@@ -116,35 +124,17 @@ const Home: React.FC = () => {
                                     flexDirection: "row",
                                     justifyContent: "space-between",
                                     alignItems: "center",
-                                    width: "100%",
-                                    mb: 2
+                                    width: "100%"
                                 }}
                             >
                                 <Typography variant="h4" sx={{ fontSize: 30, width: "100%", fontWeight: "bold" }} >{filme?.name}</Typography>
-                                {filme?.homepage !== "" && <Typography
-                                    sx={{
-                                        bgcolor: "rgba(156, 219, 255, 0.4)",
-                                        px: 1,
-                                        py: 0.5,
-                                        borderRadius: 1,
-                                        display: "inline",
-                                        width: "fit-content",
-                                        cursor: "pointer",
-                                        fontSize: 14,
-                                        fontWeight: "bold",
-                                        whiteSpace: "nowrap",
-                                        color: "rgba(255, 255, 255, 0.8)",
-                                        '&:hover': {
-                                            bgcolor: "rgba(141, 206, 243, 0.6)",
-                                            color: "rgba(255, 255, 255, 0.9)"
-                                        }
-                                    }}
-                                    onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
-                                >
-                                    Pagina da série
-                                </Typography>}
                             </Box>
-                            {/* <Typography variant="body1"
+                            <Box sx={{ mb: 2 }}>
+                                <Typography variant="subtitle1" color="text.secondary">
+                                    {filme?.tagline}
+                                </Typography>
+                            </Box>
+                            <Typography variant="body1"
                                 sx={{
                                     mt: 4,
                                     fontSize: 20,
@@ -157,29 +147,32 @@ const Home: React.FC = () => {
                                     px: 1
                                 }}>
                                 {TipoClassificacao[0]}
-                            </Typography> */}
-                            <Typography
-                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
-                            >
-                                {formatarData(filme?.first_air_date ? filme?.first_air_date : "")}
                             </Typography>
                             <Typography
                                 sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
-                                {filme?.number_of_seasons} Temporadas - {filme?.number_of_episodes} Episódios
+                                {formatarData(filme?.first_air_date ? filme?.first_air_date : '')}
+                            </Typography>
+                            <Typography
+                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                            >
+                                {filme?.number_of_seasons} Temporadas
+                            </Typography>
+                            <Typography
+                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                            >
+                                {filme?.number_of_episodes} Episódios
                             </Typography>
                             <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview}</Typography>
                         </Box>
-                        <Box>
-                            <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
-                                {filme?.genres.map((genre, key) => (
-                                    <Box key={key} sx={{ display: "flex", border: "1px solid rgba(255, 255, 255, 0.1)", alignItems: "center", gap: 1, bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 1, p: 1 }}>
-                                        <Typography variant="body2" >
-                                            {genre.name}
-                                        </Typography>
-                                    </Box>
-                                ))}
-                            </Box>
+                        <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
+                            {filme?.genres.map((genre, key) => (
+                                <Box key={key} sx={{ display: "flex", border: "1px solid rgba(255, 255, 255, 0.1)", alignItems: "center", gap: 1, bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 1, p: 1 }}>
+                                    <Typography variant="body2" >
+                                        {genre.name}
+                                    </Typography>
+                                </Box>
+                            ))}
                         </Box>
                     </Box>
                     <Box>
@@ -189,106 +182,183 @@ const Home: React.FC = () => {
                             image={`https://image.tmdb.org/t/p/original${filme?.poster_path}`}
                             alt={filme?.name}
                         />
-                        <Box
+                        {filme?.homepage !== "" &&
+                            <Button
+                                sx={{
+                                    bgcolor: "rgba(0, 0, 0, 0.3)",
+                                    width: "100%",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    height: 40,
+                                    color: "rgba(255, 255, 255, 0.9)",
+                                    cursor: "pointer",
+                                    fontSize: 17,
+                                    fontWeight: "bold",
+                                    borderEndStartRadius: 10,
+                                    borderEndEndRadius: 10,
+                                    borderStartStartRadius: 0,
+                                    borderStartEndRadius: 0,
+                                    border: "1px solid rgba(255, 255, 255, 0.1)",
+                                    '&:hover': {
+                                        bgcolor: "rgba(0, 0, 0, 0.5)",
+                                    },
+                                    trasition: "all 0.3s ease",
+                                }}
+                                onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
+                            >
+                                Onde Assistir
+                            </Button>
+                        }
+                    </Box>
+                </Stack>
+
+                <div
+                    style={{
+                        paddingBottom: "50px",
+                    }}
+                >
+                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
                             sx={{
                                 bgcolor: "rgba(0, 0, 0, 0.3)",
-                                width: "100%",
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                                height: 40,
                                 color: "rgba(255, 255, 255, 0.9)",
-                                cursor: "pointer",
-                                fontSize: 17,
-                                fontWeight: "bold",
-                                borderEndStartRadius: 10,
-                                borderEndEndRadius: 10,
-                                border: "1px solid rgba(255, 255, 255, 0.1)",
                                 '&:hover': {
                                     bgcolor: "rgba(0, 0, 0, 0.5)",
                                 },
                                 trasition: "all 0.3s ease",
                             }}
-                            onClick={handleOpen}
                         >
-                            Assistir Trailer
-                        </Box>
-                    </Box>
-                </Stack>
-                <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
-                    Mais informações
-                </Typography>
-                <Divider />
-                <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px", mt: 5, mb: 5 }}>
-                    <Typography>{filme?.name}</Typography>
-                </Box>
-                <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
-                    Elenco
-                </Typography>
-                <Divider />
-                <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px", mt: 5, mb: 5 }}>
-                    <Flicking
-                        align="prev"
-                        circular={false}
-                    >
-                        {credts.map((elenco, key) => (
-                            <Card key={key} sx={{ minWidth: 275, mx: 1 }}>
-                                <CardMedia
-                                    sx={{ height: 240 }}
-                                    image={`https://image.tmdb.org/t/p/w500${elenco.profile_path}`}
-                                    title={elenco.name}
-                                />
-                                <CardContent>
-                                    <Typography sx={{ fontSize: 20, mt: 1 }} gutterBottom variant="h5" component="div">
-                                        {elenco.name}
+                            <Typography component="span">Mais Informações</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Box sx={{ my: 2 }}>
+                                <Stack spacing={2} sx={{ mb: 3 }}>
+                                    <Typography variant="body1">
+                                        <strong>Primeira data de emissão:</strong> {formatarData(filme?.first_air_date ? filme?.first_air_date : '')}
                                     </Typography>
-                                    <Typography sx={{ fontSize: 12 }} gutterBottom variant="body2" component="div">
-                                        {elenco.character}
+                                    <Typography variant="body1">
+                                        <strong>Última data de emissão:</strong> {formatarData(filme?.last_air_date ? filme?.last_air_date : '')}
                                     </Typography>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </Flicking>
-                </Box>
+                                    <Typography variant="body1">
+                                        <strong>Duração:</strong> {filme?.runtime === 0 ? "Não divugado" : filme?.runtime + " min"}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        <strong>Em produção:</strong> {filme?.in_production ? "Sim" : "Nao"}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        <strong>Avaliação:</strong> {filme?.vote_average.toFixed(2)} ({filme?.vote_count} votos)
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        <strong>País de Origem:</strong> {filme?.origin_country}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        <strong>Produções:</strong> {filme?.production_companies.map((company, key) => (
+                                            <span key={key}>{company.name}{key === filme?.production_companies.length - 1 ? "" : ", "}</span>
+                                        ))}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        <strong>Pais de produção:</strong> {filme?.production_countries.map((company, key) => (
+                                            <span key={key}>{company.name}{key === filme?.production_countries.length - 1 ? "" : ", "}</span>
+                                        ))}
+                                    </Typography>
+                                </Stack>
+                            </Box>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
+                            sx={{
+                                bgcolor: "rgba(0, 0, 0, 0.3)",
+                                color: "rgba(255, 255, 255, 0.9)",
+                                '&:hover': {
+                                    bgcolor: "rgba(0, 0, 0, 0.5)",
+                                },
+                                trasition: "all 0.3s ease",
+                            }}
+                        >
+                            <Typography component="span">Elenco</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px" }}>
+                                <Flicking
+                                    align="prev"
+                                    circular={false}
+                                >
+                                    {credts.map((elenco, key) => (
+                                        <Card key={key} sx={{ minWidth: 275, mx: 1 }}>
+                                            <CardMedia
+                                                sx={{ height: 240 }}
+                                                image={`https://image.tmdb.org/t/p/w500${elenco.profile_path}`}
+                                                title={elenco.name}
+                                            />
+                                            <CardContent>
+                                                <Typography sx={{ fontSize: 20, mt: 1 }} gutterBottom variant="h5" component="div">
+                                                    {elenco.name}
+                                                </Typography>
+                                                <Typography sx={{ fontSize: 12 }} gutterBottom variant="body2" component="div">
+                                                    {elenco.character}
+                                                </Typography>
+                                            </CardContent>
+                                        </Card>
+                                    ))}
+                                </Flicking>
+                            </Box>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1-content"
+                            id="panel1-header"
+                            sx={{
+                                bgcolor: "rgba(0, 0, 0, 0.3)",
+                                color: "rgba(255, 255, 255, 0.9)",
+                                '&:hover': {
+                                    bgcolor: "rgba(0, 0, 0, 0.5)",
+                                },
+                                trasition: "all 0.3s ease",
+                            }}
+                        >
+                            <Typography component="span">Trailer</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
+                            <Box
+                                sx={{
+                                    width: "100%",
+                                    height: "500px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                {
+                                    videos.length === 0 ? (
+                                        <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
+                                            Trailer indisponível
+                                        </Typography>
+                                    ) : (
+                                            <CardMedia
+                                                component="iframe"
+                                                sx={{ width: '100%', height: "100%" }}
+                                                src={`https://www.youtube.com/embed/${videos[0].key}?vq=hd1080`}
+                                                allow="autoplay; encrypted-media"
+                                                title="Trailer do filme"
+                                            />
+                                    )
+                                }
+                            </Box>
+                        </AccordionDetails>
+                    </Accordion>
+                </div>
             </Container>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        width: { xs: 1300, sm: 400, md: 1500 },
-                        height: { xs: 600, sm: 600, md: 800 },
-                        bgcolor: 'background.paper',
-                        boxShadow: 24,
-                    }}
-                >
-                    {
-                        videos.length === 0 ? (
-                            <Typography sx={{ fontSize: 20 }} gutterBottom variant="h5" component="div">
-                                Trailer indisponível
-                            </Typography>
-                        ) : (
-                            <Card sx={{ width: "100%", height: "100%" }}>
-                                <CardMedia
-                                    component="iframe"
-                                    sx={{ width: '100%', height: "100%" }}
-                                    src={`https://www.youtube.com/embed/${videos[0].key}?vq=hd1080`}
-                                    allow="autoplay; encrypted-media"
-                                    title="Trailer do filme"
-                                />
-                            </Card>
-                        )
-                    }
-                </Box>
-            </Modal>
-        </Content>
+        </Content >
     );
 }
 
