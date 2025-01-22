@@ -13,28 +13,74 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from 'next/navigation';
 import LoadingScreen from '../components/Loading';
+import { IFilme, IReleaseDates } from '@/types/filmes.type';
 
 export default function Home() {
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
     const [seriesPopulares, setSeriesPopulares] = useState<IPopular[]>([]);
     const [filmesEmCartaz, setFilmesEmCartaz] = useState<Popular[]>([]);
-
+    const [classificacoes, setClassificacoes] = useState<{ [id: number]: string }>({});
     const router = useRouter();
-
     const [loading, setLoading] = useState(true);
+
+    const formatarData = (data: string) => {
+        const [ano, mes, dia] = data.split('-');
+        return `${dia}/${mes}/${ano}`;
+    };
+
+    const definirClassificacao = (certification: string) => {
+        if (!certification) {
+            return ['Não classificado', 'rgba(206, 110, 0, 0.3)', 'rgb(206, 110, 0)'];
+        }
+        if (isNaN(Number(certification))) {
+            return ['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)'];
+        }
+        const idade = parseInt(certification, 10);
+        if (idade < 18) {
+            return [certification, 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)'];
+        }
+        return [`${certification}+`, 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)'];
+    };
 
     const fetchData = async () => {
         setLoading(true);
-        await Promise.all([
-            films.buscaPopulares().then((data) => setFilmesPopulares(data.results)),
-            series.buscaPopulares().then((data) => setSeriesPopulares(data.results)),
-            films.getFilmesEmCartaz().then((data) => setFilmesEmCartaz(data.results))
-        ]);
-        setTimeout(() => {
-            setLoading(false);
-        }, 2000);
-    };
 
+        try {
+            const [populares, seriesPopulares, filmesEmCartaz] = await Promise.all([
+                films.buscaPopulares(),
+                series.buscaPopulares(),
+                films.getFilmesEmCartaz(),
+            ]);
+
+            setFilmesPopulares(populares.results);
+            setSeriesPopulares(seriesPopulares.results);
+            setFilmesEmCartaz(filmesEmCartaz.results);
+
+            const classificacoesData = await Promise.all(
+                populares.results.map(async (filme: IFilme) => {
+                    const detalhes = await films.getFilme(filme.id);
+                    const brRelease = detalhes.release_dates.results.find(
+                        (release: any) => release.iso_3166_1 === 'BR'
+                    );
+                    return {
+                        id: filme.id,
+                        classificacao: brRelease?.release_dates[0]?.certification || '',
+                    };
+                })
+            );
+
+            const classificacoesMap = classificacoesData.reduce((acc, item) => {
+                acc[item.id] = item.classificacao;
+                return acc;
+            }, {} as { [id: number]: string });
+
+            setClassificacoes(classificacoesMap);
+        } catch (error) {
+            console.error('Erro ao buscar os dados:', error);
+        } finally {
+            setTimeout(() => setLoading(false), 2000);
+        }
+    };
     useEffect(() => {
         fetchData();
     }, []);
@@ -76,127 +122,121 @@ export default function Home() {
                     {/* Imagem de fundo */}
                     <div className='slider-container' style={{ position: 'relative', width: '100%', height: '100%' }}>
                         <Slider {...settings}>
-                            {filmesPopulares.map((filme) => (
-                                <>
-                                    <Box key={filme.id} sx={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
-                                        <img
-                                            src={
-                                                filme.backdrop_path
-                                                    ? `https://image.tmdb.org/t/p/original${filme.backdrop_path}.jpg`
-                                                    : 'https://via.placeholder.com/150'
-                                            }
-                                            alt="Filme Popular"
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                objectFit: 'cover',
+                            {filmesPopulares.map((filme, index) => {
+                                const [label, bgColor, color] = definirClassificacao(classificacoes[filme.id] || '');
 
-                                            }}
-                                        />
-                                    </Box>
-                                    <Box
-                                        sx={{
-                                            position: 'absolute',
-                                            top: 0,
-                                            left: 0,
-                                            width: '50%',
-                                            height: '100%',
-                                            background: 'linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0))',
-                                            pl: 10,
-                                            mt: -10,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            justifyContent: 'center',
-                                        }}
-                                    >
-                                        <Box>
-                                            <Typography
-                                                component="h1"
-                                                variant="h1"
-                                                sx={{
-                                                    fontSize: '40px',
-                                                    fontWeight: 'bold',
+                                return (
+                                    <>
+                                        <Box key={filme.id} sx={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+                                            <img
+                                                src={
+                                                    filme.backdrop_path
+                                                        ? `https://image.tmdb.org/t/p/original${filme.backdrop_path}.jpg`
+                                                        : 'https://via.placeholder.com/150'
+                                                }
+                                                alt="Filme Popular"
+                                                style={{
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    objectFit: 'cover',
+
                                                 }}
-                                            >
-                                                {filme.title}
-                                            </Typography>
+                                            />
+                                        </Box>
+                                        <Box
+                                            sx={{
+                                                position: 'absolute',
+                                                top: 0,
+                                                left: 0,
+                                                width: '50%',
+                                                height: '100%',
+                                                background: 'linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0))',
+                                                pl: 10,
+                                                mt: -10,
+                                                display: 'flex',
+                                                flexDirection: 'column',
+                                                justifyContent: 'center',
+                                            }}
+                                        >
                                             <Box>
                                                 <Typography
-                                                    component="p"
-                                                    variant="body1"
+                                                    component="h1"
+                                                    variant="h1"
                                                     sx={{
-                                                        fontSize: '16px',
-                                                        color: filme.adult ? 'rgba(255, 0, 0, 0.8)' : 'rgba(17, 207, 0, 0.8)',
-                                                        bgcolor: filme.adult ? 'rgba(255, 0, 0, 0.8)' : 'rgba(9, 104, 0, 0.8)',
-                                                        display: 'inline-block',
-                                                        px: 1,
-                                                        mr: 1,
-                                                        mt: 1
+                                                        fontSize: '40px',
+                                                        fontWeight: 'bold',
                                                     }}
                                                 >
-                                                    {filme.adult ? '18+' : 'L'}
+                                                    {filme.title}
                                                 </Typography>
-                                                <Typography
-                                                    component="p"
-                                                    variant="body1"
-                                                    sx={{
-                                                        fontSize: '16px',
-                                                        color: 'rgba(255, 255, 255, 0.8)',
-                                                        bgcolor: 'rgba(0, 0, 0, 0.8)',
-                                                        display: 'inline-block',
-                                                        px: 1,
-                                                    }}
-                                                >
-                                                    {filme.release_date.toString().substring(0, 4)}
-                                                </Typography>
-                                            </Box>
-                                            <Typography
-                                                variant="body1"
-                                                sx={{
-                                                    fontSize: '20px',
-                                                    mt: 2,
-                                                    color: 'rgba(255, 255, 255, 0.8)',
-                                                    width: '60%',
-                                                }}
-                                            >
-                                                {filme.overview}
-                                            </Typography>
-                                            <Box
+                                                <Box
                                                 sx={{
                                                     display: 'flex',
-                                                    justifyContent: 'center',
-                                                    width: '50%',
-                                                }}
-                                            >
-                                                <Box
-                                                    sx={{
-                                                        gap: 2,
-                                                        mt: 2,
-                                                        bgcolor: 'rgb(43, 16, 105)',
-                                                        display: 'inline-block',
-                                                        px: 5,
-                                                        py: 1,
-                                                        borderRadius: 1,
-                                                        fontWeight: 'bold',
-                                                        cursor: 'pointer',
-                                                        color: 'rgba(255, 255, 255, 0.8)',
-                                                        '&:hover': {
-                                                            bgcolor: 'rgba(43, 16, 105, 0.79)',
+                                                    alignItems: 'center',}}
+                                                >
+                                                    <Typography sx={{ mr: 2,fontSize: 20, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
+                                                        {label}
+                                                    </Typography>
+                                                    <Typography
+                                                        component="p"
+                                                        variant="body1"
+                                                        sx={{
+                                                            fontSize: '19px',
                                                             color: 'rgba(255, 255, 255, 0.8)',
-                                                        },
-                                                        fontSize: '17px',
-                                                    }}
-                                                    onClick={() => {
-                                                        router.push(`/filmes/detalhes?id=${filme.id}`);
+                                                            display: 'inline-block',
+                                                        }}
+                                                    >
+                                                        {formatarData(filme.release_date)}
+                                                    </Typography>
+                                                </Box>
+                                                <Typography
+                                                    variant="body1"
+                                                    sx={{
+                                                        fontSize: '20px',
+                                                        mt: 2,
+                                                        color: 'rgba(255, 255, 255, 0.8)',
+                                                        width: '60%',
                                                     }}
                                                 >
-                                                    Mais informações
+                                                    {filme.overview}
+                                                </Typography>
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
+                                                        width: '50%',
+                                                    }}
+                                                >
+                                                    <Box
+                                                        sx={{
+                                                            gap: 2,
+                                                            mt: 2,
+                                                            bgcolor: 'rgb(43, 16, 105)',
+                                                            display: 'inline-block',
+                                                            px: 5,
+                                                            py: 1,
+                                                            borderRadius: 1,
+                                                            fontWeight: 'bold',
+                                                            cursor: 'pointer',
+                                                            color: 'rgba(255, 255, 255, 0.8)',
+                                                            '&:hover': {
+                                                                bgcolor: 'rgba(43, 16, 105, 0.79)',
+                                                                color: 'rgba(255, 255, 255, 0.8)',
+                                                            },
+                                                            fontSize: '17px',
+                                                        }}
+                                                        onClick={() => {
+                                                            router.push(`/filmes/detalhes?id=${filme.id}`);
+                                                        }}
+                                                    >
+                                                        Mais informações
+                                                    </Box>
                                                 </Box>
                                             </Box>
                                         </Box>
-                                    </Box>
-                                </>
-                            ))}
+                                    </>
+                                );
+                            })}
                         </Slider>
                     </div>
                     <Box
