@@ -3,7 +3,7 @@ interface IGenrt {
   name: string;
 }
 
-interface IReleaseDates {
+export interface IReleaseDates {
   results: {
     iso_3166_1: string;
     release_dates: {
