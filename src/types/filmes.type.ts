@@ -3,18 +3,14 @@ interface IGenrt {
   name: string;
 }
 
-export interface IReleaseDates {
-  results: {
-    iso_3166_1: string;
-    release_dates: {
-      certification: string;
-      descriptors: [];
-      iso_639_1: string;
-      note: string;
-      release_date: string;
-      type: number;
-    }[];
-  }[];
+export interface IReleaseDate {
+  certification?: string;
+  release_date?: string;
+}
+
+export interface IReleaseDatesResult {
+  iso_3166_1: string;
+  release_dates: IReleaseDate[];
 }
 
 interface IProduction_companies {
@@ -41,7 +37,7 @@ export interface IFilme {
   popularity: number;
   poster_path: string;
   release_date: string;
-  release_dates: IReleaseDates;
+  release_dates: {results:IReleaseDatesResult[]};
   production_companies: IProduction_companies[];
   production_countries: IProduction_countries[];
   title: string;

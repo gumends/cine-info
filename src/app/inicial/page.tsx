@@ -13,7 +13,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from 'next/navigation';
 import LoadingScreen from '../components/Loading';
-import { IFilme, IReleaseDates } from '@/types/filmes.type';
+import { IFilme, IReleaseDatesResult } from '@/types/filmes.type';
 
 export default function Home() {
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
@@ -60,7 +60,7 @@ export default function Home() {
                 populares.results.map(async (filme: IFilme) => {
                     const detalhes = await films.getFilme(filme.id);
                     const brRelease = detalhes.release_dates.results.find(
-                        (release: any) => release.iso_3166_1 === 'BR'
+                        (release: IReleaseDatesResult) => release.iso_3166_1 === 'BR'
                     );
                     return {
                         id: filme.id,
@@ -122,7 +122,7 @@ export default function Home() {
                     {/* Imagem de fundo */}
                     <div className='slider-container' style={{ position: 'relative', width: '100%', height: '100%' }}>
                         <Slider {...settings}>
-                            {filmesPopulares.map((filme, index) => {
+                            {filmesPopulares.map((filme) => {
                                 const [label, bgColor, color] = definirClassificacao(classificacoes[filme.id] || '');
 
                                 return (
@@ -170,11 +170,12 @@ export default function Home() {
                                                     {filme.title}
                                                 </Typography>
                                                 <Box
-                                                sx={{
-                                                    display: 'flex',
-                                                    alignItems: 'center',}}
+                                                    sx={{
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                    }}
                                                 >
-                                                    <Typography sx={{ mr: 2,fontSize: 20, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
+                                                    <Typography sx={{ mr: 2, fontSize: 20, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
                                                         {label}
                                                     </Typography>
                                                     <Typography

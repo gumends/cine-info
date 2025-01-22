@@ -91,7 +91,7 @@ const Home: React.FC = () => {
                     for (let i = 0; i < br.length; i++) {
                         for (let r = 0; r < br[i].release_dates.length; r++) {
                             if (br[i].release_dates[r].certification != "") {
-                                classificacao(br[i].release_dates[r].certification);
+                                classificacao(br[i].release_dates[r].certification ?? "");
                             }
                         }
                     }
