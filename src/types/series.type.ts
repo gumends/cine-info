@@ -30,6 +30,28 @@ interface ISesson {
   vote_average: number;
 }
 
+export interface IReleaseDate {
+  certification?: string;
+  release_date?: string;
+}
+
+export interface IReleaseDatesResult {
+  iso_3166_1: string;
+  release_dates: IReleaseDate[];
+}
+
+interface IProduction_companies {
+  id: number;
+  logo_path: string;
+  name: string;
+  origin_country: string;
+}
+
+interface IProduction_countries {
+  iso_3166_1: string;
+  name: string;
+}
+
 export interface ISerie {
   adult: boolean;
   backdrop_path: string;
@@ -48,6 +70,13 @@ export interface ISerie {
   overview: string;
   popularity: number;
   poster_path: string;
+  tagline: string;
+  runtime: number;
+  budget: number;
+  revenue: number;
+  origin_country: string;
+  production_companies: IProduction_companies[];
+  production_countries: IProduction_countries[];
   sessons: ISesson[];
   release_date: string;
   // release_dates: IReleaseDates;
