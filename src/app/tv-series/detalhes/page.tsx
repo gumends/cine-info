@@ -1,6 +1,6 @@
 'use client';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, CardMedia, Container, Divider, Modal, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, CardMedia, Chip, Container, Divider, Modal, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as series from '@/services/series.service';
@@ -15,6 +15,7 @@ import { Stack } from '@mui/joy';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import LoadingScreen from '@/app/components/Loading';
+import CarroselCuston from '@/app/components/CarroselCuston';
 
 const Home: React.FC = () => {
 
@@ -163,7 +164,7 @@ const Home: React.FC = () => {
                             >
                                 {filme?.number_of_episodes} Episódios
                             </Typography>
-                            <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview}</Typography>
+                            <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview.length == 0 ? "Sem sinopse" : filme?.overview}</Typography>
                         </Box>
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
                             {filme?.genres.map((genre, key) => (
@@ -269,7 +270,7 @@ const Home: React.FC = () => {
                             </Box>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                    <Accordion disabled={credts.length === 0} sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
@@ -283,36 +284,15 @@ const Home: React.FC = () => {
                                 trasition: "all 0.3s ease",
                             }}
                         >
-                            <Typography component="span">Elenco</Typography>
+                            <Typography component="span">Elenco {credts.length === 0 ? <Chip label="Indisponivel" color="default" /> : ""}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Box sx={{ maxWidth: "100%", display: "flex", overflowX: "auto", gap: 2, height: "350px" }}>
-                                <Flicking
-                                    align="prev"
-                                    circular={false}
-                                >
-                                    {credts.map((elenco, key) => (
-                                        <Card key={key} sx={{ minWidth: 275, mx: 1 }}>
-                                            <CardMedia
-                                                sx={{ height: 240 }}
-                                                image={`https://image.tmdb.org/t/p/w500${elenco.profile_path}`}
-                                                title={elenco.name}
-                                            />
-                                            <CardContent>
-                                                <Typography sx={{ fontSize: 20, mt: 1 }} gutterBottom variant="h5" component="div">
-                                                    {elenco.name}
-                                                </Typography>
-                                                <Typography sx={{ fontSize: 12 }} gutterBottom variant="body2" component="div">
-                                                    {elenco.character}
-                                                </Typography>
-                                            </CardContent>
-                                        </Card>
-                                    ))}
-                                </Flicking>
+                            <Box sx={{ px: 2, height: "400px" }}>
+                                <CarroselCuston data={credts} />
                             </Box>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                    <Accordion disabled={videos.length === 0} sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
@@ -326,7 +306,7 @@ const Home: React.FC = () => {
                                 trasition: "all 0.3s ease",
                             }}
                         >
-                            <Typography component="span">Trailer</Typography>
+                            <Typography component="span">Trailer {videos.length === 0 ? <Chip label="Indisponivel" color="default" /> : ""}</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             <Box
@@ -344,13 +324,13 @@ const Home: React.FC = () => {
                                             Trailer indisponível
                                         </Typography>
                                     ) : (
-                                            <CardMedia
-                                                component="iframe"
-                                                sx={{ width: '100%', height: "100%" }}
-                                                src={`https://www.youtube.com/embed/${videos[0].key}?vq=hd1080`}
-                                                allow="autoplay; encrypted-media"
-                                                title="Trailer do filme"
-                                            />
+                                        <CardMedia
+                                            component="iframe"
+                                            sx={{ width: '100%', height: "100%" }}
+                                            src={`https://www.youtube.com/embed/${videos[0].key}?vq=hd1080`}
+                                            allow="autoplay; encrypted-media"
+                                            title="Trailer do filme"
+                                        />
                                     )
                                 }
                             </Box>

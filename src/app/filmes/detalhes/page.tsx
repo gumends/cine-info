@@ -179,7 +179,7 @@ const Home: React.FC = () => {
                             >
                                 {formatRuntime(filme?.runtime as number)}
                             </Typography>
-                            <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview}</Typography>
+                            <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview.length == 0 ? "Sem sinopse" : filme?.overview}</Typography>
                         </Box>
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
                             {filme?.genres.map((genre, key) => (
@@ -285,7 +285,10 @@ const Home: React.FC = () => {
                             </Box>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                    <Accordion 
+                    sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}
+                    disabled={credts.length === 0}
+                    >
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"
@@ -302,12 +305,15 @@ const Home: React.FC = () => {
                             <Typography component="span">Elenco</Typography>
                         </AccordionSummary>
                         <AccordionDetails>
-                            <Box sx={{ px: 2 }}>
+                            <Box sx={{ px: 2, height: "400px" }}>
                                 <CarroselCuston data={credts} />
                             </Box>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
+                    <Accordion 
+                    sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}
+                    disabled={videos.length === 0}
+                    >
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1-content"

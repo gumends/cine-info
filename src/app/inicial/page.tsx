@@ -105,7 +105,6 @@ export default function Home() {
                 sx={{
                     position: 'relative',
                     width: '100vw',
-                    height: '100vh',
                     overflow: 'hidden',
                     top: -179,
                     boxShadow: '1px 300px 200px rgb(0, 0, 0)',
@@ -115,8 +114,6 @@ export default function Home() {
                     sx={{
                         position: 'relative',
                         width: '100%',
-                        height: '100vh', // Define a altura total da tela
-                        overflow: 'hidden',
                     }}
                 >
                     {/* Imagem de fundo */}
@@ -139,7 +136,6 @@ export default function Home() {
                                                     width: '100%',
                                                     height: '100%',
                                                     objectFit: 'cover',
-
                                                 }}
                                             />
                                         </Box>
@@ -152,13 +148,16 @@ export default function Home() {
                                                 height: '100%',
                                                 background: 'linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0))',
                                                 pl: 10,
-                                                mt: -10,
                                                 display: 'flex',
                                                 flexDirection: 'column',
                                                 justifyContent: 'center',
                                             }}
                                         >
-                                            <Box>
+                                            <Box
+                                                sx={{
+                                                    mb: 20,
+                                                }}
+                                            >
                                                 <Typography
                                                     component="h1"
                                                     variant="h1"
@@ -175,7 +174,7 @@ export default function Home() {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <Typography sx={{ mr: 2, fontSize: 20, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
+                                                    <Typography sx={{ mr: 2, fontSize: { xs: '16px', sm: '18px' }, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
                                                         {label}
                                                     </Typography>
                                                     <Typography
@@ -246,7 +245,7 @@ export default function Home() {
                             bottom: 0,
                             left: 0,
                             width: '100%',
-                            height: '30%', // Tamanho do gradiente (ajustável)
+                            height: '30%',
                             background: 'linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0))',
                         }}
                     />
@@ -258,8 +257,9 @@ export default function Home() {
                     flexDirection: 'column',
                     alignItems: 'center',
                     position: 'relative',
-                    mx: 20,
-                    mt: -50
+                    mx: { xs: 5, sm: 10, md: 20 },
+                    mt: { xs: -20, sm: 0, md: -50 }
+
                 }}
             >
                 <Stack sx={{ alignItems: 'left', width: '100%' }}>
@@ -295,20 +295,6 @@ export default function Home() {
                 <Stack sx={{ width: '100%', mt: 4 }}>
                     <Responsive filmes={seriesPopulares} tipo="tv-series" />
                 </Stack>
-
-            </Box>
-            <Box sx={{
-                width: '100%',
-                mt: 4,
-                height: '100%',
-                background: 'linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.8), rgb(0, 0, 0))',
-                mb: 3,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                position: 'relative',
-                px: 20
-            }}>
                 <Stack sx={{ alignItems: 'left', width: '100%', mt: 4 }}>
                     <Typography
                         component="span"
