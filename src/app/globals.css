@@ -25,14 +25,18 @@ body {
 
 /* Ajustando a posição das setas */
 .slick-prev {
-  left: -65px !important; /* Ajuste horizontal da seta anterior */
+  left: -29px !important;
 }
 
 .slick-next {
-  right: -65px !important; /* Ajuste horizontal da seta próxima */
+  /* right: -65px !important;  */
+}
+
+.itens{
+  padding: 0 10px !important;
 }
 
 /* Ajuste opcional para a posição dos dots */
-.slick-dots {
+/* .slick-dots {
   bottom: -25px !important;
-}
+} */
