@@ -121,14 +121,13 @@ const Home: React.FC = () => {
                 <Stack
                     sx={{
                         width: "100%",
-                        height: 500,
+                        height: "100%",
                         justifyContent: "space-between",
-                        my: 8,
+                        my: { xs: 0, sm: 0, md: 8},
                         gap: 2,
                     }}
-                    direction={{ xs: "column", sm: "row", md: "row" }}
-                    alignItems={{ xs: "center", sm: "flex-start", md: "flex-start" }}
-                    marginTop={{ xs: 15, sm: 0, md: 0 }}
+                    direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
+                    alignItems={{ xs: "center", sm: "center", md: "flex-start" }}
                 >
                     <Box sx={{ width: "100%", display: "flex", flexDirection: "column", justifyContent: "space-between", height: "100%" }}>
                         <Box>
@@ -144,20 +143,20 @@ const Home: React.FC = () => {
                                 <Typography
                                     variant="h4"
                                     sx={{
-                                        fontSize: 30,
+                                        fontSize: { xs: 25, md: 30},
                                         width: "100%",
                                         fontWeight: "bold"
                                     }}>{filme?.title}</Typography>
                             </Box>
                             <Box sx={{ mb: 2 }}>
-                                <Typography variant="subtitle1" color="text.secondary">
+                                <Typography sx={{ fontSize: { xs: 15, md: 17}, width: '70%', display: "inline" }}  variant="subtitle1" color="text.secondary">
                                     {filme?.tagline}
                                 </Typography>
                             </Box>
                             <Typography variant="body1"
                                 sx={{
                                     mt: 4,
-                                    fontSize: 20,
+                                    fontSize: { xs: 15, md: 17},
                                     width: '70%',
                                     color: TipoClassificacao[2],
                                     bgcolor: TipoClassificacao[1],
@@ -169,16 +168,27 @@ const Home: React.FC = () => {
                                 {TipoClassificacao[0]}
                             </Typography>
                             <Typography
-                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                                sx={{ fontSize: { xs: 15, md: 17}, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
                                 {formatarData(filme?.release_date ? filme?.release_date : '')}
                             </Typography>
                             <Typography
-                                sx={{ fontSize: 17, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                                sx={{ fontSize: { xs: 15, md: 17}, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
                                 {formatRuntime(filme?.runtime as number)}
                             </Typography>
-                            <Typography variant="body1" sx={{ mt: 4, fontSize: 20, width: '70%', color: "rgba(255, 255, 255, 0.8)" }}>{filme?.overview.length == 0 ? "Sem sinopse" : filme?.overview}</Typography>
+                            <Typography
+                                variant="body1"
+                                sx={{
+                                    mt: 4,
+                                    fontSize: { xs: 15, md: 20},
+                                    width: { xs: '100%', md: '70%'},
+                                    color: "rgba(255, 255, 255, 0.8)",
+                                    textAlign: "justify"
+                                }}
+                            >
+                                {filme?.overview.length == 0 ? "Sem sinopse" : filme?.overview}
+                            </Typography>
                         </Box>
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
                             {filme?.genres.map((genre, key) => (
@@ -193,7 +203,13 @@ const Home: React.FC = () => {
                     <Box>
                         <CardMedia
                             component="img"
-                            sx={{ minWidth: 300, maxWidth: "100%", height: 500, border: "1px solid rgba(255, 255, 255, 0.1)", borderStartStartRadius: 10, borderStartEndRadius: 10 }}
+                            sx={{
+                                width: { xs: 300, sm: 400, md: 600 },
+                                height: { xs: 500, sm: 400, md: 600 },
+                                borderStartStartRadius: 10,
+                                borderStartEndRadius: 10,
+                                objectFit: "contain",
+                            }}
                             image={`https://image.tmdb.org/t/p/original${filme?.poster_path}`}
                             alt={filme?.title}
                         />
@@ -202,7 +218,7 @@ const Home: React.FC = () => {
                                 sx={{
                                     bgcolor: "rgba(0, 0, 0, 0.3)",
                                     width: "100%",
-                                    display: "flex",
+                                    display: { xs: "none", sm: "none", md: "flex" },
                                     justifyContent: "center",
                                     alignItems: "center",
                                     height: 40,
@@ -210,10 +226,8 @@ const Home: React.FC = () => {
                                     cursor: "pointer",
                                     fontSize: 17,
                                     fontWeight: "bold",
-                                    borderEndStartRadius: 10,
-                                    borderEndEndRadius: 10,
-                                    borderStartStartRadius: 0,
-                                    borderStartEndRadius: 0,
+                                    borderEndStartRadius: { xs: 0, sm: 0, md: 10 },
+                                    borderEndEndRadius: { xs: 0, sm: 0, md: 10 },
                                     border: "1px solid rgba(255, 255, 255, 0.1)",
                                     '&:hover': {
                                         bgcolor: "rgba(0, 0, 0, 0.5)",
@@ -227,10 +241,9 @@ const Home: React.FC = () => {
                         }
                     </Box>
                 </Stack>
-
                 <div
                     style={{
-                        paddingBottom: "50px",
+                        padding: "30px 0 50px 0",
                     }}
                 >
                     <Accordion sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}>
@@ -284,9 +297,9 @@ const Home: React.FC = () => {
                             </Box>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion 
-                    sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}
-                    disabled={credts.length === 0}
+                    <Accordion
+                        sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}
+                        disabled={credts.length === 0}
                     >
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -309,9 +322,9 @@ const Home: React.FC = () => {
                             </Box>
                         </AccordionDetails>
                     </Accordion>
-                    <Accordion 
-                    sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}
-                    disabled={videos.length === 0}
+                    <Accordion
+                        sx={{ border: "1px solid rgba(255, 255, 255, 0.1)", bgcolor: "rgba(255, 255, 255, 0.05)" }}
+                        disabled={videos.length === 0}
                     >
                         <AccordionSummary
                             expandIcon={<ExpandMoreIcon />}
