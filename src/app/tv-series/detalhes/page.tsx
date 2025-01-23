@@ -103,7 +103,7 @@ const Home: React.FC = () => {
                         width: "100%",
                         height: 500,
                         justifyContent: "space-between",
-                        my: { xs: 40, sm: 0, md: 8 },
+                        my: { xs: 0, sm: 0, md: 8 },
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
@@ -152,16 +152,18 @@ const Home: React.FC = () => {
                             >
                                 {formatarData(filme?.first_air_date ? filme?.first_air_date : '')}
                             </Typography>
-                            <Typography
-                                sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
-                            >
-                                {filme?.number_of_seasons} Temporadas
-                            </Typography>
-                            <Typography
-                                sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
-                            >
-                                {filme?.number_of_episodes} Episódios
-                            </Typography>
+                            <Box sx={{ mt: { xs: 1, sm: 1, md: 1, lg: 0 }, display: { xs: 'block', sm: 'block', md: 'block', lg: 'inline'}, ml: { xs: 0, sm: 0, md: 0, lg: 2} }}>
+                                <Typography
+                                    sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline" }}
+                                >
+                                    {filme?.number_of_seasons} Temporadas
+                                </Typography>
+                                <Typography
+                                    sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                                >
+                                    {filme?.number_of_episodes} Episódios
+                                </Typography>
+                            </Box>
                             <Typography
                                 variant="body1"
                                 sx={{

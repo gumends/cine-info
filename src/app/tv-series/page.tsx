@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
 import Carrosel from '@/app/components/Carrosel'
 import * as series from '@/services/series.service';
@@ -52,39 +52,6 @@ export default function Home() {
                 }}
                 maxWidth="lg"
             >
-                <Stack
-                    spacing={2}
-                    useFlexGap
-                    sx={{ alignItems: 'center', width: { xs: '100%', sm: '70%' } }}
-                    marginTop={{ xs: 15, sm: 0, md: 0 }}
-                >
-                    <Typography
-                        variant="h1"
-                        sx={{
-                            display: 'flex',
-                            flexDirection: { xs: 'column', sm: 'row' },
-                            alignItems: 'center',
-                            fontSize: 'clamp(3rem, 10vw, 3.5rem)',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Cine
-                        <Typography
-                            component="span"
-                            variant="h1"
-                            sx={(theme) => ({
-                                fontSize: 'inherit',
-                                color: 'success.main',
-                                ...theme.applyStyles('dark', {
-                                    color: 'success.light',
-                                }),
-                                fontWeight: 'bold',
-                            })}
-                        >
-                            Info
-                        </Typography>
-                    </Typography>
-                </Stack>
                 <Typography
                     component="span"
                     variant="h2"
@@ -100,7 +67,7 @@ export default function Home() {
                 >
                     Séries Recentes
                 </Typography>
-                <Box sx={{ mt: 4, width: '100%', }}>
+                <Box sx={{ mt: 4, width: '100%', px: { xs: 3, sm: 2 } }}>
                     {seriesRecentes.length > 0 ? <Carrosel filmes={seriesRecentes} tipo='tv-series' /> : null}
                 </Box>
             </Container>
