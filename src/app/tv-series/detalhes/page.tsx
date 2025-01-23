@@ -1,12 +1,11 @@
 'use client';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, CardMedia, Chip, Container, Divider, Modal, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CardMedia, Chip, Container, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as series from '@/services/series.service';
 import { ISerie } from '@/types/series.type';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
-import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
@@ -16,6 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 import LoadingScreen from '@/app/components/Loading';
 import CarroselCuston from '@/app/components/CarroselCuston';
+import { IReleaseDatesResult } from '@/types/filmes.type';
 
 const Home: React.FC = () => {
 
@@ -53,13 +53,6 @@ const Home: React.FC = () => {
         return `${dia}/${mes}/${ano}`;
     }
 
-    function formatRuntime(minutes: number) {
-        if (minutes == 0) return 'Tem duração não informado';
-        const hours = Math.floor(minutes / 60);
-        const mins = minutes % 60;
-        return `${hours}h ${mins}min`;
-    }
-
     const fatchData = async (movieId: string) => {
         await Promise.all([
             series.getSerie(Number(movieId))
@@ -78,7 +71,7 @@ const Home: React.FC = () => {
             series.getClassificacoes(Number(movieId))
                 .then((data) => {
                     try {
-                        const classBrasil = (data.results).filter((item: any) => item.iso_3166_1 == 'BR');
+                        const classBrasil = (data.results).filter((item: IReleaseDatesResult) => item.iso_3166_1 == 'BR');
                         classificacao(classBrasil[0].rating);
                     } catch {
                         classificacao('');

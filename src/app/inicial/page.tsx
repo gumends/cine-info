@@ -106,7 +106,7 @@ export default function Home() {
                     position: 'relative',
                     width: '100vw',
                     overflow: 'hidden',
-                    top: -179,
+                    top: { xs: -70, sm: -179, md: -179 },
                     boxShadow: '1px 300px 200px rgb(0, 0, 0)',
                 }}
             >
@@ -114,6 +114,7 @@ export default function Home() {
                     sx={{
                         position: 'relative',
                         width: '100%',
+                        display: { xs: 'none', sm: 'flex', md: 'flex' },
                     }}
                 >
                     {/* Imagem de fundo */}
@@ -121,7 +122,6 @@ export default function Home() {
                         <Slider {...settings}>
                             {filmesPopulares.map((filme) => {
                                 const [label, bgColor, color] = definirClassificacao(classificacoes[filme.id] || '');
-
                                 return (
                                     <>
                                         <Box key={filme.id} sx={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
@@ -147,7 +147,7 @@ export default function Home() {
                                                 width: '50%',
                                                 height: '100%',
                                                 background: 'linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0))',
-                                                pl: 10,
+                                                pl: { sm: 5, md: 10 },
                                                 display: 'flex',
                                                 flexDirection: 'column',
                                                 justifyContent: 'center',
@@ -155,14 +155,14 @@ export default function Home() {
                                         >
                                             <Box
                                                 sx={{
-                                                    mb: 20,
+                                                    mb: { xs: 1, sm: 2, md: 3, lg: 4 },
                                                 }}
                                             >
                                                 <Typography
                                                     component="h1"
                                                     variant="h1"
                                                     sx={{
-                                                        fontSize: '40px',
+                                                        fontSize: { xs: '15px', sm: '20px', md: '30px', lg: '40px' },
                                                         fontWeight: 'bold',
                                                     }}
                                                 >
@@ -174,14 +174,14 @@ export default function Home() {
                                                         alignItems: 'center',
                                                     }}
                                                 >
-                                                    <Typography sx={{ mr: 2, fontSize: { xs: '16px', sm: '18px' }, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
+                                                    <Typography sx={{ mr: 2, fontSize: { xs: '10px', sm: '12px', md: '15px', lg: '18px' }, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
                                                         {label}
                                                     </Typography>
                                                     <Typography
                                                         component="p"
                                                         variant="body1"
                                                         sx={{
-                                                            fontSize: '19px',
+                                                            fontSize: { xs: '10px', sm: '12px', md: '15px', lg: '18px' },
                                                             color: 'rgba(255, 255, 255, 0.8)',
                                                             display: 'inline-block',
                                                         }}
@@ -192,10 +192,15 @@ export default function Home() {
                                                 <Typography
                                                     variant="body1"
                                                     sx={{
-                                                        fontSize: '20px',
+                                                        fontSize: { xs: '10px', sm: '12px', md: '15px', lg: '18px' },
                                                         mt: 2,
                                                         color: 'rgba(255, 255, 255, 0.8)',
                                                         width: '60%',
+                                                        display: '-webkit-box',
+                                                        WebkitLineClamp: 3,
+                                                        WebkitBoxOrient: 'vertical',
+                                                        overflow: 'hidden',
+                                                        textOverflow: 'ellipsis',
                                                     }}
                                                 >
                                                     {filme.overview}
@@ -213,7 +218,7 @@ export default function Home() {
                                                             mt: 2,
                                                             bgcolor: 'rgb(43, 16, 105)',
                                                             display: 'inline-block',
-                                                            px: 5,
+                                                            px: { xs: 1, sm: 2, md: 3, lg: 4 },
                                                             py: 1,
                                                             borderRadius: 1,
                                                             fontWeight: 'bold',
@@ -223,7 +228,7 @@ export default function Home() {
                                                                 bgcolor: 'rgba(43, 16, 105, 0.79)',
                                                                 color: 'rgba(255, 255, 255, 0.8)',
                                                             },
-                                                            fontSize: '17px',
+                                                            fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '17px' }
                                                         }}
                                                         onClick={() => {
                                                             router.push(`/filmes/detalhes?id=${filme.id}`);
@@ -250,6 +255,168 @@ export default function Home() {
                         }}
                     />
                 </Stack>
+                <Stack
+                    sx={{
+                        position: 'relative',
+                        width: '100%',
+                        height: '100%',
+                        overflow: 'hidden',
+                        display: { xs: 'block', sm: 'none', md: 'none', lg: 'none' },
+                    }}
+                >
+                    <div className='slider-container' style={{ position: 'relative', width: '100%', height: '100%' }}>
+                        <Slider {...settings}>
+                            {filmesPopulares.map((filme) => {
+                                const [label, bgColor, color] = definirClassificacao(classificacoes[filme.id] || '');
+                                return (
+                                    <Box
+                                        key={filme.id}
+                                        className="slider-item"
+                                    >
+                                        <Box key={filme.id} sx={{ position: 'relative', width: '100%', minHeight: 250, overflow: 'hidden' }}>
+                                            <img
+                                                src={
+                                                    filme.backdrop_path
+                                                        ? `https://image.tmdb.org/t/p/original${filme.poster_path}.jpg`
+                                                        : 'https://via.placeholder.com/150'
+                                                }
+                                                alt="Filme Popular"
+                                                style={{
+                                                    width: '100%',
+                                                    maxHeight: '100%',
+                                                    objectFit: 'cover',
+                                                }}
+                                            />
+                                            <Box
+                                                sx={{
+                                                    position: 'absolute',
+                                                    bottom: 0,
+                                                    left: 0,
+                                                    width: '100%',
+                                                    height: '50%',
+                                                    background: 'linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0))',
+                                                    pl: { sm: 5, md: 10 },
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    justifyContent: 'center',
+                                                }}
+                                            >
+                                                <Box
+                                                    sx={{
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        justifyContent: 'end',
+                                                        px: 3
+                                                    }}
+                                                >
+                                                    <Typography
+                                                        component="h1"
+                                                        variant="h1"
+                                                        sx={{
+                                                            display: '-webkit-box',
+                                                            WebkitLineClamp: 1,
+                                                            WebkitBoxOrient: 'vertical',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                            fontSize: 25,
+                                                            fontWeight: 'bold',
+                                                        }}
+                                                    >
+                                                        {filme.title}
+                                                    </Typography>
+                                                    <Box
+                                                        sx={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <Typography sx={{ mr: 2, fontSize: 15, color, bgcolor: bgColor, borderRadius: 1, px: 1 }}>
+                                                            {label}
+                                                        </Typography>
+                                                        <Typography
+                                                            component="p"
+                                                            variant="body1"
+                                                            sx={{
+                                                                fontSize: 15,
+                                                                color: 'rgba(255, 255, 255, 0.8)',
+                                                                display: 'inline-block',
+                                                            }}
+                                                        >
+                                                            {formatarData(filme.release_date)}
+                                                        </Typography>
+                                                    </Box>
+                                                    <Typography
+                                                        variant="body1"
+                                                        sx={{
+                                                            fontSize: 16,
+                                                            mt: 2,
+                                                            color: 'rgba(255, 255, 255, 0.8)',
+                                                            width: '100%',
+                                                            display: '-webkit-box',
+                                                            WebkitLineClamp: 3,
+                                                            WebkitBoxOrient: 'vertical',
+                                                            overflow: 'hidden',
+                                                            textOverflow: 'ellipsis',
+                                                        }}
+                                                    >
+                                                        {filme.overview}
+                                                    </Typography>
+                                                    <Box
+                                                        sx={{
+                                                            display: 'flex',
+                                                            justifyContent: 'center',
+                                                            width: '100%',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <Box
+                                                            sx={{
+                                                                gap: 2,
+                                                                my: 2,
+                                                                bgcolor: 'rgb(43, 16, 105)',
+                                                                display: 'inline-block',
+                                                                textAlign: 'center',
+                                                                px: 4,
+                                                                py: 1,
+                                                                width: '100%',
+                                                                borderRadius: 1,
+                                                                fontWeight: 'bold',
+                                                                cursor: 'pointer',
+                                                                color: 'rgba(255, 255, 255, 0.8)',
+                                                                '&:hover': {
+                                                                    bgcolor: 'rgba(43, 16, 105, 0.79)',
+                                                                    color: 'rgba(255, 255, 255, 0.8)',
+                                                                },
+                                                                fontSize: 15
+                                                            }}
+                                                            onClick={() => {
+                                                                router.push(`/filmes/detalhes?id=${filme.id}`);
+                                                            }}
+                                                        >
+                                                            Mais informações
+                                                        </Box>
+                                                    </Box>
+                                                </Box>
+                                            </Box>
+                                        </Box>
+                                    </Box>
+                                )
+                            })}
+                        </Slider>
+                    </div>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '0.6%',
+                            background: 'linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 1))',
+                        }}
+                    />
+                </Stack>
             </Stack>
             <Box
                 sx={{
@@ -258,7 +425,7 @@ export default function Home() {
                     alignItems: 'center',
                     position: 'relative',
                     mx: { xs: 5, sm: 10, md: 20 },
-                    mt: { xs: -20, sm: 0, md: -50 }
+                    mt: { xs: 0, sm: -25, md: -35, lg: -40 },
 
                 }}
             >
@@ -267,7 +434,7 @@ export default function Home() {
                         component="span"
                         variant="h2"
                         sx={{
-                            fontSize: '30px',
+                            fontSize: { xs: '20px', md: '30px'},
                             color: '#00FFFF',
                             fontWeight: 'bold',
                         }}
@@ -283,7 +450,7 @@ export default function Home() {
                         component="span"
                         variant="h2"
                         sx={{
-                            fontSize: '30px',
+                            fontSize: { xs: '20px', md: '30px'},
                             color: '#00FFFF',
                             fontWeight: 'bold',
                             mt: 4,
@@ -300,7 +467,7 @@ export default function Home() {
                         component="span"
                         variant="h2"
                         sx={{
-                            fontSize: '30px',
+                            fontSize: { xs: '20px', md: '30px'},
                             color: '#00FFFF',
                             fontWeight: 'bold',
                             mt: 4,

@@ -7,7 +7,7 @@ import { IPopular } from "@/types/popular-tv.type";
 import { Box } from "@mui/material";
 
 function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: string }) {
-    var settings = {
+    const settings = {
         dots: true,
         infinite: false,
         speed: 500,
@@ -18,8 +18,8 @@ function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 4,
+                    slidesToScroll: 4,
                     infinite: true,
                     dots: true
                 }

@@ -17,14 +17,14 @@ interface IData {
     original_name: string;
     popularity: number;
     profile_path: string;
-}[]
+}
 
 interface IProps {
-    data: IData[];
+    data: IData[]; // Array de objetos do tipo IData
 }
 
 function CarroselCuston(props: IProps) {
-    var settings = {
+    const settings = {
         dots: true,
         infinite: false,
         speed: 500,
@@ -62,8 +62,8 @@ function CarroselCuston(props: IProps) {
         <div className="slider-container">
             <Slider {...settings}>
                 {props.data.map((data: IData) => (
-                    <div className="itens">
-                        <Card key={data.id}
+                    <div key={data.id} className="itens">
+                        <Card
                             sx={{
                                 cursor: 'pointer',
                                 transition: 'transform 0.3s ease-in-out'

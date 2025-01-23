@@ -1,12 +1,11 @@
 'use client';
 
-import { AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, CardMedia, Container, Typography } from '@mui/material';
+import { AccordionDetails, AccordionSummary, Box, Button, Card, CardMedia, Container, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as films from '@/services/films.service';
 import { IFilme } from '@/types/filmes.type';
 import { IElencoResponse, IElenco } from '@/types/elenco.type';
-import Flicking from "@egjs/react-flicking";
 import "@egjs/react-flicking/dist/flicking.css";
 import "@egjs/react-flicking/dist/flicking-inline.css";
 import { useRouter } from 'next/navigation';
