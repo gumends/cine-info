@@ -47,7 +47,8 @@ function CarroselCuston(props: IProps) {
                 slidesToShow: 2,
                 slidesToScroll: 2,
                 initialSlide: 0,
-                dots: false
+                dots: false,
+                infinite: true,
               }
             },
             {
@@ -56,7 +57,8 @@ function CarroselCuston(props: IProps) {
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 initialSlide: 0,
-                dots: false
+                dots: false,
+                infinite: true,
               }
             }
           ]
