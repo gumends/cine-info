@@ -476,7 +476,7 @@ export default function Home() {
                         Filmes em cartaz
                     </Typography>
                 </Stack>
-                <Stack sx={{ width: '100%', mt: 4 }}>
+                <Stack sx={{ width: '100%', mt: 4, pb: 9 }}>
                     <Responsive filmes={filmesEmCartaz} tipo="filmes" />
                 </Stack>
             </Box>

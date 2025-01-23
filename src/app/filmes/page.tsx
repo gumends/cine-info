@@ -28,7 +28,7 @@ export default function Home() {
     const getPopulares = async () => {
         const data = await films.buscaPopulares(pagina + 1);
         setPagina((prevPagina) => prevPagina + 1);
-        setFilmesPopulares((prevFilmes) => [...prevFilmes, ...data.results]); 
+        setFilmesPopulares((prevFilmes) => [...prevFilmes, ...data.results]);
     };
 
     useEffect(() => {
@@ -65,11 +65,11 @@ export default function Home() {
                 >
                     Filmes Em Cartaz
                 </Typography>
-                <Box sx={{ mt: 4, width: '100%',  }}>
-                <Carrosel filmes={filmes} tipo="filmes" />
+                <Box sx={{ mt: 4, width: '100%', px: { xs: 3, sm: 2 }}}>
+                    <Carrosel filmes={filmes} tipo="filmes" />
                 </Box>
             </Container>
-            <Container sx={{ mt: 19 }}>
+            <Container sx={{ mt: { xs: 7, sm: 7, md: 17 } }}>
                 <Typography
                     component="span"
                     variant="h2"
@@ -175,7 +175,7 @@ export default function Home() {
                         ))
                     }
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 7 }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 7, pb: 7 }}>
                     <Button variant="contained" onClick={() => { getPopulares() }}>
                         Ver mais
                     </Button>
