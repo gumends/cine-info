@@ -12,13 +12,44 @@ function CenterMode({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
     dots: true,
     centerMode: true,
     infinite: true,
-    centerPadding: "90px",
     slidesToShow: 3,
     speed: 500,
     autoplay: true,
     autoplaySpeed: 3000,
-    cssEase: "linear",
-    dotsClass: "slick-dots slick-thumb",
+    responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true,
+                centerMode: false
+              }
+            },
+            {
+              breakpoint: 600,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2,
+                initialSlide: 0,
+                dots: false,
+                infinite: true,
+                centerMode: false
+              }
+            },
+            {
+              breakpoint: 480,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                initialSlide: 0,
+                dots: false,
+                infinite: true,
+                centerMode: false
+              }
+            }
+          ]
   };
 
   const router = useRouter();
@@ -31,7 +62,6 @@ function CenterMode({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
             key={filme.id}
             className="slider-item"
             sx={{
-              mx: 2,
               p: 2,
               cursor: 'pointer',
               transition: 'transform 0.3s ease-in-out',
@@ -51,37 +81,6 @@ function CenterMode({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
           </Box>
         ))}
       </Slider>
-      <style jsx>{`
-        /* Dots Customization */
-        .slick-dots li button:before {
-          font-size: 12px;
-          color: #aaa; /* Default dot color */
-        }
-
-        .slick-dots li.slick-active button:before {
-          color: #ff5722; /* Active dot color */
-        }
-
-        /* Arrow Customization */
-        .slick-prev:before,
-        .slick-next:before {
-          font-size: 20px;
-          color: #ff5722; /* Arrow color */
-        }
-
-        .slick-prev {
-          left: -45px; /* Adjust position of previous arrow */
-        }
-
-        .slick-next {
-          right: -45px; /* Adjust position of next arrow */
-        }
-
-        /* Optional: Background behind dots */
-        .slick-dots {
-          bottom: -25px;
-        }
-      `}</style>
     </div>
   );
 }
