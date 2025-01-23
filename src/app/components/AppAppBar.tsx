@@ -36,7 +36,7 @@ export default function AppAppBar() {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ mb: 6, display: {xs: 'none', sm: 'block', md: 'block'} }}>
+    <Container maxWidth="lg" sx={{ mb: 6, display: {xs: 'none', sm: 'none', md: 'block'} }}>
       <StyledToolbar variant="dense" disableGutters>
         <Box
           sx={{
