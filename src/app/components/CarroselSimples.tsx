@@ -29,14 +29,17 @@ function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    initialSlide: 2
+                    initialSlide: 0,
+                    infinite: true,
                 }
             },
             {
                 breakpoint: 480,
                 settings: {
                     slidesToShow: 3,
-                    slidesToScroll: 3
+                    slidesToScroll: 3,
+                    initialSlide: 0,
+                    infinite: true
                 }
             }
         ]
