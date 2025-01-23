@@ -201,6 +201,7 @@ export default function Home() {
                                                         WebkitBoxOrient: 'vertical',
                                                         overflow: 'hidden',
                                                         textOverflow: 'ellipsis',
+                                                        textAlign: 'justify',
                                                     }}
                                                 >
                                                     {filme.overview}
