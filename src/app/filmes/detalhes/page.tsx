@@ -1,6 +1,6 @@
 'use client';
 
-import { AccordionDetails, AccordionSummary, Box, Button, Card, CardMedia, Container, Typography } from '@mui/material';
+import { AccordionDetails, AccordionSummary, Box, Card, CardMedia, Container, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as films from '@/services/films.service';
