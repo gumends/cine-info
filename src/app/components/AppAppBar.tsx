@@ -63,7 +63,7 @@ export default function AppAppBar() {
               size="medium"
               onClick={() => router.push('/inicial')}
             >
-              Inicial
+              Início
             </Button>
             <Button
               variant="text"
@@ -145,14 +145,14 @@ export default function AppAppBar() {
                   borderTopRightRadius: 0,
                   borderBottomRightRadius: 0,
                 }}
-                onClick={() => router.push('/inicial')}>Inicio</Button>
+                onClick={() => router.push('/inicial')}>Início</Button>
               <Button
                 sx={{
                   width: "100%",
                   border: '1px solid rgba(255, 255, 255, 0.2)',
                   borderRadius: 0
                 }}
-                onClick={() => router.push('/filmes')}>Filme</Button>
+                onClick={() => router.push('/filmes')}>Filmes</Button>
               <Button
                 sx={{
                   width: "100%",
