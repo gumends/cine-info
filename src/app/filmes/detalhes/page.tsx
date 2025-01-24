@@ -16,6 +16,7 @@ import { styled } from '@mui/material/styles';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CarroselCuston from '@/app/components/CarroselCuston';
+import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
 
 const Accordion = styled((props: AccordionProps) => (
     <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -123,7 +124,7 @@ const Home: React.FC = () => {
                         width: "100%",
                         height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 40, sm: 30, md: 8},
+                        mt: { xs: 55, sm: 30, md: 8},
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
@@ -181,7 +182,7 @@ const Home: React.FC = () => {
                                 variant="body1"
                                 sx={{
                                     mt: 4,
-                                    fontSize: { xs: 15, md: 20},
+                                    fontSize: { xs: 15, sm: 16, md: 16, lg: 18},
                                     width: { xs: '100%', md: '70%'},
                                     color: "rgba(255, 255, 255, 0.8)",
                                     textAlign: "justify"
@@ -205,12 +206,12 @@ const Home: React.FC = () => {
                             component="img"
                             sx={{
                                 width: { xs: 300, sm: 400, md: 600 },
-                                height: { xs: 500, sm: 400, md: 600 },
+                                height: { xs: 500, sm: 400, md: 500 },
                                 borderStartStartRadius: 10,
                                 borderStartEndRadius: 10,
                                 objectFit: "contain",
                             }}
-                            image={`https://image.tmdb.org/t/p/original${filme?.poster_path}`}
+                            image={ filme?.poster_path ?`https://image.tmdb.org/t/p/original${filme?.poster_path}` : images.default.src}
                             alt={filme?.title}
                         />
                         {filme?.homepage !== "" &&

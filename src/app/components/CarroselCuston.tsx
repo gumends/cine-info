@@ -3,6 +3,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
 
 interface IData {
     adult: boolean;
@@ -33,35 +34,44 @@ function CarroselCuston(props: IProps) {
         initialSlide: 0,
         responsive: [
             {
-              breakpoint: 1024,
-              settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: true
-              }
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: true
+                }
+            }, 
+            {
+                breakpoint: 750,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: false
+                }
             },
             {
-              breakpoint: 600,
-              settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2,
-                initialSlide: 0,
-                dots: false,
-                infinite: true,
-              }
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 0,
+                    dots: false,
+                    infinite: true,
+                }
             },
             {
-              breakpoint: 480,
-              settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1,
-                initialSlide: 0,
-                dots: false,
-                infinite: true,
-              }
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    initialSlide: 0,
+                    dots: false,
+                    infinite: true,
+                }
             }
-          ]
+        ]
     };
     return (
         <div className="slider-container">
@@ -76,7 +86,7 @@ function CarroselCuston(props: IProps) {
                         >
                             <CardMedia
                                 sx={{ height: 240 }}
-                                image={`https://image.tmdb.org/t/p/w500${data.profile_path}`}
+                                image={data.profile_path ? `https://image.tmdb.org/t/p/w500${data.profile_path}` : images.default.src}
                                 title={data.name}
                             />
                             <CardContent>
@@ -87,7 +97,7 @@ function CarroselCuston(props: IProps) {
                                     {data.character}
                                 </Typography>
                             </CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%'}}>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Button sx={{
                                     width: '100%',
                                     color: 'rgba(255, 255, 255, 0.8)',

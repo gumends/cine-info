@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Popular } from '@/types/popular.type';
 import { IPopular } from '@/types/popular-tv.type';
 import { useRouter } from "next/navigation";
+import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
 
 function CenterMode({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: string }) {
   const settings = {
@@ -70,7 +71,7 @@ function CenterMode({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
             onClick={() => { router.push(`/${tipo}/detalhes?id=${filme.id}`) }}
           >
             <img
-              src={`https://image.tmdb.org/t/p/w500/${filme.poster_path}`}
+              src={ filme.poster_path ? `https://image.tmdb.org/t/p/w500/${filme.poster_path}` : images.default.src}
               alt="poster"
               style={{
                 borderRadius: "8px",
