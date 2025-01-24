@@ -36,7 +36,7 @@ export default function AppAppBar() {
   }, []);
 
   return (
-    <Container maxWidth="lg" sx={{ mb: 6, display: {xs: 'none', sm: 'none', md: 'block'} }}>
+    <Container maxWidth="lg" sx={{ mb: 6, display: { xs: 'block', sm: 'block', md: 'block' } }}>
       <StyledToolbar variant="dense" disableGutters>
         <Box
           sx={{
@@ -45,7 +45,7 @@ export default function AppAppBar() {
             alignItems: 'center',
             px: 0,
             justifyContent: 'space-between',
-            height: '50px',
+            height: "100%",
           }}
         >
           {/* Desktop Navigation */}
@@ -82,79 +82,90 @@ export default function AppAppBar() {
               Séries
             </Button>
           </Box>
-
-          {/* Mobile Menu Toggle */}
-          <IconButton
-            color="success"
-            onClick={() => setOpenDrawer(true)}
-            sx={{ display: { xs: 'flex', md: 'none' } }}
-          >
-            <DehazeIcon />
-          </IconButton>
-
-          {/* Search Field */}
           <Box
             sx={{
-              display: 'flex',
-              justifyContent: 'end',
-              alignItems: 'center',
-              flexGrow: 1,
+              width: '100%'
             }}
           >
-            <TextField
-              variant="outlined"
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-              placeholder="Busca"
+            <Box
               sx={{
-                mt: 0,
-                width: { xs: '100%', md: 500 },
+                display: 'flex',
+                justifyContent: 'end',
+                alignItems: 'center',
+                flexGrow: 1,
               }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  router.push(`/busca?q=${busca.replace(' ', '%20')}`);
-                }
-              }}
-            />
-            <IconButton
-              color="success"
-              onClick={() =>
-                router.push(`/busca?q=${busca.replace(' ', '%20')}`)
-              }
-              sx={{ ml: 1 }}
             >
-              <SearchIcon />
-            </IconButton>
+              <IconButton
+                color="success"
+                onClick={() => setOpenDrawer(!openDrawer)}
+                sx={{ mr: 1, display: { xs: 'flex', md: 'none' } }}
+              >
+                <DehazeIcon />
+              </IconButton>
+              <TextField
+                variant="outlined"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+                placeholder="Busca"
+                sx={{
+                  mt: 0,
+                  width: { xs: '100%', md: 500 },
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    router.push(`/busca?q=${busca.replace(' ', '%20')}`);
+                  }
+                }}
+              />
+              <IconButton
+                color="success"
+                onClick={() =>
+                  router.push(`/busca?q=${busca.replace(' ', '%20')}`)
+                }
+                sx={{ ml: 1 }}
+              >
+                <SearchIcon />
+              </IconButton>
+            </Box>
+            <Box
+              sx={{
+                display: { xs: openDrawer ? 'flex' : 'none', sm: openDrawer ? 'flex' : 'none', md: 'none' },
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                width: "100%",
+                mt: 2,
+                transition: 'all 0.3s ease-in-out'
+              }}
+            >
+              <Button
+                sx={{
+                  width: "100%",
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  borderBottomRightRadius: 0,
+                }}
+                onClick={() => router.push('/inicial')}>Inicio</Button>
+              <Button
+                sx={{
+                  width: "100%",
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderRadius: 0
+                }}
+                onClick={() => router.push('/filmes')}>Filme</Button>
+              <Button
+                sx={{
+                  width: "100%",
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  borderTopLeftRadius: 0,
+                  borderTopRightRadius: 0,
+                  borderBottomLeftRadius: 0,
+                }}
+                onClick={() => router.push('/tv-series')}>Séries</Button>
+            </Box>
           </Box>
         </Box>
       </StyledToolbar>
-
-      {/* Drawer for Mobile Navigation */}
-      <Drawer
-        anchor="left"
-        open={openDrawer}
-        onClose={() => setOpenDrawer(false)}
-      >
-        <Box
-          sx={{
-            width: 250,
-            p: 2,
-          }}
-          role="presentation"
-        >
-          <List>
-            <ListItemButton onClick={() => router.push('/inicial')}>
-              <ListItemText primary="Inicial" />
-            </ListItemButton>
-            <ListItemButton onClick={() => router.push('/filmes')}>
-              <ListItemText primary="Filmes" />
-            </ListItemButton>
-            <ListItemButton onClick={() => router.push('/tv-series')}>
-              <ListItemText primary="Séries" />
-            </ListItemButton>
-          </List>
-        </Box>
-      </Drawer>
     </Container>
   );
 }
