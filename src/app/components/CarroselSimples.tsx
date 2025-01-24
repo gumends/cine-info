@@ -48,8 +48,8 @@ function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
         <div className="slider-container">
             <Slider {...settings} >
                 {filmes.map((data) => (
-                    <Box key={data.id} className="itens" sx={{ cursor: 'pointer' }} onClick={() => window.location.href = `/${tipo}/detalhes?id=${data.id}`} >
-                        <img src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`} style={{ borderRadius: '10px' }} alt={(data as Popular).title || (data as IPopular).name} />
+                    <Box key={data.id} className="itens" sx={{ cursor: 'pointer', height: { xs: 150, lg: 300, md: 250, sm: 200, xl: 400 } }} onClick={() => window.location.href = `/${tipo}/detalhes?id=${data.id}`} >
+                        <img src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`} style={{ borderRadius: '10px', height: '100%' }} alt={(data as Popular).title || (data as IPopular).name} />
                     </Box>
                 ))}
             </Slider>
