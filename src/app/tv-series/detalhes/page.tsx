@@ -103,7 +103,7 @@ const Home: React.FC = () => {
                         width: "100%",
                         height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 40, sm: 30, md: 8},
+                        mt: { xs: 40, sm: 30, md: 8 },
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
@@ -152,7 +152,7 @@ const Home: React.FC = () => {
                             >
                                 {formatarData(filme?.first_air_date ? filme?.first_air_date : '')}
                             </Typography>
-                            <Box sx={{ mt: { xs: 1, sm: 1, md: 1, lg: 0 }, display: { xs: 'block', sm: 'block', md: 'block', lg: 'inline'}, ml: { xs: 0, sm: 0, md: 0, lg: 2} }}>
+                            <Box sx={{ mt: { xs: 1, sm: 1, md: 1, lg: 0 }, display: { xs: 'block', sm: 'block', md: 'block', lg: 'inline' }, ml: { xs: 0, sm: 0, md: 0, lg: 2 } }}>
                                 <Typography
                                     sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline" }}
                                 >
@@ -281,6 +281,26 @@ const Home: React.FC = () => {
                                             <span key={key}>{company.name}{key === filme?.production_countries.length - 1 ? "" : ", "}</span>
                                         ))}
                                     </Typography>
+                                    {
+                                        filme?.homepage &&
+                                        <Typography variant="body1">
+                                            <strong>Onde assistir:</strong>
+                                            <strong
+                                                style={{
+                                                    color: "rgb(8, 255, 222)",
+                                                    fontWeight: "bold",
+                                                    cursor: "pointer",
+                                                    textDecoration: "underline",
+                                                    marginLeft: "10px",
+                                                    transition: "all 0.3s ease",
+
+                                                }}
+                                                onClick={() => window.open(filme?.homepage, "_blank")}
+                                            >
+                                                assistir
+                                            </strong>
+                                        </Typography>
+                                    }
                                 </Stack>
                             </Box>
                         </AccordionDetails>

@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                         width: "100%",
                         height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 55, sm: 30, md: 8},
+                        mt: { xs: 55, sm: 30, md: 8 },
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
@@ -144,20 +144,20 @@ const Home: React.FC = () => {
                                 <Typography
                                     variant="h4"
                                     sx={{
-                                        fontSize: { xs: 25, md: 30},
+                                        fontSize: { xs: 25, md: 30 },
                                         width: "100%",
                                         fontWeight: "bold"
                                     }}>{filme?.title}</Typography>
                             </Box>
                             <Box sx={{ mb: 2 }}>
-                                <Typography sx={{ fontSize: { xs: 15, md: 17}, width: '70%', display: "inline" }}  variant="subtitle1" color="text.secondary">
+                                <Typography sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', display: "inline" }} variant="subtitle1" color="text.secondary">
                                     {filme?.tagline}
                                 </Typography>
                             </Box>
                             <Typography variant="body1"
                                 sx={{
                                     mt: 4,
-                                    fontSize: { xs: 15, md: 17},
+                                    fontSize: { xs: 15, md: 17 },
                                     width: '70%',
                                     color: TipoClassificacao[2],
                                     bgcolor: TipoClassificacao[1],
@@ -169,12 +169,12 @@ const Home: React.FC = () => {
                                 {TipoClassificacao[0]}
                             </Typography>
                             <Typography
-                                sx={{ fontSize: { xs: 15, md: 17}, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                                sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
                                 {formatarData(filme?.release_date ? filme?.release_date : '')}
                             </Typography>
                             <Typography
-                                sx={{ fontSize: { xs: 15, md: 17}, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
+                                sx={{ fontSize: { xs: 15, md: 17 }, width: '70%', color: "rgba(255, 255, 255, 0.8)", display: "inline", ml: 2 }}
                             >
                                 {formatRuntime(filme?.runtime as number)}
                             </Typography>
@@ -182,8 +182,8 @@ const Home: React.FC = () => {
                                 variant="body1"
                                 sx={{
                                     mt: 4,
-                                    fontSize: { xs: 15, sm: 16, md: 16, lg: 18},
-                                    width: { xs: '100%', md: '70%'},
+                                    fontSize: { xs: 15, sm: 16, md: 16, lg: 18 },
+                                    width: { xs: '100%', md: '70%' },
                                     color: "rgba(255, 255, 255, 0.8)",
                                     textAlign: "justify"
                                 }}
@@ -211,35 +211,9 @@ const Home: React.FC = () => {
                                 borderStartEndRadius: 10,
                                 objectFit: "contain",
                             }}
-                            image={ filme?.poster_path ?`https://image.tmdb.org/t/p/original${filme?.poster_path}` : images.default.src}
+                            image={filme?.poster_path ? `https://image.tmdb.org/t/p/original${filme?.poster_path}` : images.default.src}
                             alt={filme?.title}
                         />
-                        {filme?.homepage !== "" &&
-                            <Button
-                                sx={{
-                                    bgcolor: "rgba(0, 0, 0, 0.3)",
-                                    width: "100%",
-                                    display: { xs: "none", sm: "none", md: "flex" },
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    height: 40,
-                                    color: "rgba(255, 255, 255, 0.9)",
-                                    cursor: "pointer",
-                                    fontSize: 17,
-                                    fontWeight: "bold",
-                                    borderEndStartRadius: { xs: 0, sm: 0, md: 10 },
-                                    borderEndEndRadius: { xs: 0, sm: 0, md: 10 },
-                                    border: "1px solid rgba(255, 255, 255, 0.1)",
-                                    '&:hover': {
-                                        bgcolor: "rgba(0, 0, 0, 0.5)",
-                                    },
-                                    trasition: "all 0.3s ease",
-                                }}
-                                onClick={() => { window.open(filme?.homepage ? filme?.homepage : "", "_blank") }}
-                            >
-                                Onde Assistir
-                            </Button>
-                        }
                     </Box>
                 </Stack>
                 <div
@@ -294,6 +268,27 @@ const Home: React.FC = () => {
                                             <span key={key}>{company.name}{key === filme?.production_countries.length - 1 ? "" : ", "}</span>
                                         ))}
                                     </Typography>
+                                    {
+                                        filme?.homepage &&
+                                        <Typography variant="body1">
+                                            <strong>Onde assistir:</strong>
+                                            <strong
+                                                style={{
+                                                    color: "rgb(8, 255, 222)",
+                                                    fontWeight: "bold",
+                                                    cursor: "pointer",
+                                                    textDecoration: "underline",
+                                                    marginLeft: "10px",
+                                                    transition: "all 0.3s ease",
+                                                    
+                                                }}
+                                                onClick={() => window.open(filme?.homepage, "_blank")}
+                                            >
+                                                assistir
+                                            </strong>
+                                        </Typography>
+                                    }
+
                                 </Stack>
                             </Box>
                         </AccordionDetails>
