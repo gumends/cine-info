@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import { useRouter } from 'next/navigation';
 import Box from '@mui/material/Box';
-import { IconButton, TextField, Drawer, List, ListItemText, ListItemButton } from '@mui/material';
+import { IconButton, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { useSearchParams } from 'next/navigation';
 import DehazeIcon from '@mui/icons-material/Dehaze';
