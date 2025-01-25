@@ -30,7 +30,7 @@ export default function Home() {
     const [qntFilmes, setQntFilmes] = useState(0);
     const [qntSeries, setQntSeries] = useState(0);
 
-    const [pagina, setPagina] = useState(0);
+    const [pagina, setPagina] = useState(1);
 
     const handleListItemClick = (
         event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -43,7 +43,7 @@ export default function Home() {
 
     const getPopulares = async () => {
         const { searchParams } = new URL(window.location.href);
-            
+
         const query = searchParams.get('q') as string;
 
         if (!query) router.push('/filmes');
@@ -51,10 +51,16 @@ export default function Home() {
 
         setPagina((prevPagina) => prevPagina + 1);
 
+        console.log(pagina);
+
+
         const [maisFilmes, maisSeries] = await Promise.all([
             filmes.getFilmePorNome(query, pagina + 1),
             series.getSeriePorNome(query, pagina + 1),
         ]);
+
+        console.log(maisFilmes);
+
 
         setFilmesBusca((prev) => [...prev, ...maisFilmes.results]);
         setSeriesBusca((prev) => [...prev, ...maisSeries.results]);
@@ -62,7 +68,7 @@ export default function Home() {
 
     const fetchData = async () => {
         const { searchParams } = new URL(window.location.href);
-            
+
         const query = searchParams.get('q') as string;
 
         if (!query) router.push('/filmes');
@@ -91,7 +97,7 @@ export default function Home() {
 
     return (
         <Content>
-            {loading && <LoadingScreen/>}
+            {loading && <LoadingScreen />}
             <Container
                 sx={{
                     display: 'flex',
@@ -105,7 +111,7 @@ export default function Home() {
                 <Stack
                     sx={{
                         display: 'flex',
-                        flexDirection: 'row',
+                        flexDirection: { xs: 'column', sm: 'column', md: 'row' },
                         alignItems: 'flex-start',
                         justifyContent: 'space-between',
                         width: '100%',
@@ -114,7 +120,7 @@ export default function Home() {
                 >
                     <Box
                         sx={{
-                            width: 300,
+                            width: { xs: '100%', sm: '100%', md: 300 },
                             bgcolor: 'background.paper',
                             borderRadius: '10px',
                             p: 2,
@@ -132,7 +138,7 @@ export default function Home() {
                             Buscas Relacionadas
                         </Typography>
                         <Divider />
-                        <List component="nav" aria-label="main mailbox folders" sx={{ mt: 2 }}>
+                        <List component="nav" aria-label="main mailbox folders" sx={{ mt: 2, display: { xs: 'flex', sm: 'flex', md: 'block'}, flexDirection: 'row' }}>
                             <ListItemButton
                                 selected={selectedIndex === 0}
                                 onClick={(event) => handleListItemClick(event, 0)}
@@ -161,7 +167,7 @@ export default function Home() {
                             display: 'flex',
                             flexDirection: 'row',
                             flexWrap: 'wrap',
-                            justifyContent: 'flex-start',
+                            justifyContent: 'center',
                             gap: 2,
                             width: '100%',
                         }}
@@ -242,9 +248,9 @@ export default function Home() {
                                     </Typography>
                                 </Box>
                             ))}
-                            {selectedIndex === 2 &&
-                            pessoasBusca.map((pessoa)=> (
-                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }}  onClick={() => router.push(`/pessoa?p=${pessoa.id}`)}>
+                        {selectedIndex === 2 &&
+                            pessoasBusca.map((pessoa) => (
+                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/pessoa?p=${pessoa.id}`)}>
                                     <CardMedia
                                         component="img"
                                         image={
@@ -283,7 +289,7 @@ export default function Home() {
                     </Box>
                 </Stack>
                 <Box sx={{ display: 'flex', justifyContent: 'right', width: '100%', mr: 6, mt: 2 }}>
-                    <Button variant='outlined' color='info' onClick={() => { getPopulares();}}>Exibir mais</Button>
+                    <Button variant='outlined' color='info' onClick={() => { getPopulares(); }}>Exibir mais</Button>
                 </Box>
             </Container>
         </Content>
