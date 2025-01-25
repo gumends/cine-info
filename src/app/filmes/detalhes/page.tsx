@@ -206,7 +206,7 @@ const Home: React.FC = () => {
                             component="img"
                             sx={{
                                 width: { xs: 300, sm: 400, md: 600 },
-                                height: { xs: 500, sm: 400, md: 500 },
+                                height: { xs: 300, sm: 400, md: 500 },
                                 borderStartStartRadius: 10,
                                 borderStartEndRadius: 10,
                                 objectFit: "contain",
