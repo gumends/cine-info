@@ -39,8 +39,6 @@ export default function Home() {
         setSelectedIndex(index);
     };
 
-
-
     const getPopulares = async () => {
         const { searchParams } = new URL(window.location.href);
 
