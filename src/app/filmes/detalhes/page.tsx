@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                         width: "100%",
                         height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 55, sm: 30, md: 8 },
+                        mt: { xs: 20, sm: 20, md: 8 },
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
