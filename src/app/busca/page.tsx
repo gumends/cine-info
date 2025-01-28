@@ -26,9 +26,10 @@ export default function Home() {
     const [filmesBusca, setFilmesBusca] = useState<Popular[]>([]);
     const [seriesBusca, setSeriesBusca] = useState<IPopular[]>([]);
     const [pessoasBusca, setPessoasBusca] = useState<IPessoa[]>([]);
-    const [qntPessoas, setQntPessoas] = useState(0);
-    const [qntFilmes, setQntFilmes] = useState(0);
-    const [qntSeries, setQntSeries] = useState(0);
+    const [qntPessoas, setQntPessoas] = useState(1);
+    const [qntFilmes, setQntFilmes] = useState(1);
+    const [qntSeries, setQntSeries] = useState(1);
+    const [totalPagina, setTotalPagina] = useState(1);
 
     const [pagina, setPagina] = useState(1);
 
@@ -46,22 +47,27 @@ export default function Home() {
 
         if (!query) router.push('/filmes');
 
-
-        setPagina((prevPagina) => prevPagina + 1);
-
-        console.log(pagina);
-
-
-        const [maisFilmes, maisSeries] = await Promise.all([
-            filmes.getFilmePorNome(query, pagina + 1),
-            series.getSeriePorNome(query, pagina + 1),
+        await Promise.all([
+            filmes.getFilmePorNome(query, pagina + 1).then((response) => {
+                setQntFilmes(response.total_results);
+                setTotalPagina(response.total_pages);
+                setFilmesBusca([...filmesBusca, ...response.results]);
+            }),
+            series.getSeriePorNome(query, pagina + 1).then((response) => {
+                setQntSeries(response.total_results);
+                setTotalPagina(response.total_pages);
+                setSeriesBusca([...seriesBusca, ...response.results]);
+            }),
+            pessoas.getPessoas(query, pagina + 1).then((response) => {
+                setQntPessoas(response.total_results);
+                setTotalPagina(response.total_pages);
+                setPessoasBusca([...pessoasBusca, ...response.results]);
+            })
         ]);
 
-        console.log(maisFilmes);
+        setPagina(pagina + 1);
 
 
-        setFilmesBusca((prev) => [...prev, ...maisFilmes.results]);
-        setSeriesBusca((prev) => [...prev, ...maisSeries.results]);
     };
 
     const fetchData = async () => {
@@ -72,17 +78,20 @@ export default function Home() {
         if (!query) router.push('/filmes');
 
         await Promise.all([
-            filmes.getFilmePorNome(query as string).then((response) => {
+            filmes.getFilmePorNome(query as string, pagina).then((response) => {
                 setQntFilmes(response.total_results);
                 setFilmesBusca(response.results);
+                setTotalPagina(response.total_pages);
             }),
-            series.getSeriePorNome(query as string).then((response) => {
+            series.getSeriePorNome(query as string, pagina).then((response) => {
                 setQntSeries(response.total_results);
                 setSeriesBusca(response.results);
+                setTotalPagina(response.total_pages);
             }),
-            pessoas.getPessoas(query as string).then((response) => {
+            pessoas.getPessoas(query as string, pagina).then((response) => {
                 setPessoasBusca(response.results);
                 setQntPessoas(response.total_results);
+                setTotalPagina(response.total_pages);
             })
         ]);
 
@@ -90,8 +99,9 @@ export default function Home() {
     };
 
     useEffect(() => {
+        console.log(totalPagina);
         fetchData();
-    }, []);
+    }, [selectedIndex]);
 
     return (
         <Content>
@@ -139,21 +149,21 @@ export default function Home() {
                         <List component="nav" aria-label="main mailbox folders" sx={{ mt: 2, display: { xs: 'flex', sm: 'flex', md: 'block'}, flexDirection: 'row' }}>
                             <ListItemButton
                                 selected={selectedIndex === 0}
-                                onClick={(event) => handleListItemClick(event, 0)}
+                                onClick={(event) => {handleListItemClick(event, 0), setPagina(1)}}
                             >
                                 <ListItemText primary="Filmes" />
                                 <Chip label={qntFilmes} color="warning" variant="outlined" />
                             </ListItemButton>
                             <ListItemButton
                                 selected={selectedIndex === 1}
-                                onClick={(event) => handleListItemClick(event, 1)}
+                                onClick={(event) => {handleListItemClick(event, 1), setPagina(1)}}
                             >
                                 <ListItemText primary="Séries" />
                                 <Chip label={qntSeries} color="warning" variant="outlined" />
                             </ListItemButton>
                             <ListItemButton
                                 selected={selectedIndex === 2}
-                                onClick={(event) => handleListItemClick(event, 2)}
+                                onClick={(event) => {handleListItemClick(event, 2), setPagina(1)}}
                             >
                                 <ListItemText primary="Pessoas" />
                                 <Chip label={qntPessoas} color="warning" variant="outlined" />
@@ -287,7 +297,7 @@ export default function Home() {
                     </Box>
                 </Stack>
                 <Box sx={{ display: 'flex', justifyContent: 'right', width: '100%', mr: 6, mt: 2 }}>
-                    <Button variant='outlined' color='info' onClick={() => { getPopulares(); }}>Exibir mais</Button>
+                    <Button disabled={pagina === totalPagina} variant='outlined' color='info' onClick={() => { getPopulares(); }}>Exibir mais</Button>
                 </Box>
             </Container>
         </Content>
