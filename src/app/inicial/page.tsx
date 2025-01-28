@@ -106,7 +106,7 @@ export default function Home() {
                     position: 'relative',
                     width: '100vw',
                     overflow: 'hidden',
-                    top: { xs: -70, sm: -90, md: -179 },
+                    top: { xs: -170, sm: -170, md: -179 },
                     boxShadow: '1px 300px 200px rgb(0, 0, 0)',
                 }}
             >
@@ -134,7 +134,7 @@ export default function Home() {
                                                 alt="Filme Popular"
                                                 style={{
                                                     width: '100%',
-                                                    height: '100%',
+                                                    minHeight: '100%',
                                                     objectFit: 'cover',
                                                 }}
                                             />
@@ -155,7 +155,7 @@ export default function Home() {
                                         >
                                             <Box
                                                 sx={{
-                                                    mb: { xs: 1, sm: 2, md: 3, lg: 4 },
+                                                    mb: { xs: 1, sm: -6, md: 3, lg: 4 },
                                                 }}
                                             >
                                                 <Typography
@@ -229,7 +229,8 @@ export default function Home() {
                                                                 bgcolor: 'rgba(43, 16, 105, 0.79)',
                                                                 color: 'rgba(255, 255, 255, 0.8)',
                                                             },
-                                                            fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '17px' }
+                                                            fontSize: { xs: '10px', sm: '12px', md: '14px', lg: '17px' },
+                                                            zIndex: 99,
                                                         }}
                                                         onClick={() => {
                                                             router.push(`/filmes/detalhes?id=${filme.id}`);
@@ -274,7 +275,7 @@ export default function Home() {
                                         key={filme.id}
                                         className="slider-item"
                                     >
-                                        <Box key={filme.id} sx={{ position: 'relative', width: '100%', minHeight: 250, overflow: 'hidden' }}>
+                                        <Box key={filme.id} sx={{ position: 'relative', width: '100%', height: '800px', overflow: 'hidden' }}>
                                             <img
                                                 src={
                                                     filme.backdrop_path
@@ -284,8 +285,9 @@ export default function Home() {
                                                 alt="Filme Popular"
                                                 style={{
                                                     width: '100%',
-                                                    maxHeight: '100%',
-                                                    objectFit: 'cover',
+                                                    height: '100%', // Faz com que a imagem ocupe toda a altura do container
+                                                    minHeight: '250px', // Define um tamanho mínimo adequado
+                                                    objectFit: 'cover', // Garante que a imagem cubra todo o espaço, evitando lacunas
                                                 }}
                                             />
                                             <Box
@@ -434,7 +436,7 @@ export default function Home() {
                         component="span"
                         variant="h2"
                         sx={{
-                            fontSize: { xs: '20px', md: '30px'},
+                            fontSize: { xs: '20px', md: '30px' },
                             color: '#00FFFF',
                             fontWeight: 'bold',
                         }}
@@ -450,7 +452,7 @@ export default function Home() {
                         component="span"
                         variant="h2"
                         sx={{
-                            fontSize: { xs: '20px', md: '30px'},
+                            fontSize: { xs: '20px', md: '30px' },
                             color: '#00FFFF',
                             fontWeight: 'bold',
                             mt: 4,
@@ -467,7 +469,7 @@ export default function Home() {
                         component="span"
                         variant="h2"
                         sx={{
-                            fontSize: { xs: '20px', md: '30px'},
+                            fontSize: { xs: '20px', md: '30px' },
                             color: '#00FFFF',
                             fontWeight: 'bold',
                             mt: 4,
