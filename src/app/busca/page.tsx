@@ -30,7 +30,6 @@ export default function Home() {
     const [qntPessoas, setQntPessoas] = useState(1);
     const [qntFilmes, setQntFilmes] = useState(1);
     const [qntSeries, setQntSeries] = useState(1);
-    const [totalPagina, setTotalPagina] = useState(1);
 
     const [pagina, setPagina] = useState(1);
 
@@ -54,17 +53,14 @@ export default function Home() {
         await Promise.all([
             filmes.getFilmePorNome(query, nextPage).then((response) => {
                 setQntFilmes(response.total_results);
-                setTotalPagina(response.total_pages || 1);
                 setFilmesBusca((prev) => [...prev, ...response.results]);
             }),
             series.getSeriePorNome(query, nextPage).then((response) => {
                 setQntSeries(response.total_results);
-                setTotalPagina(response.total_pages || 1);
                 setSeriesBusca((prev) => [...prev, ...response.results]);
             }),
             pessoas.getPessoas(query, nextPage).then((response) => {
                 setQntPessoas(response.total_results);
-                setTotalPagina(response.total_pages || 1);
                 setPessoasBusca((prev) => [...prev, ...response.results]);
             })
         ]);
