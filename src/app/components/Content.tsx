@@ -72,6 +72,8 @@ export default function MarketingPage({
                 top: 20,
                 left: 0,
                 width: '100%',
+                display: 'flex',
+                justifyContent: 'center',
                 zIndex: (theme) => theme.zIndex.drawer + 1, // Prioridade alta no zIndex
               }}
             >
