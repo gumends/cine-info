@@ -9,17 +9,17 @@ import { Box } from "@mui/material";
 function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: string }) {
     const settings = {
         dots: true,
-        infinite: false,
         speed: 500,
-        slidesToShow: 6,
-        slidesToScroll: 6,
+        slidesToShow: 5,
+        slidesToScroll: 5,
         initialSlide: 0,
+        infinite: true,
         responsive: [
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 4,
-                    slidesToScroll: 4,
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
                     infinite: true,
                     dots: true
                 }
@@ -39,7 +39,8 @@ function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
                     slidesToShow: 2,
                     slidesToScroll: 2,
                     initialSlide: 0,
-                    infinite: true
+                    infinite: true,
+                    dots: false
                 }
             }
         ]
@@ -48,7 +49,7 @@ function Responsive({ filmes, tipo }: { filmes: Popular[] | IPopular[], tipo: st
         <div className="slider-container">
             <Slider {...settings} >
                 {filmes.map((data) => (
-                    <Box key={data.id} className="itens" sx={{ cursor: 'pointer', height: { xs: 300, lg: 300, md: 250, sm: 300, xl: 400 } }} onClick={() => window.location.href = `/${tipo}/detalhes?id=${data.id}`} >
+                    <Box key={data.id} className="itens" sx={{ cursor: 'pointer', height: { xs: 250, lg: 270, md: 250, sm: 250, xl: 400 } }} onClick={() => window.location.href = `/${tipo}/detalhes?id=${data.id}`} >
                         <img src={`https://image.tmdb.org/t/p/w500/${data.poster_path}`} style={{ borderRadius: '10px', height: '100%' }} alt={(data as Popular).title || (data as IPopular).name} />
                     </Box>
                 ))}
