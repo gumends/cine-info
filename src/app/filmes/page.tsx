@@ -16,7 +16,7 @@ export default function Home() {
     const [filmes, setFilmes] = useState<Popular[]>([]);
     const [filmesPopulares, setFilmesPopulares] = useState<Popular[]>([]);
     const [loading, setLoading] = useState(true);
-    const [pagina, setPagina] = useState(0);
+    const [pagina, setPagina] = useState(1);
 
     const getRecents = async () => {
         await films.getRecents()
@@ -26,14 +26,14 @@ export default function Home() {
     };
 
     const getPopulares = async () => {
-        const data = await films.buscaPopulares(pagina + 1);
-        setPagina((prevPagina) => prevPagina + 1);
-        setFilmesPopulares((prevFilmes) => [...prevFilmes, ...data.results]);
+        setPagina(pagina + 1);
+        const data = await films.buscaPopulares(pagina);
+        setFilmesPopulares([...filmesPopulares, ...data.results]);
     };
 
     useEffect(() => {
-        getRecents();
         getPopulares();
+        getRecents();
         setTimeout(() => {
             setLoading(false);
         }, 2000);

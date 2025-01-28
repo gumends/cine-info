@@ -1,8 +1,8 @@
 import process from 'process';
 
 const key = process.env.NEXT_PUBLIC_API_KEY;
-async function getPessoas(nome: string) {
-    const response = await fetch(`https://api.themoviedb.org/3/search/person?query=${nome}&api_key=${key}&language=pt-BR`, {
+async function getPessoas(nome: string, page: number) {
+    const response = await fetch(`https://api.themoviedb.org/3/search/person?query=${nome}&api_key=${key}&language=pt-BR&page=${page}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
