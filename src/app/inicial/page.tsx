@@ -106,7 +106,7 @@ export default function Home() {
                     position: 'relative',
                     width: '100vw',
                     overflow: 'hidden',
-                    top: { xs: -170, sm: -170, md: -179 },
+                    top: { xs: -70, sm: -70, md: -69 },
                     boxShadow: '1px 300px 200px rgb(0, 0, 0)',
                 }}
             >
@@ -428,7 +428,7 @@ export default function Home() {
                     alignItems: 'center',
                     position: 'relative',
                     mx: { xs: 5, sm: 10, md: 20 },
-                    mt: { xs: 0, sm: -20, md: -35, lg: -40, xl: -50 },
+                    mt: { xs: 0, sm: -5, md: -25, lg: -30, xl: -40 },
                 }}
             >
                 <Stack sx={{ alignItems: 'left', width: '100%' }}>
