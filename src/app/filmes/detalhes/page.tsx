@@ -124,7 +124,7 @@ const Home: React.FC = () => {
                         width: "100%",
                         height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 20, sm: 20, md: 8 },
+                        mt: { xs: 35, sm: 40, md: 20 },
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
@@ -182,7 +182,7 @@ const Home: React.FC = () => {
                                 variant="body1"
                                 sx={{
                                     mt: 4,
-                                    fontSize: { xs: 15, sm: 16, md: 16, lg: 18 },
+                                    fontSize: { xs: 12, sm: 14, md: 14, lg: 16 },
                                     width: { xs: '100%', md: '70%' },
                                     color: "rgba(255, 255, 255, 0.8)",
                                     textAlign: "justify"
