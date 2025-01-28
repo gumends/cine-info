@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation';
 import { Popular } from '@/types/popular.type';
 import { IPessoa } from '@/types/pessoa.type';
 import LoadingScreen from '../components/Loading';
+import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
 
 export default function Home() {
     const [loading, setLoading] = useState(true);
@@ -38,6 +39,7 @@ export default function Home() {
         index: number,
     ) => {
         setSelectedIndex(index);
+        setPagina(1); // Resetar a página ao trocar de categoria
     };
 
     const getPopulares = async () => {
@@ -47,27 +49,27 @@ export default function Home() {
 
         if (!query) router.push('/filmes');
 
+        const nextPage = pagina + 1; // Calcular próxima página
+
         await Promise.all([
-            filmes.getFilmePorNome(query, pagina + 1).then((response) => {
+            filmes.getFilmePorNome(query, nextPage).then((response) => {
                 setQntFilmes(response.total_results);
-                setTotalPagina(response.total_pages);
-                setFilmesBusca([...filmesBusca, ...response.results]);
+                setTotalPagina(response.total_pages || 1);
+                setFilmesBusca((prev) => [...prev, ...response.results]);
             }),
-            series.getSeriePorNome(query, pagina + 1).then((response) => {
+            series.getSeriePorNome(query, nextPage).then((response) => {
                 setQntSeries(response.total_results);
-                setTotalPagina(response.total_pages);
-                setSeriesBusca([...seriesBusca, ...response.results]);
+                setTotalPagina(response.total_pages || 1);
+                setSeriesBusca((prev) => [...prev, ...response.results]);
             }),
-            pessoas.getPessoas(query, pagina + 1).then((response) => {
+            pessoas.getPessoas(query, nextPage).then((response) => {
                 setQntPessoas(response.total_results);
-                setTotalPagina(response.total_pages);
-                setPessoasBusca([...pessoasBusca, ...response.results]);
+                setTotalPagina(response.total_pages || 1);
+                setPessoasBusca((prev) => [...prev, ...response.results]);
             })
         ]);
 
-        setPagina(pagina + 1);
-
-
+        setPagina(nextPage); // Atualizar a página apenas uma vez
     };
 
     const fetchData = async () => {
@@ -81,17 +83,20 @@ export default function Home() {
             filmes.getFilmePorNome(query as string, pagina).then((response) => {
                 setQntFilmes(response.total_results);
                 setFilmesBusca(response.results);
-                setTotalPagina(response.total_pages);
+                console.log(response);
+                
             }),
             series.getSeriePorNome(query as string, pagina).then((response) => {
                 setQntSeries(response.total_results);
                 setSeriesBusca(response.results);
-                setTotalPagina(response.total_pages);
+                console.log(response);
+                
             }),
             pessoas.getPessoas(query as string, pagina).then((response) => {
                 setPessoasBusca(response.results);
                 setQntPessoas(response.total_results);
-                setTotalPagina(response.total_pages);
+                console.log(response);
+                
             })
         ]);
 
@@ -99,7 +104,6 @@ export default function Home() {
     };
 
     useEffect(() => {
-        console.log(totalPagina);
         fetchData();
     }, [selectedIndex]);
 
@@ -149,21 +153,21 @@ export default function Home() {
                         <List component="nav" aria-label="main mailbox folders" sx={{ mt: 2, display: { xs: 'flex', sm: 'flex', md: 'block'}, flexDirection: 'row' }}>
                             <ListItemButton
                                 selected={selectedIndex === 0}
-                                onClick={(event) => {handleListItemClick(event, 0), setPagina(1)}}
+                                onClick={(event) => handleListItemClick(event, 0)}
                             >
                                 <ListItemText primary="Filmes" />
                                 <Chip label={qntFilmes} color="warning" variant="outlined" />
                             </ListItemButton>
                             <ListItemButton
                                 selected={selectedIndex === 1}
-                                onClick={(event) => {handleListItemClick(event, 1), setPagina(1)}}
+                                onClick={(event) => handleListItemClick(event, 1)}
                             >
                                 <ListItemText primary="Séries" />
                                 <Chip label={qntSeries} color="warning" variant="outlined" />
                             </ListItemButton>
                             <ListItemButton
                                 selected={selectedIndex === 2}
-                                onClick={(event) => {handleListItemClick(event, 2), setPagina(1)}}
+                                onClick={(event) => handleListItemClick(event, 2)}
                             >
                                 <ListItemText primary="Pessoas" />
                                 <Chip label={qntPessoas} color="warning" variant="outlined" />
@@ -188,7 +192,7 @@ export default function Home() {
                                         image={
                                             filme.poster_path
                                                 ? `https://image.tmdb.org/t/p/original${filme.poster_path}`
-                                                : 'https://via.placeholder.com/150'
+                                                : images.default.src
                                         }
                                         alt={filme.title || 'Poster do filme'}
                                         sx={{
@@ -226,7 +230,7 @@ export default function Home() {
                                         image={
                                             series.poster_path
                                                 ? `https://image.tmdb.org/t/p/original${series.poster_path}`
-                                                : 'https://via.placeholder.com/150'
+                                                : images.default.src
                                         }
                                         alt={series.name || 'Poster da série'}
                                         sx={{
@@ -264,7 +268,7 @@ export default function Home() {
                                         image={
                                             pessoa.profile_path
                                                 ? `https://image.tmdb.org/t/p/original${pessoa.profile_path}`
-                                                : 'https://placehold.co/150'
+                                                : images.default.src
                                         }
                                         alt={pessoa.name || 'Poster da série'}
                                         sx={{
@@ -297,10 +301,9 @@ export default function Home() {
                     </Box>
                 </Stack>
                 <Box sx={{ display: 'flex', justifyContent: 'right', width: '100%', mr: 6, mt: 2 }}>
-                    <Button disabled={pagina === totalPagina} variant='outlined' color='info' onClick={() => { getPopulares(); }}>Exibir mais</Button>
+                    <Button variant='outlined' color='info' onClick={() => { getPopulares(); }}>Exibir mais</Button>
                 </Box>
             </Container>
         </Content>
     );
-
 }
