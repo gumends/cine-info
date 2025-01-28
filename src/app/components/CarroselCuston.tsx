@@ -97,7 +97,7 @@ function CarroselCuston(props: IProps) {
                                     {data.character}
                                 </Typography>
                             </CardContent>
-                            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                            {/* <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Button sx={{
                                     width: '100%',
                                     color: 'rgba(255, 255, 255, 0.8)',
@@ -111,7 +111,7 @@ function CarroselCuston(props: IProps) {
                                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
                                     }
                                 }}>Informações</Button>
-                            </Box>
+                            </Box> */}
                         </Card>
                     </div>
                 ))
