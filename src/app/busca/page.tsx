@@ -154,6 +154,7 @@ export default function Home() {
                             <ListItemButton
                                 selected={selectedIndex === 0}
                                 onClick={(event) => handleListItemClick(event, 0)}
+                                sx={{ display: "flex", flexDirection: "column" }}
                             >
                                 <ListItemText primary="Filmes" />
                                 <Chip label={qntFilmes} color="warning" variant="outlined" />
@@ -161,6 +162,7 @@ export default function Home() {
                             <ListItemButton
                                 selected={selectedIndex === 1}
                                 onClick={(event) => handleListItemClick(event, 1)}
+                                sx={{ display: "flex", flexDirection: "column" }}
                             >
                                 <ListItemText primary="Séries" />
                                 <Chip label={qntSeries} color="warning" variant="outlined" />
@@ -168,6 +170,7 @@ export default function Home() {
                             <ListItemButton
                                 selected={selectedIndex === 2}
                                 onClick={(event) => handleListItemClick(event, 2)}
+                                sx={{ display: "flex", flexDirection: "column" }}
                             >
                                 <ListItemText primary="Pessoas" />
                                 <Chip label={qntPessoas} color="warning" variant="outlined" />
