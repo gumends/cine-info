@@ -195,7 +195,7 @@ export default function Home() {
                                     marginTop={1}
                                     sx={{ fontSize: { xs: "15px", sm: "15px", md: "17px"} }}
                                 >
-                                    Tambem conhecido como: {pessoasBusca?.also_known_as && Array.isArray(pessoasBusca.also_known_as) ? pessoasBusca.also_known_as.length : "Nomes não encontrados"}
+                                    Tambem conhecido como: {pessoasBusca?.also_known_as && Array.isArray(pessoasBusca.also_known_as) ? pessoasBusca.also_known_as.map((item: string, index: number) => index === pessoasBusca.also_known_as.length - 1 ? item : item + ", ") : "Nomes não encontrados"}
                                 </Typography>
                             </CardContent>
                         </Box>
