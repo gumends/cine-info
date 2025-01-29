@@ -71,12 +71,12 @@ export default function Home() {
                 <Typography
                     component="span"
                     variant="h2"
-                    sx={(theme) => ({
+                    sx={{
                         fontSize: '20px',
                         color: '#00FFFF',
                         fontWeight: 'bold',
                         mt: 4,
-                    })}
+                    }}
                 >
                     Filmes Populares
                 </Typography>
