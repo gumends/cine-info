@@ -79,23 +79,16 @@ export default function Home() {
             filmes.getFilmePorNome(query as string, pagina).then((response) => {
                 setQntFilmes(response.total_results);
                 setFilmesBusca(response.results);
-                console.log(response);
-                
             }),
             series.getSeriePorNome(query as string, pagina).then((response) => {
                 setQntSeries(response.total_results);
                 setSeriesBusca(response.results);
-                console.log(response);
-                
             }),
             pessoas.getPessoas(query as string, pagina).then((response) => {
                 setPessoasBusca(response.results);
                 setQntPessoas(response.total_results);
-                console.log(response);
-                
             })
         ]);
-
         setLoading(false);
     };
 
@@ -223,7 +216,7 @@ export default function Home() {
                             ))}
                         {selectedIndex === 1 &&
                             seriesBusca.map((series) => (
-                                <Box key={series.id} sx={{ width: 150, cursor: 'pointer' }}>
+                                <Box key={series.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/tv-series/detalhes?id=${series.id}`)}>
                                     <CardMedia
                                         component="img"
                                         image={
@@ -261,7 +254,7 @@ export default function Home() {
                             ))}
                         {selectedIndex === 2 &&
                             pessoasBusca.map((pessoa) => (
-                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/pessoa?p=${pessoa.id}`)}>
+                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }}>
                                     <CardMedia
                                         component="img"
                                         image={

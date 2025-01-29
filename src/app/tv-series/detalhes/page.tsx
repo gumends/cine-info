@@ -102,9 +102,8 @@ const Home: React.FC = () => {
                 <Stack
                     sx={{
                         width: "100%",
-                        height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 35, sm: 40, md: 20 },
+                        mt: { xs: 8, sm: 9, md: 12 },
                         gap: 2,
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}

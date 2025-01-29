@@ -122,10 +122,9 @@ const Home: React.FC = () => {
                 <Stack
                     sx={{
                         width: "100%",
-                        height: 500,
                         justifyContent: "space-between",
-                        mt: { xs: 35, sm: 40, md: 20 },
                         gap: 2,
+                        mt: { xs: 8, sm: 9, md: 12 }
                     }}
                     direction={{ xs: "column-reverse", sm: "column-reverse", md: "row" }}
                     alignItems={{ xs: "center", sm: "center", md: "flex-start" }}
@@ -194,7 +193,7 @@ const Home: React.FC = () => {
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
                             {filme?.genres.map((genre, key) => (
                                 <Box key={key} sx={{ display: "flex", border: "1px solid rgba(255, 255, 255, 0.1)", alignItems: "center", gap: 1, bgcolor: "rgba(255, 255, 255, 0.1)", borderRadius: 1, p: 1 }}>
-                                    <Typography variant="body2" >
+                                    <Typography variant="body2" sx={{ color: "rgba(255, 255, 255, 0.8)", fontSize: 12 }} >
                                         {genre.name}
                                     </Typography>
                                 </Box>
