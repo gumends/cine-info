@@ -33,6 +33,7 @@ export interface IFilme {
   imdb_id: string;
   original_language: string;
   original_title: string;
+  name?: string;
   overview: string;
   popularity: number;
   poster_path: string;
