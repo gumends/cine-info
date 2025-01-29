@@ -68,7 +68,7 @@ const Home: React.FC = () => {
         if (isNaN(parseInt(certification))) {
             setTipoClassificacao(['L', 'rgba(0, 156, 21, 0.3)', 'rgb(0, 156, 21)']);
         } else if (parseInt(certification) < 18) {
-            setTipoClassificacao([certification.toString(), 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
+            setTipoClassificacao([certification.toString() + '+', 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)']);
         } else if (parseInt(certification) >= 18) {
             setTipoClassificacao([certification.toString() + '+', 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)']);
         }

@@ -37,7 +37,7 @@ export default function Home() {
         }
         const idade = parseInt(certification, 10);
         if (idade < 18) {
-            return [certification, 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)'];
+            return [`${certification}+`, 'rgba(156, 83, 0, 0.3)', 'rgb(255, 136, 0)'];
         }
         return [`${certification}+`, 'rgba(255, 0, 0, 0.3)', 'rgb(255, 0, 0)'];
     };
