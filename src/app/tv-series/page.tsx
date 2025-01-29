@@ -8,7 +8,7 @@ import { IPopular } from '@/types/popular-tv.type';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import LoadingScreen from '../components/Loading';
-
+import * as images from '@/assets/back.png';
 export default function Home() {
 
     const router = useRouter();
@@ -141,7 +141,7 @@ export default function Home() {
                                     <CardMedia
                                         component="img"
                                         sx={{ width: 170, height: 100 }}
-                                        image={item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg` : 'https://via.placeholder.com/150'}
+                                        image={item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg` : images.default.src}
                                         alt="Live from space album cover"
                                     />
                                 </Box>

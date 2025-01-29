@@ -1,6 +1,6 @@
 'use client';
 
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, CardMedia, Chip, Container, Typography } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, CardMedia, Chip, Container, Typography } from '@mui/material';
 import Content from '../../components/Content';
 import React, { useEffect, useState } from 'react';
 import * as series from '@/services/series.service';

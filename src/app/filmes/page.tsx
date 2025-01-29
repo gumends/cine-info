@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Carrosel from '@/app/components/Carrosel'
 import LoadingScreen from '../components/Loading';
+import * as images from '@/assets/back.png';
 
 export default function Home() {
 
@@ -138,8 +139,8 @@ export default function Home() {
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                     <CardMedia
                                         component="img"
-                                        sx={{ width: 170, height: 100 }}
-                                        image={item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg` : 'https://via.placeholder.com/150'}
+                                        sx={{ minWidth: 170, height: 100 }}
+                                        image={item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg` : images.default.src}
                                         alt="Live from space album cover"
                                     />
                                 </Box>
