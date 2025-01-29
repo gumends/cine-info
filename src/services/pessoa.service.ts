@@ -25,8 +25,33 @@ async function getPessoa(id: string) {
         throw new Error(response.statusText);
     }
     return response.json();
+}
 
+async function getPessoaFilmes(id: string) {
+    const response = await fetch(`https://api.themoviedb.org/3/person/${id}/movie_credits?api_key=${key}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
+}
+
+async function getPessoaTv(id: string) {
+    const response = await fetch(`https://api.themoviedb.org/3/person/${id}/tv_credits?api_key=${key}&language=pt-BR`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    if (!response.ok) {
+        throw new Error(response.statusText);
+    }
+    return response.json();
 }
 
     
-export { getPessoa, getPessoas };
+export { getPessoa, getPessoas, getPessoaFilmes, getPessoaTv };
