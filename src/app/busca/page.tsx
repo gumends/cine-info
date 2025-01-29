@@ -254,7 +254,7 @@ export default function Home() {
                             ))}
                         {selectedIndex === 2 &&
                             pessoasBusca.map((pessoa) => (
-                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }}>
+                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/pessoa?p=${pessoa.id}`)}>
                                     <CardMedia
                                         component="img"
                                         image={
