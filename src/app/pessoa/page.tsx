@@ -188,7 +188,7 @@ export default function Home() {
                                 >
                                     Genero: {pessoasBusca?.gender == 1 ? 'Feminino' : 'Masculino'}
                                 </Typography>
-                                <Typography
+                                {/* <Typography
                                     variant="h6"
                                     color="rgba(255, 255, 255, 0.7)"
                                     component="div"
@@ -196,7 +196,7 @@ export default function Home() {
                                     sx={{ fontSize: { xs: "15px", sm: "15px", md: "17px"} }}
                                 >
                                     Tambem conhecido como: {pessoasBusca?.also_known_as && Array.isArray(pessoasBusca.also_known_as) ? pessoasBusca.also_known_as.map((item: string, index: number) => index === pessoasBusca.also_known_as.length - 1 ? item : item + ", ") : "Nomes não encontrados"}
-                                </Typography>
+                                </Typography> */}
                             </CardContent>
                         </Box>
                     </Card>

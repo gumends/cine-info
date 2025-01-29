@@ -139,7 +139,7 @@ export default function Home() {
                             Buscas Relacionadas
                         </Typography>
                         <Divider />
-                        <List component="nav" aria-label="main mailbox folders" sx={{ mt: 2, display: { xs: 'flex', sm: 'flex', md: 'block'}, flexDirection: 'row' }}>
+                        <List component="nav" aria-label="main mailbox folders" sx={{ mt: 2, display: { xs: 'flex', sm: 'flex', md: 'block' }, flexDirection: 'row' }}>
                             <ListItemButton
                                 selected={selectedIndex === 0}
                                 onClick={(event) => handleListItemClick(event, 0)}
@@ -176,120 +176,123 @@ export default function Home() {
                             width: '100%',
                         }}
                     >
-                        {selectedIndex === 0 &&
-                            filmesBusca.map((filme) => (
-                                <Box key={filme.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/filmes/detalhes?id=${filme.id}`)}>
-                                    <CardMedia
-                                        component="img"
-                                        image={
-                                            filme.poster_path
-                                                ? `https://image.tmdb.org/t/p/original${filme.poster_path}`
-                                                : images.default.src
-                                        }
-                                        alt={filme.title || 'Poster do filme'}
-                                        sx={{
-                                            width: '100%',
-                                            height: 225,
-                                            objectFit: 'cover',
-                                            borderTopLeftRadius: 10,
-                                            borderTopRightRadius: 10,
-                                        }}
-                                    />
-                                    <Typography
-                                        variant="body2"
-                                        sx={{
-                                            color: 'text.primary',
-                                            textAlign: 'center',
-                                            backgroundColor: 'background.paper',
-                                            borderBottomLeftRadius: 10,
-                                            borderBottomRightRadius: 10,
-                                            p: 1,
-                                            fontSize: 14,
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}
-                                    >
-                                        {filme.title}
-                                    </Typography>
-                                </Box>
-                            ))}
-                        {selectedIndex === 1 &&
-                            seriesBusca.map((series) => (
-                                <Box key={series.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/tv-series/detalhes?id=${series.id}`)}>
-                                    <CardMedia
-                                        component="img"
-                                        image={
-                                            series.poster_path
-                                                ? `https://image.tmdb.org/t/p/original${series.poster_path}`
-                                                : images.default.src
-                                        }
-                                        alt={series.name || 'Poster da série'}
-                                        sx={{
-                                            width: '100%',
-                                            height: 225,
-                                            objectFit: 'cover',
-                                            borderTopLeftRadius: 10,
-                                            borderTopRightRadius: 10,
-                                        }}
-                                    />
-                                    <Typography
-                                        variant="body2"
-                                        sx={{
-                                            color: 'text.primary',
-                                            textAlign: 'center',
-                                            backgroundColor: 'background.paper',
-                                            borderBottomLeftRadius: 10,
-                                            borderBottomRightRadius: 10,
-                                            p: 1,
-                                            fontSize: 14,
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}
-                                    >
-                                        {series.name}
-                                    </Typography>
-                                </Box>
-                            ))}
-                        {selectedIndex === 2 &&
-                            pessoasBusca.map((pessoa) => (
-                                <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/pessoa?p=${pessoa.id}`)}>
-                                    <CardMedia
-                                        component="img"
-                                        image={
-                                            pessoa.profile_path
-                                                ? `https://image.tmdb.org/t/p/original${pessoa.profile_path}`
-                                                : images.default.src
-                                        }
-                                        alt={pessoa.name || 'Poster da série'}
-                                        sx={{
-                                            width: '100%',
-                                            height: 225,
-                                            objectFit: 'cover',
-                                            borderTopLeftRadius: 10,
-                                            borderTopRightRadius: 10,
-                                        }}
-                                    />
-                                    <Typography
-                                        variant="body2"
-                                        sx={{
-                                            color: 'text.primary',
-                                            textAlign: 'center',
-                                            backgroundColor: 'background.paper',
-                                            borderBottomLeftRadius: 10,
-                                            borderBottomRightRadius: 10,
-                                            p: 1,
-                                            fontSize: 14,
-                                            whiteSpace: 'nowrap',
-                                            overflow: 'hidden',
-                                            textOverflow: 'ellipsis',
-                                        }}
-                                    >
-                                        {pessoa.name}
-                                    </Typography>
-                                </Box>
-                            ))}
+                        {selectedIndex === 0 ?
+                            filmesBusca.length === 0 ? <Typography variant='h4'>Nenhum filme encontrado</Typography> :
+                                filmesBusca.map((filme) => (
+                                    <Box key={filme.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/filmes/detalhes?id=${filme.id}`)}>
+                                        <CardMedia
+                                            component="img"
+                                            image={
+                                                filme.poster_path
+                                                    ? `https://image.tmdb.org/t/p/original${filme.poster_path}`
+                                                    : images.default.src
+                                            }
+                                            alt={filme.title || 'Poster do filme'}
+                                            sx={{
+                                                width: '100%',
+                                                height: 225,
+                                                objectFit: 'cover',
+                                                borderTopLeftRadius: 10,
+                                                borderTopRightRadius: 10,
+                                            }}
+                                        />
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                color: 'text.primary',
+                                                textAlign: 'center',
+                                                backgroundColor: 'background.paper',
+                                                borderBottomLeftRadius: 10,
+                                                borderBottomRightRadius: 10,
+                                                p: 1,
+                                                fontSize: 14,
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                            }}
+                                        >
+                                            {filme.title}
+                                        </Typography>
+                                    </Box>
+                                )) : null}
+                        {selectedIndex === 1 ?
+                            seriesBusca.length === 0 ? <Typography variant='h4'>Nenhuma serie encontrado</Typography> :
+                                seriesBusca.map((series) => (
+                                    <Box key={series.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/tv-series/detalhes?id=${series.id}`)}>
+                                        <CardMedia
+                                            component="img"
+                                            image={
+                                                series.poster_path
+                                                    ? `https://image.tmdb.org/t/p/original${series.poster_path}`
+                                                    : images.default.src
+                                            }
+                                            alt={series.name || 'Poster da série'}
+                                            sx={{
+                                                width: '100%',
+                                                height: 225,
+                                                objectFit: 'cover',
+                                                borderTopLeftRadius: 10,
+                                                borderTopRightRadius: 10,
+                                            }}
+                                        />
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                color: 'text.primary',
+                                                textAlign: 'center',
+                                                backgroundColor: 'background.paper',
+                                                borderBottomLeftRadius: 10,
+                                                borderBottomRightRadius: 10,
+                                                p: 1,
+                                                fontSize: 14,
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                            }}
+                                        >
+                                            {series.name}
+                                        </Typography>
+                                    </Box>
+                                )) : null}
+                        {selectedIndex === 2 ?
+                            pessoasBusca.length === 0 ? <Typography variant='h4'>Nenhuma pessoa encontrada</Typography> :
+                                pessoasBusca.map((pessoa) => (
+                                    <Box key={pessoa.id} sx={{ width: 150, cursor: 'pointer' }} onClick={() => router.push(`/pessoa?p=${pessoa.id}`)}>
+                                        <CardMedia
+                                            component="img"
+                                            image={
+                                                pessoa.profile_path
+                                                    ? `https://image.tmdb.org/t/p/original${pessoa.profile_path}`
+                                                    : images.default.src
+                                            }
+                                            alt={pessoa.name || 'Poster da série'}
+                                            sx={{
+                                                width: '100%',
+                                                height: 225,
+                                                objectFit: 'cover',
+                                                borderTopLeftRadius: 10,
+                                                borderTopRightRadius: 10,
+                                            }}
+                                        />
+                                        <Typography
+                                            variant="body2"
+                                            sx={{
+                                                color: 'text.primary',
+                                                textAlign: 'center',
+                                                backgroundColor: 'background.paper',
+                                                borderBottomLeftRadius: 10,
+                                                borderBottomRightRadius: 10,
+                                                p: 1,
+                                                fontSize: 14,
+                                                whiteSpace: 'nowrap',
+                                                overflow: 'hidden',
+                                                textOverflow: 'ellipsis',
+                                            }}
+                                        >
+                                            {pessoa.name}
+                                        </Typography>
+                                    </Box>
+                                )) : null}
                     </Box>
                 </Stack>
                 <Box sx={{ display: 'flex', justifyContent: 'right', width: '100%', mr: 6, mt: 2 }}>
