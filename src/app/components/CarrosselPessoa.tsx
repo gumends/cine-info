@@ -1,30 +1,19 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
-
-interface IData {
-    adult: boolean;
-    cast_id: number;
-    character: string;
-    credit_id: string;
-    gender: number;
-    id: number;
-    known_for_department: string;
-    name: string;
-    order: number;
-    original_name: string;
-    popularity: number;
-    profile_path: string;
-}
+import { useRouter } from "next/navigation";
+import { IFilme } from "@/types/filmes.type";
 
 interface IProps {
-    data: IData[]; // Array de objetos do tipo IData
+    data: IFilme[]; // Array de objetos do tipo IData
+    tipo: string
 }
 
-function CarroselCuston(props: IProps) {
+function CarrosselPessoa(props: IProps) {
+    const router = useRouter();
     const settings = {
         dots: true,
         infinite: false,
@@ -39,9 +28,9 @@ function CarroselCuston(props: IProps) {
                     slidesToShow: 3,
                     slidesToScroll: 3,
                     infinite: true,
-                    dots: true
+                    dots: false
                 }
-            }, 
+            },
             {
                 breakpoint: 750,
                 settings: {
@@ -76,28 +65,33 @@ function CarroselCuston(props: IProps) {
     return (
         <div className="slider-container">
             <Slider {...settings}>
-                {props.data.map((data: IData) => (
+                {props.data.map((data: IFilme) => (
                     <div key={data.id} className="itens">
                         <Card
                             sx={{
-                                cursor: 'pointer',
-                                transition: 'transform 0.3s ease-in-out'
+                                transition: 'transform 0.3s ease-in-out',
+                                maxHeight: 390,
+                                display: 'flex',
+                                flexDirection: 'column',
+                                justifyContent: 'space-between',
                             }}
                         >
-                            <CardMedia
-                                sx={{ height: 240 }}
-                                image={data.profile_path ? `https://image.tmdb.org/t/p/w500${data.profile_path}` : images.default.src}
-                                title={data.name}
-                            />
-                            <CardContent>
-                                <Typography sx={{ fontSize: 20, mt: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} gutterBottom variant="h5" component="div">
-                                    {data.name}
-                                </Typography>
-                                <Typography sx={{ fontSize: 12, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} gutterBottom variant="body2" component="div">
-                                    {data.character}
-                                </Typography>
-                            </CardContent>
-                            {/* <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                            <Box>
+                                <CardMedia
+                                    sx={{ height: 240 }}
+                                    image={data.poster_path ? `https://image.tmdb.org/t/p/w500${data.poster_path}` : images.default.src}
+                                    title={data.title}
+                                />
+                                <CardContent>
+                                    <Typography sx={{ fontSize: 20, mt: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} gutterBottom variant="h5" component="div">
+                                        {data.title || data.name}
+                                    </Typography>
+                                    <Typography sx={{ fontSize: 12, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} gutterBottom variant="body2" component="div">
+                                        {data.tagline}
+                                    </Typography>
+                                </CardContent>
+                            </Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
                                 <Button sx={{
                                     width: '100%',
                                     color: 'rgba(255, 255, 255, 0.8)',
@@ -110,8 +104,10 @@ function CarroselCuston(props: IProps) {
                                         color: 'rgba(255, 255, 255, 1)',
                                         backgroundColor: 'rgba(255, 255, 255, 0.1)',
                                     }
-                                }}>Informações</Button>
-                            </Box> */}
+                                }}
+                                    onClick={() => { router.push(`${props.tipo}/detalhes?id=${data.id}`) }}
+                                >Informações</Button>
+                            </Box>
                         </Card>
                     </div>
                 ))
@@ -121,4 +117,4 @@ function CarroselCuston(props: IProps) {
     );
 }
 
-export default CarroselCuston;
+export default CarrosselPessoa;
