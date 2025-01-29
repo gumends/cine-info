@@ -1,10 +1,23 @@
+import { IFilme } from "./filmes.type";
+
 export interface IPessoa {
-    adult: boolean
-    gender: number
-    id: number
-    known_for_department: string
-    name: string
-    original_name: string
-    popularity: number
+    adult: boolean,
+    also_known_as: [],
+    biography: string,
+    birthday: string,
+    deathday: string,
+    gender: number,
+    homepage: string,
+    id: number,
+    imdb_id: string,
+    known_for_department: string,
+    name: string,
+    place_of_birth: string,
+    popularity: number,
     profile_path: string
+}
+
+export interface IPessoaFilme {
+    cast: IFilme[];
+    crew: IFilme[];
 }
