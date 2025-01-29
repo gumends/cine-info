@@ -6,7 +6,7 @@ import * as films from '@/services/films.service';
 import { Popular } from '@/types/popular.type';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Carrosel from '@/app/components/Carrosel'
+import Carrossel from '@/app/components/Carrossel'
 import LoadingScreen from '../components/Loading';
 import * as images from '@/assets/back.png';
 
@@ -54,20 +54,17 @@ export default function Home() {
                 <Typography
                     component="span"
                     variant="h2"
-                    sx={(theme) => ({
+                    sx={{
                         fontSize: '20px',
-                        color: 'success.main',
-                        ...theme.applyStyles('dark', {
-                            color: 'success.light',
-                        }),
+                        color: '#00FFFF',
                         fontWeight: 'bold',
-                        mt: 4,
-                    })}
+                        mt: 10,
+                    }}
                 >
                     Filmes Em Cartaz
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%', px: { xs: 3, sm: 2 }}}>
-                    <Carrosel filmes={filmes} tipo="filmes" />
+                    <Carrossel filmes={filmes} tipo="filmes" />
                 </Box>
             </Container>
             <Container sx={{ mt: { xs: 7, sm: 7, md: 17 } }}>
@@ -76,10 +73,7 @@ export default function Home() {
                     variant="h2"
                     sx={(theme) => ({
                         fontSize: '20px',
-                        color: 'success.main',
-                        ...theme.applyStyles('dark', {
-                            color: 'success.light',
-                        }),
+                        color: '#00FFFF',
                         fontWeight: 'bold',
                         mt: 4,
                     })}
