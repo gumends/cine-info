@@ -7,7 +7,7 @@ import * as series from '@/services/series.service';
 import { Popular } from '@/types/popular.type';
 import { IPopular } from '@/types/popular-tv.type';
 import React, { useEffect, useState } from 'react';
-import Responsive from '@/app/components/CarroselSimples';
+import Responsive from '@/app/components/CarrosselSimples';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

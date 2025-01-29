@@ -15,7 +15,7 @@ import LoadingScreen from '@/app/components/Loading';
 import { styled } from '@mui/material/styles';
 import MuiAccordion, { AccordionProps } from '@mui/material/Accordion';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import CarroselCuston from '@/app/components/CarroselCuston';
+import CarrosselCuston from '@/app/components/CarrosselCuston';
 import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
 
 const Accordion = styled((props: AccordionProps) => (
@@ -313,7 +313,7 @@ const Home: React.FC = () => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Box sx={{ px: 2, height: "400px" }}>
-                                <CarroselCuston data={credts} />
+                                <CarrosselCuston data={credts} />
                             </Box>
                         </AccordionDetails>
                     </Accordion>

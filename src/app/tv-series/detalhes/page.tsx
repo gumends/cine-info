@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import * as images from '@/assets/Screenshot 2025-01-23 at 23-11-57 404 Image Placeholder.png';
 
 import LoadingScreen from '@/app/components/Loading';
-import CarroselCuston from '@/app/components/CarroselCuston';
+import CarrosselCuston from '@/app/components/CarrosselCuston';
 import { IReleaseDatesResult } from '@/types/filmes.type';
 
 const Home: React.FC = () => {
@@ -296,7 +296,7 @@ const Home: React.FC = () => {
                         </AccordionSummary>
                         <AccordionDetails>
                             <Box sx={{ px: 2, height: "400px" }}>
-                                <CarroselCuston data={credts} />
+                                <CarrosselCuston data={credts} />
                             </Box>
                         </AccordionDetails>
                     </Accordion>

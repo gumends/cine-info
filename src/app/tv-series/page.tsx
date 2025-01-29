@@ -2,7 +2,7 @@
 
 import { Box, Button, Card, CardContent, CardMedia, CircularProgress, Container, Divider, Typography } from '@mui/material';
 import Content from '@/app/components/Content';
-import Carrosel from '@/app/components/Carrosel'
+import Carrossel from '@/app/components/Carrossel'
 import * as series from '@/services/series.service';
 import { IPopular } from '@/types/popular-tv.type';
 import { useEffect, useState } from 'react';
@@ -57,18 +57,15 @@ export default function Home() {
                     variant="h2"
                     sx={(theme) => ({
                         fontSize: '20px',
-                        color: 'success.main',
-                        ...theme.applyStyles('dark', {
-                            color: 'success.light',
-                        }),
+                        color: '#00FFFF',
                         fontWeight: 'bold',
-                        mt: 4,
+                        mt: 10,
                     })}
                 >
                     Séries Recentes
                 </Typography>
                 <Box sx={{ mt: 4, width: '100%', px: { xs: 3, sm: 2 } }}>
-                    {seriesRecentes.length > 0 ? <Carrosel filmes={seriesRecentes} tipo='tv-series' /> : null}
+                    {seriesRecentes.length > 0 ? <Carrossel filmes={seriesRecentes} tipo='tv-series' /> : null}
                 </Box>
             </Container>
             <Container sx={{ mt: 19 }}>
@@ -77,15 +74,12 @@ export default function Home() {
                     variant="h2"
                     sx={(theme) => ({
                         fontSize: '20px',
-                        color: 'success.main',
-                        ...theme.applyStyles('dark', {
-                            color: 'success.light',
-                        }),
+                        color: '#00FFFF',
                         fontWeight: 'bold',
                         mt: 4,
                     })}
                 >
-                    Filmes Populares
+                    Séries Populares
                 </Typography>
                 <Divider sx={{ my: 4 }} />
                 <Box
