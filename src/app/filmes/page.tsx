@@ -170,8 +170,8 @@ export default function Home() {
                         ))
                     }
                 </Box>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mt: 7, pb: 7 }}>
-                    <Button variant="contained" onClick={() => { getPopulares() }}>
+                <Box sx={{ display: 'flex', justifyContent: 'right', gap: 2, mt: 7, pb: 7 }}>
+                    <Button variant="outlined" onClick={() => { getPopulares() }}>
                         Ver mais
                     </Button>
                 </Box>
