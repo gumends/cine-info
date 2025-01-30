@@ -206,7 +206,7 @@ export default function Home() {
                         sx={{ color: "rgba(255, 255, 255, 0.7)", pt: 4, pb: 1 }}
                         textAlign={"center"}
                     >
-                        Trabalhos de atuações
+                        Trabalhos
                     </Typography>
                     <div
                         style={{
