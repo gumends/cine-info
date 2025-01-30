@@ -133,7 +133,7 @@ export default function Home() {
                                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                                     <CardMedia
                                         component="img"
-                                        sx={{ minWidth: 170, height: 100 }}
+                                        sx={{ width: { xs: 150, sm: 150 }, height: 100 }}
                                         image={item.backdrop_path ? `https://image.tmdb.org/t/p/original${item.backdrop_path}.jpg` : images.default.src}
                                         alt="Live from space album cover"
                                     />
