@@ -174,7 +174,7 @@ const Home: React.FC = () => {
                                     textAlign: "justify"
                                 }}
                             >
-                                {filme?.overview.length == 0 ? "Sem sinopse" : filme?.overview}
+                                {filme?.overview.length == 0 ? "Nenhuma Sinopse Encontrada" : filme?.overview}
                             </Typography>
                         </Box>
                         <Box sx={{ display: "flex", mt: 4, gap: 1, alignItems: "center" }}>
