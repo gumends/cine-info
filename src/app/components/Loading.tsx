@@ -18,7 +18,7 @@ const LoadingScreen = () => {
 
     const getLetterColor = (index: number) => {
         if (text[index] === "I") {
-            return "rgb(36, 122, 2)";
+            return '#00FFFF';
         }
         return "white";
     };
